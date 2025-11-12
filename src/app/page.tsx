@@ -1,388 +1,1345 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import Header from '@/components/custom/Header';
-import HeroSection from '@/components/custom/HeroSection';
-import PricingSection from '@/components/custom/PricingSection';
-import { Button } from '@/components/ui/button';
+import { useState } from "react";
 import { 
-  BookOpen, 
-  Video, 
-  Calendar, 
-  Activity, 
-  Wallet, 
-  TrendingUp, 
-  ShoppingCart, 
-  Users, 
-  Trophy, 
-  LayoutDashboard, 
-  Award,
-  MessageCircle,
-  Instagram,
-  Send,
-  Star,
-  Play,
-  Lock,
-  CheckCircle2
-} from 'lucide-react';
-import type { Language } from '@/lib/translations';
+  Bell, Globe, User, Crown, Lock, Check, Star, TrendingUp, 
+  Zap, Video, ShoppingCart, Calendar, Activity, Wallet, 
+  Users, BarChart3, Award, MessageSquare, Menu, X,
+  ChevronDown, Play, BookOpen, Film, Sparkles, Clock,
+  Heart, Brain, Dumbbell, Apple, Droplet, Moon, Smile,
+  AlertCircle, Upload, ExternalLink, Trophy, Medal,
+  Target, Flame, CheckCircle, XCircle, Plus, Minus,
+  DollarSign, PieChart, TrendingDown, Send, Image as ImageIcon,
+  Mail, Eye, EyeOff, Phone, LogOut, Settings, Instagram
+} from "lucide-react";
 
-export default function Home() {
-  const [lang, setLang] = useState<Language>('pt');
+export default function EliteLifeHome() {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [language, setLanguage] = useState("pt");
+  const [showNotifications, setShowNotifications] = useState(false);
+  const [showLanguageMenu, setShowLanguageMenu] = useState(false);
+  const [showUserMenu, setShowUserMenu] = useState(false);
+  const [activeSection, setActiveSection] = useState("home");
+  
+  // Modal states
+  const [showLoginModal, setShowLoginModal] = useState(false);
+  const [showSignupModal, setShowSignupModal] = useState(false);
+  const [showPasswordLogin, setShowPasswordLogin] = useState(false);
+  const [showPasswordSignup, setShowPasswordSignup] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+
+  // User state
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [userName, setUserName] = useState("");
+  const [userPlan, setUserPlan] = useState<"free" | "paid">("free");
+
+  // Video categories
+  const videoCategories = [
+    { id: "all", label: "Todos" },
+    { id: "motivacional", label: "Motivacionais" },
+    { id: "ecommerce", label: "E-commerce" },
+    { id: "influencer", label: "Influencer Pro" },
+  ];
+
+  const [activeVideoCategory, setActiveVideoCategory] = useState("all");
+
+  // Videos data organizados por categoria
+  const videos = [
+    // Motivacionais
+    { id: "zqPA_xfQlVw", title: "Transformação Completa", category: "motivacional", duration: "12:45" },
+    { id: "mgYO12VzvNk", title: "Mindset de Sucesso", category: "motivacional", duration: "15:30" },
+    { id: "-bqT-Z3-6js", title: "Mentalidade Vencedora", category: "motivacional", duration: "18:20" },
+    { id: "_qKQ1lVNVL0", title: "Foco e Disciplina", category: "motivacional", duration: "10:15" },
+    { id: "hSrFmzk6E0w", title: "Produtividade Máxima", category: "motivacional", duration: "22:40" },
+    { id: "IhoXqdUvnC0", title: "Hábitos Poderosos", category: "motivacional", duration: "14:55" },
+    { id: "36MkeXmnBVU", title: "Superação", category: "motivacional", duration: "16:30" },
+    { id: "MkDVZplKyTQ", title: "Motivação Diária", category: "motivacional", duration: "13:20" },
+    { id: "GkW5jpPfaC0", title: "Resiliência", category: "motivacional", duration: "11:45" },
+    { id: "7kR-C-Boy0Y", title: "Inteligência Emocional", category: "motivacional", duration: "19:10" },
+    
+    // E-commerce
+    { id: "8UNgFZ7-5Ts", title: "Mercado Livre Avançado", category: "ecommerce", duration: "17:25" },
+    { id: "Im9PNgnXRTo", title: "Amazon FBA", category: "ecommerce", duration: "12:50" },
+    { id: "i1E4sgCeUEs", title: "Shopee Estratégias", category: "ecommerce", duration: "20:15" },
+    { id: "dSFkPWhrtNg", title: "Tráfego Pago", category: "ecommerce", duration: "14:30" },
+    { id: "9VuZlg-GHXk", title: "Google Ads", category: "ecommerce", duration: "18:45" },
+    { id: "-tovD0nSPsA", title: "Copywriting para Vendas", category: "ecommerce", duration: "16:20" },
+    { id: "kxm7n8BUgT0", title: "Anúncios Profissionais", category: "ecommerce", duration: "13:55" },
+    { id: "rF6daSPnrgc", title: "Dropshipping", category: "ecommerce", duration: "21:30" },
+    { id: "P3PU47_a-Kk", title: "Escalar Lojas", category: "ecommerce", duration: "15:40" },
+    { id: "FYtF7FjUgU4", title: "Funil de Vendas", category: "ecommerce", duration: "19:25" },
+    
+    // Influencer Pro
+    { id: "B89sP7HyfrQ", title: "Crescer no Instagram", category: "influencer", duration: "17:10" },
+    { id: "lt-qsz3gFho", title: "TikTok Viral", category: "influencer", duration: "10:30" },
+    { id: "DY2CfcVvc00", title: "YouTube Estratégias", category: "influencer", duration: "23:15" },
+    { id: "YpUd8YhKo-o", title: "Thumbnails que Convertem", category: "influencer", duration: "14:20" },
+    { id: "ogV4_WZcw7E", title: "Scripts Virais", category: "influencer", duration: "20:45" },
+    { id: "X0Y7Rwwkh5A", title: "Hashtags Estratégicas", category: "influencer", duration: "12:35" },
+    { id: "Wh44_CIxfYI", title: "Calendário de Conteúdo", category: "influencer", duration: "18:50" },
+    { id: "JCV5HQOePDg", title: "Branding Pessoal", category: "influencer", duration: "16:15" },
+    { id: "NdT7BRlaeVg", title: "Monetização", category: "influencer", duration: "22:30" },
+    { id: "4I5QFma7Cso", title: "Engajamento Alto", category: "influencer", duration: "11:20" },
+  ];
+
+  const filteredVideos = activeVideoCategory === "all" 
+    ? videos 
+    : videos.filter(v => v.category === activeVideoCategory);
+
+  const plans = [
+    {
+      id: 1,
+      name: "Gratuito",
+      price: "R$ 0,00",
+      period: "",
+      badge: null,
+      color: "from-gray-400 to-gray-600",
+      icon: Lock,
+      features: [
+        "Acesso limitado",
+        "Agenda personalizável (versão reduzida)",
+        "Tracker básico (água, calorias e passos)",
+        "Quiz inicial",
+        "Relatório simples após 7 dias",
+        { text: "Cursos e IA bloqueados", locked: true }
+      ]
+    },
+    {
+      id: 2,
+      name: "PRO",
+      price: "R$ 49,90",
+      period: "/mês",
+      badge: null,
+      color: "from-purple-500 to-indigo-600",
+      icon: Zap,
+      features: [
+        "+ de 100 cursos desbloqueados",
+        "1000 atividades e 1000 questionários",
+        "Acesso à IA de suporte",
+        "Relatórios semanais",
+        "Agenda completa",
+        "Tracker avançado (alimentação e nutrição)",
+        "Certificado Elite Life a cada módulo"
+      ]
+    },
+    {
+      id: 3,
+      name: "PRO PLUS",
+      price: "R$ 79,90",
+      period: "/mês",
+      badge: "Mais Popular",
+      badgeColor: "bg-gradient-to-r from-orange-400 to-pink-600",
+      color: "from-pink-500 to-purple-600",
+      icon: Crown,
+      features: [
+        "Tudo do PRO +",
+        "Comunidade exclusiva",
+        "Desafios de 30 dias",
+        "Sistema de medalhas e ranking",
+        "Relatórios de performance completos",
+        "Relatórios automáticos de evolução",
+        "Notificações personalizadas"
+      ]
+    },
+    {
+      id: 4,
+      name: "ELITE",
+      price: "R$ 89,90",
+      period: "/mês",
+      badge: "Acesso Total",
+      badgeColor: "bg-[#D4AF37] text-[#0B0B0B]",
+      color: "from-[#D4AF37] to-amber-600",
+      icon: Crown,
+      features: [
+        "Tudo do PRO PLUS +",
+        "Funções premium da IA (planos automáticos fitness + financeiros)",
+        "Chat social da comunidade",
+        "Carteira de investimentos simulada",
+        "Dashboards avançados",
+        "Relatórios detalhados de progresso físico e financeiro"
+      ]
+    },
+    {
+      id: 5,
+      name: "ANUAL",
+      price: "R$ 299,00",
+      period: "/ano",
+      badge: "Melhor Economia",
+      badgeColor: "bg-gradient-to-r from-green-400 to-emerald-600",
+      color: "from-emerald-500 to-teal-600",
+      icon: Crown,
+      features: [
+        "Todos os recursos do plano ELITE",
+        "Pagamento anual com desconto",
+        "Acesso completo a certificados",
+        "Agenda completa",
+        "Relatórios automáticos",
+        "IA completa",
+        "Suporte exclusivo"
+      ]
+    },
+    {
+      id: 6,
+      name: "INFLUENCER PRO",
+      price: "R$ 39,99",
+      period: "/mês",
+      badge: "Criadores de Conteúdo",
+      badgeColor: "bg-gradient-to-r from-pink-400 to-rose-600",
+      color: "from-rose-400 to-pink-600",
+      icon: Video,
+      features: [
+        "IA cria thumbnails e scripts",
+        "Relatórios de vídeos virais",
+        "Calendários de postagens",
+        "400 dietas de famosos (200 BR + 200 INT)",
+        "Plano semanal de treino e alimentação",
+        "Hashtags virais",
+        "Ranking de influenciadores",
+        "Tracker avançado",
+        "Afiliação com comissões de 15%"
+      ]
+    },
+    {
+      id: 7,
+      name: "E-COMMERCE PRO",
+      price: "R$ 89,90",
+      period: "/mês",
+      badge: "Vendas Online",
+      badgeColor: "bg-gradient-to-r from-blue-400 to-cyan-600",
+      color: "from-cyan-500 to-blue-600",
+      icon: ShoppingCart,
+      features: [
+        "Treinamentos Mercado Livre, Amazon, Shopee",
+        "+1000 atividades e vídeos explicativos",
+        "Tráfego pago e Google Ads",
+        "Criação de anúncios profissionais",
+        "Estratégias para escalar lojas",
+        "Tracker financeiro",
+        "Relatórios de resultados",
+        "Certificado Elite Life E-commerce"
+      ],
+      marketplaces: true
+    }
+  ];
+
+  const stats = [
+    { label: "+ de 50.000 alunos", value: "50k+" },
+    { label: "+ de 100 cursos", value: "100+" },
+    { label: "+ de 1000 atividades", value: "1000+" },
+    { label: "Certificados ELITE LIFE", value: "✓" }
+  ];
+
+  const notifications = [
+    { id: 1, title: "Boas-vindas!", message: "Bem-vindo à Elite Life", time: "Agora", read: false },
+    { id: 2, title: "Desconto disponível", message: "Cupom de 5% liberado", time: "1h atrás", read: false },
+    { id: 3, title: "Lembrete de agenda", message: "Treino em 30 minutos", time: "2h atrás", read: true },
+  ];
+
+  const languages = [
+    { code: "pt", label: "Português", flag: "🇧🇷" },
+    { code: "en", label: "English", flag: "🇺🇸" },
+    { code: "es", label: "Español", flag: "🇪🇸" },
+  ];
+
+  const ecommerceModules = [
+    {
+      platform: "Mercado Livre",
+      icon: "ML",
+      color: "bg-yellow-400 text-black",
+      courses: 15,
+      activities: 350
+    },
+    {
+      platform: "Amazon",
+      icon: "A",
+      color: "bg-orange-500 text-white",
+      courses: 12,
+      activities: 300
+    },
+    {
+      platform: "Shopee",
+      icon: "S",
+      color: "bg-orange-600 text-white",
+      courses: 10,
+      activities: 350
+    }
+  ];
+
+  const certificates = [
+    { id: 1, name: "Finanças Pessoais Avançadas", date: "15/01/2024", status: "completed" },
+    { id: 2, name: "Fitness & Nutrição", date: "10/01/2024", status: "completed" },
+    { id: 3, name: "Marketing Digital", date: "05/01/2024", status: "completed" },
+    { id: 4, name: "E-commerce Mastery", date: "-", status: "locked" },
+  ];
+
+  const rankingData = [
+    { position: 1, name: "João Silva", points: 15420, earnings: "R$ 3.450,00", medal: "🥇" },
+    { position: 2, name: "Maria Santos", points: 14890, earnings: "R$ 2.890,00", medal: "🥈" },
+    { position: 3, name: "Pedro Costa", points: 13750, earnings: "R$ 2.340,00", medal: "🥉" },
+    { position: 4, name: "Ana Oliveira", points: 12340, earnings: "R$ 1.890,00", medal: "" },
+    { position: 5, name: "Carlos Souza", points: 11890, earnings: "R$ 1.560,00", medal: "" },
+  ];
+
+  const affiliateStats = [
+    { label: "Total de Vendas", value: "R$ 2.450,00", icon: DollarSign },
+    { label: "Comissões Ganhas", value: "R$ 367,50", icon: TrendingUp },
+    { label: "Cliques no Link", value: "1.234", icon: Users },
+    { label: "Taxa de Conversão", value: "3.2%", icon: Target },
+  ];
+
+  const testimonials = [
+    {
+      name: "Mariana Silva",
+      role: "Empreendedora Digital",
+      image: "https://i.pravatar.cc/150?img=1",
+      text: "Elite Life mudou completamente minha vida! Em 3 meses perdi 12kg e aumentei minha renda em 40%. A plataforma é incrível!",
+      rating: 5
+    },
+    {
+      name: "Carlos Eduardo",
+      role: "Influencer",
+      image: "https://i.pravatar.cc/150?img=3",
+      text: "O módulo Influencer Pro me ajudou a crescer de 5k para 50k seguidores em 2 meses. Recomendo demais!",
+      rating: 5
+    },
+    {
+      name: "Juliana Costa",
+      role: "Vendedora E-commerce",
+      image: "https://i.pravatar.cc/150?img=5",
+      text: "Faturei R$ 15 mil no primeiro mês aplicando as estratégias do curso de E-commerce. Simplesmente sensacional!",
+      rating: 5
+    },
+    {
+      name: "Roberto Alves",
+      role: "Coach de Fitness",
+      image: "https://i.pravatar.cc/150?img=7",
+      text: "A combinação de treino, nutrição e mindset da Elite Life é perfeita. Meus clientes adoram!",
+      rating: 5
+    }
+  ];
+
+  const handleLogin = (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsLoggedIn(true);
+    setUserName("Usuário Elite");
+    setUserPlan("paid");
+    setShowLoginModal(false);
+  };
+
+  const handleSignup = (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsLoggedIn(true);
+    setUserName("Novo Usuário");
+    setUserPlan("free");
+    setShowSignupModal(false);
+  };
+
+  const handleLogout = () => {
+    setIsLoggedIn(false);
+    setUserName("");
+    setUserPlan("free");
+    setShowUserMenu(false);
+  };
+
+  const handleLockedClick = (path: string) => {
+    const toast = document.createElement('div');
+    toast.className = 'fixed top-4 right-4 bg-[#D4AF37] text-[#0B0B0B] px-6 py-3 rounded-xl font-bold shadow-2xl z-[200] animate-shake';
+    toast.textContent = '🔒 Assine um plano para desbloquear esta área.';
+    document.body.appendChild(toast);
+    
+    setTimeout(() => {
+      toast.remove();
+      window.location.href = `#planos`;
+    }, 2000);
+  };
+
+  const navigateToPlans = () => {
+    window.location.href = "#planos";
+  };
 
   return (
     <div className="min-h-screen bg-[#0B0B0B]">
+      {/* Login Modal */}
+      {showLoginModal && (
+        <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/80 backdrop-blur-sm p-4">
+          <div className="bg-[#1A1A1A] border border-white/10 rounded-2xl w-full max-w-md p-8 relative">
+            <button 
+              onClick={() => setShowLoginModal(false)}
+              className="absolute top-4 right-4 text-[#9A9A9A] hover:text-white transition-colors"
+            >
+              <X className="w-6 h-6" />
+            </button>
+
+            <div className="text-center mb-8">
+              <div className="w-16 h-16 bg-gradient-to-br from-[#D4AF37] to-amber-600 rounded-xl flex items-center justify-center mx-auto mb-4">
+                <Crown className="w-8 h-8 text-[#0B0B0B]" />
+              </div>
+              <h2 className="text-3xl font-bold text-white mb-2">Entrar</h2>
+              <p className="text-[#9A9A9A]">Acesse sua conta Elite Life</p>
+            </div>
+
+            <form onSubmit={handleLogin} className="space-y-4">
+              <div>
+                <label className="block text-white text-sm font-medium mb-2">E-mail</label>
+                <div className="relative">
+                  <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-[#9A9A9A]" />
+                  <input 
+                    type="email"
+                    required
+                    className="w-full bg-white/5 border border-white/10 rounded-xl pl-11 pr-4 py-3 text-white placeholder:text-[#9A9A9A] focus:outline-none focus:border-[#D4AF37] transition-colors"
+                    placeholder="seu@email.com"
+                  />
+                </div>
+              </div>
+
+              <div>
+                <label className="block text-white text-sm font-medium mb-2">Senha</label>
+                <div className="relative">
+                  <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-[#9A9A9A]" />
+                  <input 
+                    type={showPasswordLogin ? "text" : "password"}
+                    required
+                    className="w-full bg-white/5 border border-white/10 rounded-xl pl-11 pr-12 py-3 text-white placeholder:text-[#9A9A9A] focus:outline-none focus:border-[#D4AF37] transition-colors"
+                    placeholder="••••••••"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowPasswordLogin(!showPasswordLogin)}
+                    className="absolute right-3 top-1/2 -translate-y-1/2 text-[#9A9A9A] hover:text-white transition-colors"
+                  >
+                    {showPasswordLogin ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
+                  </button>
+                </div>
+              </div>
+
+              <button 
+                type="submit"
+                className="w-full bg-gradient-to-r from-[#D4AF37] to-amber-600 text-[#0B0B0B] font-bold py-3 rounded-xl hover:scale-105 transition-all duration-300"
+              >
+                Entrar
+              </button>
+            </form>
+
+            <div className="mt-6 text-center">
+              <p className="text-[#9A9A9A] text-sm">
+                Não tem uma conta?{" "}
+                <button 
+                  onClick={() => {
+                    setShowLoginModal(false);
+                    setShowSignupModal(true);
+                  }}
+                  className="text-[#D4AF37] hover:text-amber-500 font-medium transition-colors"
+                >
+                  Criar conta
+                </button>
+              </p>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Signup Modal */}
+      {showSignupModal && (
+        <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/80 backdrop-blur-sm p-4">
+          <div className="bg-[#1A1A1A] border border-white/10 rounded-2xl w-full max-w-md p-8 relative max-h-[90vh] overflow-y-auto">
+            <button 
+              onClick={() => setShowSignupModal(false)}
+              className="absolute top-4 right-4 text-[#9A9A9A] hover:text-white transition-colors"
+            >
+              <X className="w-6 h-6" />
+            </button>
+
+            <div className="text-center mb-8">
+              <div className="w-16 h-16 bg-gradient-to-br from-[#D4AF37] to-amber-600 rounded-xl flex items-center justify-center mx-auto mb-4">
+                <Crown className="w-8 h-8 text-[#0B0B0B]" />
+              </div>
+              <h2 className="text-3xl font-bold text-white mb-2">Criar Conta</h2>
+              <p className="text-[#9A9A9A]">Comece sua transformação hoje</p>
+            </div>
+
+            <form onSubmit={handleSignup} className="space-y-4">
+              <div>
+                <label className="block text-white text-sm font-medium mb-2">E-mail</label>
+                <div className="relative">
+                  <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-[#9A9A9A]" />
+                  <input 
+                    type="email"
+                    required
+                    className="w-full bg-white/5 border border-white/10 rounded-xl pl-11 pr-4 py-3 text-white placeholder:text-[#9A9A9A] focus:outline-none focus:border-[#D4AF37] transition-colors"
+                    placeholder="seu@email.com"
+                  />
+                </div>
+              </div>
+
+              <div>
+                <label className="block text-white text-sm font-medium mb-2">Senha</label>
+                <div className="relative">
+                  <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-[#9A9A9A]" />
+                  <input 
+                    type={showPasswordSignup ? "text" : "password"}
+                    required
+                    className="w-full bg-white/5 border border-white/10 rounded-xl pl-11 pr-12 py-3 text-white placeholder:text-[#9A9A9A] focus:outline-none focus:border-[#D4AF37] transition-colors"
+                    placeholder="••••••••"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowPasswordSignup(!showPasswordSignup)}
+                    className="absolute right-3 top-1/2 -translate-y-1/2 text-[#9A9A9A] hover:text-white transition-colors"
+                  >
+                    {showPasswordSignup ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
+                  </button>
+                </div>
+              </div>
+
+              <div>
+                <label className="block text-white text-sm font-medium mb-2">Confirmar Senha</label>
+                <div className="relative">
+                  <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-[#9A9A9A]" />
+                  <input 
+                    type={showConfirmPassword ? "text" : "password"}
+                    required
+                    className="w-full bg-white/5 border border-white/10 rounded-xl pl-11 pr-12 py-3 text-white placeholder:text-[#9A9A9A] focus:outline-none focus:border-[#D4AF37] transition-colors"
+                    placeholder="••••••••"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                    className="absolute right-3 top-1/2 -translate-y-1/2 text-[#9A9A9A] hover:text-white transition-colors"
+                  >
+                    {showConfirmPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
+                  </button>
+                </div>
+              </div>
+
+              <div>
+                <label className="block text-white text-sm font-medium mb-2">Telefone</label>
+                <div className="relative">
+                  <Phone className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-[#9A9A9A]" />
+                  <input 
+                    type="tel"
+                    required
+                    className="w-full bg-white/5 border border-white/10 rounded-xl pl-11 pr-4 py-3 text-white placeholder:text-[#9A9A9A] focus:outline-none focus:border-[#D4AF37] transition-colors"
+                    placeholder="(00) 00000-0000"
+                  />
+                </div>
+              </div>
+
+              <div className="flex items-start gap-3 p-4 bg-white/5 rounded-xl">
+                <input 
+                  type="checkbox"
+                  id="marketing"
+                  className="mt-1 w-4 h-4 rounded border-white/10 bg-white/5 text-[#D4AF37] focus:ring-[#D4AF37]"
+                />
+                <label htmlFor="marketing" className="text-[#9A9A9A] text-sm">
+                  Aceito receber novidades e ofertas exclusivas por e-mail
+                </label>
+              </div>
+
+              <button 
+                type="submit"
+                className="w-full bg-gradient-to-r from-[#D4AF37] to-amber-600 text-[#0B0B0B] font-bold py-3 rounded-xl hover:scale-105 transition-all duration-300"
+              >
+                Criar Conta
+              </button>
+            </form>
+
+            <div className="mt-6 text-center">
+              <p className="text-[#9A9A9A] text-sm">
+                Já tem uma conta?{" "}
+                <button 
+                  onClick={() => {
+                    setShowSignupModal(false);
+                    setShowLoginModal(true);
+                  }}
+                  className="text-[#D4AF37] hover:text-amber-500 font-medium transition-colors"
+                >
+                  Entrar
+                </button>
+              </p>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Header */}
-      <Header />
+      <header className="sticky top-0 z-50 border-b border-[#D4AF37]/20 bg-[#0B0B0B]/95 backdrop-blur-sm">
+        <div className="container mx-auto px-4">
+          {/* Top Bar */}
+          <div className="flex items-center justify-between py-4 border-b border-white/5">
+            {/* Logo */}
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 bg-gradient-to-br from-[#D4AF37] to-amber-600 rounded-xl flex items-center justify-center">
+                <Crown className="w-6 h-6 text-[#0B0B0B]" />
+              </div>
+              <h1 className="text-2xl font-bold text-[#D4AF37]">ELITE LIFE</h1>
+            </div>
+
+            {/* Right Side - Social, Notifications, Language, User */}
+            <div className="flex items-center gap-4">
+              {/* Instagram */}
+              <a 
+                href="https://instagram.com/elitelife_experience"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hidden md:flex items-center gap-2 px-3 py-2 hover:bg-white/5 rounded-lg transition-colors"
+              >
+                <Instagram className="w-5 h-5 text-white" />
+                <span className="text-sm text-white">@elitelife_experience</span>
+              </a>
+
+              {/* Telegram */}
+              <a 
+                href="https://t.me/boost/elitelifeApp"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hidden md:flex items-center gap-2 p-2 hover:bg-white/5 rounded-lg transition-colors"
+                title="Canal Telegram"
+              >
+                <Send className="w-5 h-5 text-cyan-400" />
+              </a>
+
+              {/* Notifications */}
+              <div className="relative">
+                <button 
+                  onClick={() => setShowNotifications(!showNotifications)}
+                  className="relative p-2 hover:bg-white/5 rounded-lg transition-colors"
+                  title="Notificações"
+                >
+                  <Bell className="w-5 h-5 text-[#9A9A9A]" />
+                  <span className="absolute top-1 right-1 w-2 h-2 bg-[#D4AF37] rounded-full"></span>
+                </button>
+
+                {/* Notifications Dropdown */}
+                {showNotifications && (
+                  <div className="absolute right-0 mt-2 w-80 bg-[#1A1A1A] border border-white/10 rounded-xl shadow-2xl overflow-hidden">
+                    <div className="p-4 border-b border-white/10">
+                      <h3 className="text-white font-bold">Notificações</h3>
+                    </div>
+                    <div className="max-h-96 overflow-y-auto">
+                      {notifications.map((notif) => (
+                        <div 
+                          key={notif.id}
+                          className={`p-4 border-b border-white/5 hover:bg-white/5 cursor-pointer ${
+                            !notif.read ? 'bg-[#D4AF37]/5' : ''
+                          }`}
+                        >
+                          <div className="flex items-start justify-between">
+                            <div className="flex-1">
+                              <h4 className="text-white font-medium text-sm">{notif.title}</h4>
+                              <p className="text-[#9A9A9A] text-xs mt-1">{notif.message}</p>
+                            </div>
+                            <span className="text-[#9A9A9A] text-xs">{notif.time}</span>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </div>
+
+              {/* Language Selector */}
+              <div className="relative">
+                <button 
+                  onClick={() => setShowLanguageMenu(!showLanguageMenu)}
+                  className="flex items-center gap-2 px-3 py-2 hover:bg-white/5 rounded-lg transition-colors"
+                  title="Mudar idioma"
+                >
+                  <Globe className="w-5 h-5 text-[#9A9A9A]" />
+                  <span className="text-sm text-[#9A9A9A] uppercase">{language}</span>
+                  <ChevronDown className="w-4 h-4 text-[#9A9A9A]" />
+                </button>
+
+                {/* Language Dropdown */}
+                {showLanguageMenu && (
+                  <div className="absolute right-0 mt-2 w-48 bg-[#1A1A1A] border border-white/10 rounded-xl shadow-2xl overflow-hidden">
+                    {languages.map((lang) => (
+                      <button
+                        key={lang.code}
+                        onClick={() => {
+                          setLanguage(lang.code);
+                          setShowLanguageMenu(false);
+                        }}
+                        className={`w-full flex items-center gap-3 px-4 py-3 hover:bg-white/5 transition-colors ${
+                          language === lang.code ? 'bg-[#D4AF37]/10' : ''
+                        }`}
+                      >
+                        <span className="text-2xl">{lang.flag}</span>
+                        <span className={`text-sm ${language === lang.code ? 'text-[#D4AF37]' : 'text-white'}`}>
+                          {lang.label}
+                        </span>
+                      </button>
+                    ))}
+                  </div>
+                )}
+              </div>
+
+              {/* User Menu */}
+              {isLoggedIn ? (
+                <div className="relative">
+                  <button 
+                    onClick={() => setShowUserMenu(!showUserMenu)}
+                    className="flex items-center gap-3 px-4 py-2 hover:bg-white/5 rounded-lg transition-colors"
+                  >
+                    <div className="w-8 h-8 bg-gradient-to-br from-[#D4AF37] to-amber-600 rounded-full flex items-center justify-center">
+                      <User className="w-5 h-5 text-[#0B0B0B]" />
+                    </div>
+                    <div className="hidden md:block text-left">
+                      <div className="text-sm font-medium text-white">{userName}</div>
+                      <div className="text-xs text-[#D4AF37]">Elite Member</div>
+                    </div>
+                    <ChevronDown className="w-4 h-4 text-[#9A9A9A]" />
+                  </button>
+
+                  {/* User Dropdown */}
+                  {showUserMenu && (
+                    <div className="absolute right-0 mt-2 w-56 bg-[#1A1A1A] border border-white/10 rounded-xl shadow-2xl overflow-hidden">
+                      <button className="w-full flex items-center gap-3 px-4 py-3 hover:bg-white/5 transition-colors text-left">
+                        <User className="w-5 h-5 text-[#9A9A9A]" />
+                        <span className="text-white text-sm">Minha Conta</span>
+                      </button>
+                      <button 
+                        onClick={navigateToPlans}
+                        className="w-full flex items-center gap-3 px-4 py-3 hover:bg-white/5 transition-colors text-left"
+                      >
+                        <Crown className="w-5 h-5 text-[#D4AF37]" />
+                        <span className="text-white text-sm">Editar Plano</span>
+                      </button>
+                      <button className="w-full flex items-center gap-3 px-4 py-3 hover:bg-white/5 transition-colors text-left">
+                        <Medal className="w-5 h-5 text-[#9A9A9A]" />
+                        <span className="text-white text-sm">Medalhas</span>
+                      </button>
+                      <button className="w-full flex items-center gap-3 px-4 py-3 hover:bg-white/5 transition-colors text-left">
+                        <Settings className="w-5 h-5 text-[#9A9A9A]" />
+                        <span className="text-white text-sm">Configurações</span>
+                      </button>
+                      <div className="border-t border-white/10">
+                        <button 
+                          onClick={handleLogout}
+                          className="w-full flex items-center gap-3 px-4 py-3 hover:bg-red-500/10 transition-colors text-left"
+                        >
+                          <LogOut className="w-5 h-5 text-red-400" />
+                          <span className="text-red-400 text-sm">Sair</span>
+                        </button>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              ) : (
+                <div className="flex items-center gap-2">
+                  <button 
+                    onClick={() => setShowLoginModal(true)}
+                    className="px-4 py-2 text-white hover:bg-white/5 rounded-lg transition-colors text-sm font-medium"
+                    title="Entrar na sua conta"
+                  >
+                    Entrar
+                  </button>
+                  <button 
+                    onClick={() => setShowSignupModal(true)}
+                    className="px-4 py-2 bg-gradient-to-r from-[#D4AF37] to-amber-600 text-[#0B0B0B] rounded-lg hover:scale-105 transition-all duration-300 text-sm font-bold"
+                    title="Crie sua conta"
+                  >
+                    Criar Conta
+                  </button>
+                </div>
+              )}
+
+              {/* Mobile Menu Toggle */}
+              <button 
+                onClick={() => setIsMenuOpen(!isMenuOpen)}
+                className="md:hidden p-2 hover:bg-white/5 rounded-lg transition-colors"
+              >
+                {isMenuOpen ? (
+                  <X className="w-6 h-6 text-white" />
+                ) : (
+                  <Menu className="w-6 h-6 text-white" />
+                )}
+              </button>
+            </div>
+          </div>
+
+          {/* Main Navigation */}
+          <nav className={`${isMenuOpen ? 'block' : 'hidden'} md:block py-4`}>
+            <ul className="flex flex-col md:flex-row md:items-center md:justify-center gap-1 md:gap-6 text-sm">
+              <li><a href="#" onClick={() => setActiveSection("home")} className="block px-4 py-2 text-[#D4AF37] hover:bg-white/5 rounded-lg transition-colors font-medium" title="Início">Início</a></li>
+              
+              <li>
+                <button 
+                  onClick={() => userPlan === "paid" ? window.location.href = "#cursos" : handleLockedClick("/cursos")}
+                  className="w-full text-left flex items-center gap-2 px-4 py-2 text-[#9A9A9A] hover:text-white hover:bg-white/5 rounded-lg transition-colors"
+                  title="+ de 100 Cursos"
+                >
+                  {userPlan === "free" && <Lock className="w-4 h-4" />}
+                  Cursos
+                </button>
+              </li>
+              
+              <li>
+                <button 
+                  onClick={() => userPlan === "paid" ? window.location.href = "#videos" : handleLockedClick("/videos")}
+                  className="w-full text-left flex items-center gap-2 px-4 py-2 text-[#9A9A9A] hover:text-white hover:bg-white/5 rounded-lg transition-colors"
+                  title="Vídeos"
+                >
+                  {userPlan === "free" && <Lock className="w-4 h-4" />}
+                  Vídeos
+                </button>
+              </li>
+              
+              <li><a href="#agenda" onClick={() => setActiveSection("agenda")} className="block px-4 py-2 text-[#9A9A9A] hover:text-white hover:bg-white/5 rounded-lg transition-colors" title="Agenda">Agenda</a></li>
+              <li><a href="#tracker" onClick={() => setActiveSection("tracker")} className="block px-4 py-2 text-[#9A9A9A] hover:text-white hover:bg-white/5 rounded-lg transition-colors" title="Tracker">Tracker</a></li>
+              
+              <li>
+                <button 
+                  onClick={() => userPlan === "paid" ? window.location.href = "#carteira" : handleLockedClick("/carteira")}
+                  className="w-full text-left flex items-center gap-2 px-4 py-2 text-[#9A9A9A] hover:text-white hover:bg-white/5 rounded-lg transition-colors"
+                  title="Carteira"
+                >
+                  {userPlan === "free" && <Lock className="w-4 h-4" />}
+                  Carteira
+                </button>
+              </li>
+              
+              <li>
+                <button 
+                  onClick={() => handleLockedClick("/influencer-pro")}
+                  className="w-full text-left flex items-center gap-2 px-4 py-2 text-pink-400 hover:text-pink-300 hover:bg-white/5 rounded-lg transition-colors"
+                  title="Influencer Pro"
+                >
+                  <Lock className="w-4 h-4" />
+                  Influencer Pro
+                </button>
+              </li>
+              
+              <li><a href="#ecommerce" onClick={() => setActiveSection("ecommerce")} className="block px-4 py-2 text-cyan-400 hover:text-cyan-300 hover:bg-white/5 rounded-lg transition-colors" title="E-commerce">E-commerce</a></li>
+              
+              <li>
+                <button 
+                  onClick={() => isLoggedIn ? window.location.href = "#afilhados" : setShowLoginModal(true)}
+                  className="w-full text-left flex items-center gap-2 px-4 py-2 text-[#9A9A9A] hover:text-white hover:bg-white/5 rounded-lg transition-colors"
+                  title="Afiliados"
+                >
+                  {!isLoggedIn && <Lock className="w-4 h-4" />}
+                  Afiliados
+                </button>
+              </li>
+              
+              <li><a href="#ranking" onClick={() => setActiveSection("ranking")} className="block px-4 py-2 text-[#9A9A9A] hover:text-white hover:bg-white/5 rounded-lg transition-colors" title="Top pontos, medalhas e afiliados">Ranking</a></li>
+              
+              <li>
+                <button 
+                  onClick={() => userPlan === "paid" ? window.location.href = "#dashboard" : handleLockedClick("/dashboard")}
+                  className="w-full text-left flex items-center gap-2 px-4 py-2 text-[#9A9A9A] hover:text-white hover:bg-white/5 rounded-lg transition-colors"
+                  title="Resumo do seu progresso (requer plano)"
+                >
+                  {userPlan === "free" && <Lock className="w-4 h-4" />}
+                  Dashboard
+                </button>
+              </li>
+              
+              <li>
+                <button 
+                  onClick={() => userPlan === "paid" ? window.location.href = "#certificados" : handleLockedClick("/certificados")}
+                  className="w-full text-left flex items-center gap-2 px-4 py-2 text-[#9A9A9A] hover:text-white hover:bg-white/5 rounded-lg transition-colors"
+                  title="Certificados ELITE LIFE (desbloqueados ao concluir cursos)"
+                >
+                  {userPlan === "free" && <Lock className="w-4 h-4" />}
+                  Certificados
+                </button>
+              </li>
+              
+              <li><a href="#suporte" className="block px-4 py-2 text-[#9A9A9A] hover:text-white hover:bg-white/5 rounded-lg transition-colors" title="Ajuda por IA">Suporte IA</a></li>
+            </ul>
+          </nav>
+        </div>
+      </header>
 
       {/* Hero Section */}
-      <HeroSection lang={lang} />
-
-      {/* Quiz Section */}
-      <section className="py-20 bg-[#0B0B0B]" id="quiz">
-        <div className="container mx-auto px-4">
+      <section className="relative py-20 md:py-32 overflow-hidden">
+        {/* Background Gradient */}
+        <div className="absolute inset-0 bg-gradient-to-br from-[#D4AF37]/10 via-transparent to-purple-900/20"></div>
+        
+        <div className="container mx-auto px-4 relative z-10">
           <div className="max-w-4xl mx-auto text-center">
-            <div className="bg-gradient-to-br from-[#1A1A1A] to-[#0B0B0B] border-2 border-[#D4AF37] rounded-2xl p-12">
-              <div className="w-20 h-20 bg-gradient-to-br from-[#D4AF37] to-[#FFD700] rounded-full flex items-center justify-center mx-auto mb-6">
-                <CheckCircle2 className="w-10 h-10 text-[#0B0B0B]" />
-              </div>
-              <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
-                Descubra seu Perfil ELITE
-              </h2>
-              <p className="text-xl text-[#9A9A9A] mb-8">
-                Responda 15 perguntas e receba um plano personalizado para transformar sua vida em 90 dias
-              </p>
-              <Button
-                size="lg"
-                className="bg-gradient-to-r from-[#D4AF37] to-[#FFD700] text-[#0B0B0B] font-bold text-lg px-12 py-6 hover:opacity-90"
+            {/* Badge */}
+            <div className="inline-flex items-center gap-2 px-4 py-2 bg-[#D4AF37]/10 border border-[#D4AF37]/30 rounded-full mb-8">
+              <Sparkles className="w-4 h-4 text-[#D4AF37]" />
+              <span className="text-sm text-[#D4AF37] font-medium">Método Exclusivo ELITE LIFE</span>
+            </div>
+
+            {/* Headline */}
+            <h2 className="text-4xl md:text-6xl lg:text-7xl font-bold text-white mb-6 leading-tight">
+              Transforme sua vida em{" "}
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#D4AF37] to-amber-500">
+                90 dias
+              </span>
+            </h2>
+
+            {/* Subheadline */}
+            <p className="text-xl md:text-2xl text-[#9A9A9A] mb-12 max-w-2xl mx-auto">
+              Corpo, mente e dinheiro no mesmo lugar. + de 50 mil alunos transformados.
+            </p>
+
+            {/* CTAs */}
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-16">
+              <button 
+                onClick={() => setShowSignupModal(true)}
+                className="w-full sm:w-auto px-8 py-4 bg-gradient-to-r from-[#D4AF37] to-amber-600 text-[#0B0B0B] font-bold rounded-xl hover:scale-105 transition-all duration-300 shadow-lg shadow-[#D4AF37]/20"
               >
-                Começar Quiz Gratuito
-              </Button>
+                Criar Conta Grátis
+              </button>
+              <a 
+                href="#planos"
+                className="w-full sm:w-auto px-8 py-4 bg-transparent border-2 border-[#D4AF37] text-[#D4AF37] font-bold rounded-xl hover:bg-[#D4AF37]/10 transition-all duration-300 text-center"
+              >
+                Ver Planos
+              </a>
+            </div>
+
+            {/* Stats */}
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-3xl mx-auto">
+              {stats.map((stat, index) => (
+                <div key={index} className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-4">
+                  <div className="text-2xl md:text-3xl font-bold text-[#D4AF37] mb-1">
+                    {stat.value}
+                  </div>
+                  <div className="text-xs md:text-sm text-[#9A9A9A]">
+                    {stat.label}
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
         </div>
       </section>
 
-      {/* Pricing Section */}
-      <PricingSection lang={lang} />
+      {/* Social Proof Section */}
+      <section className="py-16 bg-gradient-to-b from-transparent to-white/5">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-12">
+            <h3 className="text-3xl md:text-4xl font-bold text-white mb-4">
+              Mais de <span className="text-[#D4AF37]">50.000 pessoas</span> mudaram de vida
+            </h3>
+            <p className="text-xl text-[#9A9A9A]">Veja o que nossos alunos estão dizendo</p>
+          </div>
 
-      {/* Features Overview */}
-      <section className="py-20 bg-gradient-to-b from-[#1A1A1A] to-[#0B0B0B]" id="recursos">
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-7xl mx-auto mb-12">
+            {testimonials.map((testimonial, index) => (
+              <div key={index} className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-6">
+                <div className="flex items-center gap-3 mb-4">
+                  <img 
+                    src={testimonial.image} 
+                    alt={testimonial.name}
+                    className="w-12 h-12 rounded-full"
+                  />
+                  <div>
+                    <div className="text-white font-bold">{testimonial.name}</div>
+                    <div className="text-[#9A9A9A] text-sm">{testimonial.role}</div>
+                  </div>
+                </div>
+                <div className="flex gap-1 mb-3">
+                  {[...Array(testimonial.rating)].map((_, i) => (
+                    <Star key={i} className="w-4 h-4 fill-[#D4AF37] text-[#D4AF37]" />
+                  ))}
+                </div>
+                <p className="text-[#9A9A9A] text-sm">{testimonial.text}</p>
+              </div>
+            ))}
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+            <div className="bg-white/5 backdrop-blur-sm border border-[#D4AF37]/20 rounded-2xl p-8 text-center">
+              <Star className="w-12 h-12 text-[#D4AF37] mx-auto mb-4" />
+              <div className="text-3xl font-bold text-white mb-2">4.9/5</div>
+              <div className="text-[#9A9A9A]">Avaliação média</div>
+            </div>
+            <div className="bg-white/5 backdrop-blur-sm border border-[#D4AF37]/20 rounded-2xl p-8 text-center">
+              <Users className="w-12 h-12 text-[#D4AF37] mx-auto mb-4" />
+              <div className="text-3xl font-bold text-white mb-2">50k+</div>
+              <div className="text-[#9A9A9A]">Vidas transformadas</div>
+            </div>
+            <div className="bg-white/5 backdrop-blur-sm border border-[#D4AF37]/20 rounded-2xl p-8 text-center">
+              <TrendingUp className="w-12 h-12 text-[#D4AF37] mx-auto mb-4" />
+              <div className="text-3xl font-bold text-white mb-2">R$ 10M+</div>
+              <div className="text-[#9A9A9A]">Valor gerado por alunos</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Videos Section */}
+      <section id="videos" className="py-20 bg-gradient-to-b from-white/5 to-transparent">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-12">
+            <h3 className="text-4xl md:text-5xl font-bold text-white mb-4">
+              Biblioteca de{" "}
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-400 to-pink-500">
+                Vídeos
+              </span>
+            </h3>
+            <p className="text-xl text-[#9A9A9A] max-w-2xl mx-auto mb-8">
+              Vídeos exclusivos organizados por categoria
+            </p>
+            
+            {userPlan === "free" && (
+              <div className="inline-flex items-center gap-2 px-4 py-2 bg-yellow-500/10 border border-yellow-500/30 rounded-full mb-8">
+                <AlertCircle className="w-4 h-4 text-yellow-400" />
+                <span className="text-sm text-yellow-400">Assine para acessar todos os vídeos</span>
+              </div>
+            )}
+          </div>
+
+          {/* Category Filter */}
+          <div className="flex flex-wrap justify-center gap-3 mb-12">
+            {videoCategories.map((cat) => (
+              <button
+                key={cat.id}
+                onClick={() => setActiveVideoCategory(cat.id)}
+                className={`px-6 py-3 rounded-xl font-bold transition-all duration-300 ${
+                  activeVideoCategory === cat.id
+                    ? 'bg-gradient-to-r from-[#D4AF37] to-amber-600 text-[#0B0B0B]'
+                    : 'bg-white/5 border border-white/10 text-[#9A9A9A] hover:bg-white/10'
+                }`}
+              >
+                {cat.label}
+              </button>
+            ))}
+          </div>
+
+          {/* Videos Grid */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 max-w-7xl mx-auto">
+            {filteredVideos.slice(0, userPlan === "paid" ? filteredVideos.length : 8).map((video) => (
+              <div
+                key={video.id}
+                className="group bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl overflow-hidden hover:scale-105 transition-all duration-300 hover:shadow-2xl hover:shadow-[#D4AF37]/10"
+              >
+                {/* Thumbnail */}
+                <div className="relative aspect-video bg-gradient-to-br from-[#D4AF37]/20 to-purple-900/20 overflow-hidden">
+                  <img
+                    src={`https://img.youtube.com/vi/${video.id}/mqdefault.jpg`}
+                    alt={video.title}
+                    className="w-full h-full object-cover"
+                  />
+                  <div className="absolute inset-0 bg-black/40 group-hover:bg-black/20 transition-all duration-300 flex items-center justify-center">
+                    <div className="w-16 h-16 bg-[#D4AF37] rounded-full flex items-center justify-center group-hover:scale-110 transition-all duration-300">
+                      <Play className="w-8 h-8 text-[#0B0B0B] ml-1" />
+                    </div>
+                  </div>
+                  {userPlan === "free" && (
+                    <div className="absolute top-2 right-2 bg-black/80 backdrop-blur-sm px-2 py-1 rounded-lg">
+                      <Lock className="w-4 h-4 text-[#D4AF37]" />
+                    </div>
+                  )}
+                  <div className="absolute bottom-2 right-2 bg-black/80 backdrop-blur-sm px-2 py-1 rounded-lg text-xs text-white">
+                    {video.duration}
+                  </div>
+                </div>
+
+                {/* Info */}
+                <div className="p-4">
+                  <h4 className="text-white font-bold mb-2 line-clamp-2">{video.title}</h4>
+                  <div className="flex items-center justify-between">
+                    <span className="text-xs text-[#9A9A9A] capitalize">{video.category}</span>
+                    <button
+                      onClick={() => {
+                        if (userPlan === "paid") {
+                          window.open(`https://www.youtube.com/watch?v=${video.id}`, '_blank');
+                        } else {
+                          handleLockedClick("/videos");
+                        }
+                      }}
+                      className={`px-3 py-1 rounded-lg text-xs font-bold transition-all ${
+                        userPlan === "paid"
+                          ? 'bg-[#D4AF37] text-[#0B0B0B] hover:scale-105'
+                          : 'bg-white/10 text-[#9A9A9A]'
+                      }`}
+                    >
+                      {userPlan === "paid" ? 'Assistir' : 'Bloqueado'}
+                    </button>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {userPlan === "free" && (
+            <div className="mt-12 text-center">
+              <div className="bg-gradient-to-r from-[#D4AF37]/10 to-amber-500/10 border border-[#D4AF37]/30 rounded-2xl p-8 max-w-2xl mx-auto">
+                <Video className="w-16 h-16 text-[#D4AF37] mx-auto mb-4" />
+                <h4 className="text-2xl font-bold text-white mb-3">
+                  Desbloqueie {filteredVideos.length - 8}+ vídeos
+                </h4>
+                <p className="text-[#9A9A9A] mb-6">
+                  Assine qualquer plano e tenha acesso completo a toda biblioteca de vídeos
+                </p>
+                <a
+                  href="#planos"
+                  className="inline-block px-8 py-4 bg-gradient-to-r from-[#D4AF37] to-amber-600 text-[#0B0B0B] font-bold rounded-xl hover:scale-105 transition-all duration-300"
+                >
+                  Ver Planos
+                </a>
+              </div>
+            </div>
+          )}
+        </div>
+      </section>
+
+      {/* Ranking Section */}
+      <section id="ranking" className="py-20">
+        <div className="container mx-auto px-4">
+          <div className="max-w-5xl mx-auto">
+            <div className="text-center mb-12">
+              <h3 className="text-4xl md:text-5xl font-bold text-white mb-4">
+                Ranking &{" "}
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#D4AF37] to-amber-500">
+                  Gamificação
+                </span>
+              </h3>
+              <p className="text-xl text-[#9A9A9A]">
+                Compete com outros alunos e conquiste medalhas
+              </p>
+            </div>
+
+            <div className="grid md:grid-cols-3 gap-6 mb-8">
+              <button className="px-6 py-3 bg-[#D4AF37]/20 border border-[#D4AF37]/30 text-[#D4AF37] rounded-xl font-bold">
+                Ranking de Pontos
+              </button>
+              <button className="px-6 py-3 bg-white/5 border border-white/10 text-[#9A9A9A] rounded-xl font-bold hover:bg-white/10">
+                Ranking de Medalhas
+              </button>
+              <button className="px-6 py-3 bg-white/5 border border-white/10 text-[#9A9A9A] rounded-xl font-bold hover:bg-white/10">
+                Ranking de Afilhados
+              </button>
+            </div>
+
+            <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl overflow-hidden">
+              <div className="p-6 border-b border-white/10">
+                <h4 className="text-white font-bold">Top 5 - Ranking Global</h4>
+                <p className="text-[#9A9A9A] text-sm">Ganhe pontos por 2h/dia na plataforma, concluir vídeos, atividades e questionários</p>
+              </div>
+              <div className="divide-y divide-white/5">
+                {rankingData.map((user) => (
+                  <div key={user.position} className="p-6 hover:bg-white/5 transition-colors">
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-4">
+                        <div className={`w-12 h-12 rounded-full flex items-center justify-center text-2xl font-bold ${
+                          user.position === 1 ? 'bg-gradient-to-br from-yellow-400 to-amber-500' :
+                          user.position === 2 ? 'bg-gradient-to-br from-gray-300 to-gray-400' :
+                          user.position === 3 ? 'bg-gradient-to-br from-orange-400 to-amber-600' :
+                          'bg-white/10'
+                        }`}>
+                          {user.medal || user.position}
+                        </div>
+                        <div>
+                          <div className="text-white font-bold">{user.name}</div>
+                          <div className="text-[#9A9A9A] text-sm">{user.points.toLocaleString('pt-BR')} pontos</div>
+                        </div>
+                      </div>
+                      <div className="text-right">
+                        <div className="text-[#D4AF37] font-bold">{user.earnings}</div>
+                        <div className="text-[#9A9A9A] text-xs">Como afiliado</div>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {userPlan === "free" && (
+              <div className="mt-8 bg-gradient-to-r from-[#D4AF37]/10 to-amber-500/10 border border-[#D4AF37]/30 rounded-2xl p-6 text-center">
+                <Medal className="w-12 h-12 text-[#D4AF37] mx-auto mb-3" />
+                <h4 className="text-white font-bold mb-2">Sua Posição</h4>
+                <p className="text-[#9A9A9A] mb-4">Faça upgrade para participar do ranking e ganhar pontos</p>
+                <a 
+                  href="#planos"
+                  className="inline-block px-6 py-3 bg-gradient-to-r from-[#D4AF37] to-amber-600 text-[#0B0B0B] font-bold rounded-xl hover:scale-105 transition-all duration-300"
+                >
+                  Ver Planos
+                </a>
+              </div>
+            )}
+          </div>
+        </div>
+      </section>
+
+      {/* Plans Section */}
+      <section id="planos" className="py-20">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
-              Tudo que você precisa em <span className="text-[#D4AF37]">um só lugar</span>
-            </h2>
+            <h3 className="text-4xl md:text-5xl font-bold text-white mb-4">
+              Escolha Seu{" "}
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#D4AF37] to-amber-500">
+                Plano
+              </span>
+            </h3>
             <p className="text-xl text-[#9A9A9A] max-w-2xl mx-auto">
-              Ferramentas completas para transformar corpo, mente e finanças
+              Acesso completo a cursos, IA personalizada, comunidade exclusiva e muito mais
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-7xl mx-auto">
-            {/* Feature Cards */}
-            {[
-              {
-                icon: BookOpen,
-                title: '+ de 100 Cursos',
-                description: 'Conteúdo completo sobre saúde, fitness, finanças e negócios',
-                href: '#cursos'
-              },
-              {
-                icon: Video,
-                title: 'Vídeos Exclusivos',
-                description: 'Motivacional, fitness, saúde, finanças, influencer e e-commerce',
-                href: '#videos'
-              },
-              {
-                icon: Calendar,
-                title: 'Agenda Inteligente',
-                description: 'Organize sua rotina com streaks e lembretes automáticos',
-                href: '#agenda'
-              },
-              {
-                icon: Activity,
-                title: 'Tracker Completo',
-                description: 'Monitore água, calorias, macros, treino, sono e muito mais',
-                href: '#tracker'
-              },
-              {
-                icon: Wallet,
-                title: 'Carteira Digital',
-                description: 'Gerencie finanças com bolsos inteligentes e gráficos',
-                href: '#carteira'
-              },
-              {
-                icon: TrendingUp,
-                title: 'Influencer Pro',
-                description: 'IA para thumbnails, scripts e 400 dietas de famosos',
-                href: '#influencer'
-              },
-              {
-                icon: ShoppingCart,
-                title: 'E-commerce Pro',
-                description: 'Domine Mercado Livre, Amazon e Shopee',
-                href: '#ecommerce'
-              },
-              {
-                icon: Users,
-                title: 'Sistema de Afiliados',
-                description: 'Ganhe 20% na primeira venda e 15% nas seguintes',
-                href: '#afilhados'
-              },
-              {
-                icon: Trophy,
-                title: 'Ranking & Gamificação',
-                description: 'Ganhe pontos, medalhas e compete com outros alunos',
-                href: '#ranking'
-              },
-              {
-                icon: LayoutDashboard,
-                title: 'Dashboard Completo',
-                description: 'Visualize todo seu progresso em um só lugar',
-                href: '#dashboard'
-              },
-              {
-                icon: Award,
-                title: 'Certificados',
-                description: 'Certificados ELITE LIFE ao concluir cada curso',
-                href: '#certificados'
-              },
-              {
-                icon: MessageCircle,
-                title: 'Suporte IA 24/7',
-                description: 'Assistente inteligente que entende todas as funções',
-                href: '#suporte-ia'
-              },
-            ].map((feature, index) => {
-              const Icon = feature.icon;
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 max-w-7xl mx-auto">
+            {plans.map((plan) => {
+              const Icon = plan.icon;
+              const isPopular = plan.id === 3;
+              const isElite = plan.id === 4;
+              
               return (
-                <a
-                  key={index}
-                  href={feature.href}
-                  className="bg-gradient-to-br from-[#1A1A1A] to-[#0B0B0B] border border-[#D4AF37]/20 rounded-xl p-6 hover:border-[#D4AF37]/50 transition-all hover:scale-105 group"
+                <div
+                  key={plan.id}
+                  className={`relative bg-white/5 backdrop-blur-sm rounded-2xl border border-white/10 p-6 hover:scale-105 transition-all duration-300 hover:shadow-2xl hover:shadow-[#D4AF37]/10 ${
+                    isPopular || isElite ? 'ring-2 ring-[#D4AF37]/50' : ''
+                  }`}
                 >
-                  <div className="w-12 h-12 bg-gradient-to-br from-[#D4AF37] to-[#FFD700] rounded-lg flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
-                    <Icon className="w-6 h-6 text-[#0B0B0B]" />
+                  {/* Badge */}
+                  {plan.badge && (
+                    <div className={`absolute -top-3 left-1/2 -translate-x-1/2 ${plan.badgeColor} text-white text-xs font-bold px-4 py-1 rounded-full shadow-lg`}>
+                      {plan.badge}
+                    </div>
+                  )}
+
+                  {/* Icon */}
+                  <div className={`w-16 h-16 bg-gradient-to-br ${plan.color} rounded-xl flex items-center justify-center mb-4 mx-auto`}>
+                    <Icon className="w-8 h-8 text-white" />
                   </div>
-                  <h3 className="text-white font-bold text-lg mb-2">{feature.title}</h3>
-                  <p className="text-[#9A9A9A] text-sm">{feature.description}</p>
-                </a>
+
+                  {/* Plan Name */}
+                  <h3 className="text-2xl font-bold text-white text-center mb-2">
+                    {plan.name}
+                  </h3>
+
+                  {/* Price */}
+                  <div className="text-center mb-6">
+                    <span className="text-4xl font-bold text-white">{plan.price}</span>
+                    {plan.period && (
+                      <span className="text-[#9A9A9A] text-lg">{plan.period}</span>
+                    )}
+                  </div>
+
+                  {/* Marketplaces Icons (E-commerce) */}
+                  {plan.marketplaces && (
+                    <div className="flex justify-center gap-3 mb-6">
+                      <div className="w-8 h-8 bg-yellow-400 rounded-lg flex items-center justify-center text-xs font-bold text-black">
+                        ML
+                      </div>
+                      <div className="w-8 h-8 bg-orange-500 rounded-lg flex items-center justify-center text-xs font-bold text-white">
+                        A
+                      </div>
+                      <div className="w-8 h-8 bg-orange-600 rounded-lg flex items-center justify-center text-xs font-bold text-white">
+                        S
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Features */}
+                  <ul className="space-y-3 mb-6">
+                    {plan.features.map((feature, index) => {
+                      const isLocked = typeof feature === 'object' && feature.locked;
+                      const text = typeof feature === 'string' ? feature : feature.text;
+                      
+                      return (
+                        <li key={index} className="flex items-start gap-2">
+                          {isLocked ? (
+                            <Lock className="w-5 h-5 text-gray-500 flex-shrink-0 mt-0.5" />
+                          ) : (
+                            <Check className="w-5 h-5 text-[#D4AF37] flex-shrink-0 mt-0.5" />
+                          )}
+                          <span className={`text-sm ${isLocked ? 'text-gray-500' : 'text-[#9A9A9A]'}`}>
+                            {text}
+                          </span>
+                        </li>
+                      );
+                    })}
+                  </ul>
+
+                  {/* CTA Button */}
+                  <button
+                    className={`w-full py-3 rounded-xl font-bold text-white transition-all duration-300 hover:scale-105 hover:shadow-xl ${
+                      plan.id === 1
+                        ? 'bg-gradient-to-r from-gray-600 to-gray-700'
+                        : `bg-gradient-to-r ${plan.color}`
+                    }`}
+                  >
+                    {plan.id === 1 ? 'Começar Grátis' : 'Assinar Agora'}
+                  </button>
+                </div>
               );
             })}
           </div>
         </div>
       </section>
 
-      {/* Courses Preview */}
-      <section className="py-20 bg-[#0B0B0B]" id="cursos">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
-              + de 100 Cursos <span className="text-[#D4AF37]">Completos</span>
-            </h2>
-            <p className="text-xl text-[#9A9A9A] max-w-2xl mx-auto">
-              Conteúdo atualizado com 1000 atividades e 1000 questionários
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-7xl mx-auto">
-            {[
-              { title: 'Finanças Pessoais', category: 'Finanças', lessons: 24, locked: false },
-              { title: 'Treino Funcional', category: 'Fitness', lessons: 32, locked: true },
-              { title: 'Nutrição Avançada', category: 'Saúde', lessons: 28, locked: true },
-              { title: 'Marketing Digital', category: 'Negócios', lessons: 36, locked: true },
-              { title: 'Mindset de Sucesso', category: 'Motivacional', lessons: 20, locked: true },
-              { title: 'E-commerce do Zero', category: 'E-commerce', lessons: 40, locked: true },
-              { title: 'Criação de Conteúdo', category: 'Influencer', lessons: 30, locked: true },
-              { title: 'Investimentos', category: 'Finanças', lessons: 25, locked: true },
-            ].map((course, index) => (
-              <div
-                key={index}
-                className="relative bg-gradient-to-br from-[#1A1A1A] to-[#0B0B0B] border border-[#D4AF37]/20 rounded-xl overflow-hidden hover:border-[#D4AF37]/50 transition-all hover:scale-105 group"
-              >
-                {/* Course Image Placeholder */}
-                <div className="relative h-48 bg-gradient-to-br from-[#D4AF37]/20 to-[#FFD700]/20 flex items-center justify-center">
-                  {course.locked && (
-                    <div className="absolute inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center">
-                      <Lock className="w-12 h-12 text-[#D4AF37]" />
-                    </div>
-                  )}
-                  <BookOpen className="w-16 h-16 text-[#D4AF37]/50" />
-                </div>
-
-                {/* Course Info */}
-                <div className="p-4">
-                  <div className="flex items-center gap-2 mb-2">
-                    <span className="text-xs px-2 py-1 bg-[#D4AF37]/20 text-[#D4AF37] rounded-full">
-                      {course.category}
-                    </span>
-                    <span className="text-xs text-[#9A9A9A]">{course.lessons} aulas</span>
-                  </div>
-                  <h3 className="text-white font-bold mb-2">{course.title}</h3>
-                  <Button
-                    size="sm"
-                    variant={course.locked ? 'outline' : 'default'}
-                    className={
-                      course.locked
-                        ? 'w-full border-[#D4AF37] text-[#D4AF37]'
-                        : 'w-full bg-gradient-to-r from-[#D4AF37] to-[#FFD700] text-[#0B0B0B]'
-                    }
-                  >
-                    {course.locked ? (
-                      <>
-                        <Lock className="w-4 h-4 mr-2" />
-                        Assinar para acessar
-                      </>
-                    ) : (
-                      <>
-                        <Play className="w-4 h-4 mr-2" />
-                        Ver Preview
-                      </>
-                    )}
-                  </Button>
-                </div>
-              </div>
-            ))}
-          </div>
-
-          <div className="text-center mt-12">
-            <Button
-              size="lg"
-              className="bg-gradient-to-r from-[#D4AF37] to-[#FFD700] text-[#0B0B0B] font-bold px-12"
-            >
-              Ver Todos os Cursos
-            </Button>
-          </div>
-        </div>
-      </section>
-
-      {/* Testimonials */}
-      <section className="py-20 bg-gradient-to-b from-[#1A1A1A] to-[#0B0B0B]">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
-              Resultados <span className="text-[#D4AF37]">Reais</span>
-            </h2>
-            <p className="text-xl text-[#9A9A9A] max-w-2xl mx-auto">
-              Veja o que nossos alunos estão conquistando
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-6xl mx-auto">
-            {[
-              {
-                name: 'Ana Paula',
-                result: 'Perdi 18kg em 3 meses',
-                text: 'O método ELITE LIFE mudou minha relação com a comida e exercícios. Nunca me senti tão bem!',
-                rating: 5,
-              },
-              {
-                name: 'Ricardo Santos',
-                result: 'Faturei R$ 50mil no primeiro mês',
-                text: 'Os cursos de e-commerce são incríveis. Aprendi tudo sobre Mercado Livre e Amazon.',
-                rating: 5,
-              },
-              {
-                name: 'Juliana Costa',
-                result: '100mil seguidores em 60 dias',
-                text: 'O Influencer Pro com IA de thumbnails e scripts virais transformou meu canal!',
-                rating: 5,
-              },
-            ].map((testimonial, index) => (
-              <div
-                key={index}
-                className="bg-gradient-to-br from-[#1A1A1A] to-[#0B0B0B] border border-[#D4AF37]/20 rounded-xl p-6"
-              >
-                <div className="flex items-center gap-1 mb-4">
-                  {[...Array(testimonial.rating)].map((_, i) => (
-                    <Star key={i} className="w-4 h-4 fill-[#D4AF37] text-[#D4AF37]" />
-                  ))}
-                </div>
-                <p className="text-[#D4AF37] font-bold text-lg mb-2">{testimonial.result}</p>
-                <p className="text-white mb-4 italic">"{testimonial.text}"</p>
-                <p className="text-[#9A9A9A] text-sm">— {testimonial.name}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+      {/* AI Support Chat Button */}
+      <button 
+        className="fixed bottom-6 right-6 w-16 h-16 bg-gradient-to-r from-[#D4AF37] to-amber-600 rounded-full shadow-2xl shadow-[#D4AF37]/30 flex items-center justify-center hover:scale-110 transition-all duration-300 z-50"
+        title="Ajuda por IA"
+      >
+        <MessageSquare className="w-8 h-8 text-[#0B0B0B]" />
+      </button>
 
       {/* Footer */}
-      <footer className="bg-[#0B0B0B] border-t border-[#D4AF37]/20 py-12">
+      <footer className="border-t border-white/10 bg-black/20 backdrop-blur-sm py-12">
         <div className="container mx-auto px-4">
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
-            {/* Brand */}
+          <div className="grid md:grid-cols-3 gap-8 mb-8">
+            {/* Logo & Description */}
             <div>
-              <div className="flex items-center gap-2 mb-4">
-                <div className="w-10 h-10 bg-gradient-to-br from-[#D4AF37] to-[#FFD700] rounded-lg flex items-center justify-center">
-                  <span className="text-[#0B0B0B] font-bold text-xl">EL</span>
+              <div className="flex items-center gap-3 mb-4">
+                <div className="w-10 h-10 bg-gradient-to-br from-[#D4AF37] to-amber-600 rounded-xl flex items-center justify-center">
+                  <Crown className="w-6 h-6 text-[#0B0B0B]" />
                 </div>
-                <div>
-                  <h3 className="text-[#D4AF37] font-bold text-lg">ELITE LIFE</h3>
-                </div>
+                <h1 className="text-2xl font-bold text-[#D4AF37]">ELITE LIFE</h1>
               </div>
               <p className="text-[#9A9A9A] text-sm">
-                Transforme sua vida em 90 dias com o método exclusivo ELITE LIFE.
+                Transforme sua vida em 90 dias. Corpo, mente e dinheiro no mesmo lugar.
               </p>
             </div>
 
             {/* Links */}
             <div>
-              <h4 className="text-white font-semibold mb-4">Recursos</h4>
-              <ul className="space-y-2">
-                <li><a href="#cursos" className="text-[#9A9A9A] hover:text-[#D4AF37] text-sm">Cursos</a></li>
-                <li><a href="#planos" className="text-[#9A9A9A] hover:text-[#D4AF37] text-sm">Planos</a></li>
-                <li><a href="#afilhados" className="text-[#9A9A9A] hover:text-[#D4AF37] text-sm">Afiliados</a></li>
-                <li><a href="#certificados" className="text-[#9A9A9A] hover:text-[#D4AF37] text-sm">Certificados</a></li>
-              </ul>
-            </div>
-
-            <div>
-              <h4 className="text-white font-semibold mb-4">Suporte</h4>
-              <ul className="space-y-2">
-                <li><a href="#" className="text-[#9A9A9A] hover:text-[#D4AF37] text-sm">Central de Ajuda</a></li>
-                <li><a href="#" className="text-[#9A9A9A] hover:text-[#D4AF37] text-sm">Termos de Uso</a></li>
-                <li><a href="#" className="text-[#9A9A9A] hover:text-[#D4AF37] text-sm">Privacidade</a></li>
-                <li><a href="#" className="text-[#9A A9A] hover:text-[#D4AF37] text-sm">Contato</a></li>
+              <h4 className="text-white font-bold mb-4">Links Rápidos</h4>
+              <ul className="space-y-2 text-sm">
+                <li><a href="#" className="text-[#9A9A9A] hover:text-[#D4AF37] transition-colors">Termos de Uso</a></li>
+                <li><a href="#" className="text-[#9A9A9A] hover:text-[#D4AF37] transition-colors">Política de Privacidade</a></li>
+                <li><a href="#" className="text-[#9A9A9A] hover:text-[#D4AF37] transition-colors">Suporte</a></li>
               </ul>
             </div>
 
             {/* Social */}
             <div>
-              <h4 className="text-white font-semibold mb-4">Siga-nos</h4>
-              <div className="flex gap-3">
-                <a
-                  href="https://www.instagram.com/elitelife_experience"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="w-10 h-10 bg-[#D4AF37]/10 hover:bg-[#D4AF37]/20 rounded-lg flex items-center justify-center transition-all"
-                >
-                  <Instagram className="w-5 h-5 text-[#D4AF37]" />
-                </a>
-                <a
-                  href="https://t.me/boost/elitelifeApp"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="w-10 h-10 bg-[#D4AF37]/10 hover:bg-[#D4AF37]/20 rounded-lg flex items-center justify-center transition-all"
-                >
-                  <Send className="w-5 h-5 text-[#D4AF37]" />
-                </a>
-              </div>
+              <h4 className="text-white font-bold mb-4">Redes Sociais</h4>
+              <ul className="space-y-2 text-sm">
+                <li>
+                  <a href="https://instagram.com/elitelife_experience" target="_blank" rel="noopener noreferrer" className="text-[#9A9A9A] hover:text-[#D4AF37] transition-colors flex items-center gap-2">
+                    <Instagram className="w-4 h-4" />
+                    @elitelife_experience
+                  </a>
+                </li>
+                <li>
+                  <a href="https://t.me/boost/elitelifeApp" target="_blank" rel="noopener noreferrer" className="text-[#9A9A9A] hover:text-[#D4AF37] transition-colors flex items-center gap-2">
+                    <Send className="w-4 h-4" />
+                    Telegram (Canal)
+                  </a>
+                </li>
+              </ul>
             </div>
           </div>
 
-          <div className="border-t border-[#D4AF37]/20 pt-8 text-center">
-            <p className="text-[#9A9A9A] text-sm">
-              © 2024 ELITE LIFE. Todos os direitos reservados.
+          <div className="border-t border-white/10 pt-8 text-center text-[#9A9A9A] text-sm">
+            <p>© 2024 Elite Life. Todos os direitos reservados.</p>
+            <p className="mt-2 text-xs">
+              Simulações educacionais não representam valores reais. Certificados emitidos pela Elite Life.
             </p>
           </div>
         </div>
       </footer>
 
-      {/* AI Support Button (Floating) */}
-      <button className="fixed bottom-6 right-6 w-16 h-16 bg-gradient-to-br from-[#D4AF37] to-[#FFD700] rounded-full shadow-2xl shadow-[#D4AF37]/50 flex items-center justify-center hover:scale-110 transition-all z-50">
-        <MessageCircle className="w-8 h-8 text-[#0B0B0B]" />
-      </button>
+      <style jsx>{`
+        @keyframes shake {
+          0%, 100% { transform: translateX(0); }
+          25% { transform: translateX(-10px); }
+          75% { transform: translateX(10px); }
+        }
+        .animate-shake {
+          animation: shake 0.15s ease-in-out;
+        }
+      `}</style>
     </div>
   );
 }

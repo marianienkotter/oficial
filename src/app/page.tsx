@@ -528,7 +528,8 @@ export default function EliteLifeHome() {
       icon: "🌱", 
       requirement: "Completar 5 atividades", 
       points: 100,
-      unlocked: true 
+      unlocked: true,
+      description: "Bem-vindo à Elite Life! Você deu o primeiro passo rumo à transformação."
     },
     { 
       id: 2, 
@@ -536,7 +537,8 @@ export default function EliteLifeHome() {
       icon: "🥉", 
       requirement: "Completar 20 atividades + 500 pontos", 
       points: 500,
-      unlocked: true 
+      unlocked: true,
+      description: "Você está progredindo! Continue assim e alcance novos patamares."
     },
     { 
       id: 3, 
@@ -544,7 +546,8 @@ export default function EliteLifeHome() {
       icon: "🥈", 
       requirement: "Completar 50 atividades + 2.000 pontos", 
       points: 2000,
-      unlocked: true 
+      unlocked: true,
+      description: "Excelente trabalho! Você está entre os melhores alunos da Elite Life."
     },
     { 
       id: 4, 
@@ -552,7 +555,8 @@ export default function EliteLifeHome() {
       icon: "🥇", 
       requirement: "Completar 100 atividades + 5.000 pontos", 
       points: 5000,
-      unlocked: false 
+      unlocked: false,
+      description: "Elite! Você dominou as habilidades essenciais. Continue para o topo!"
     },
     { 
       id: 5, 
@@ -560,7 +564,8 @@ export default function EliteLifeHome() {
       icon: "💎", 
       requirement: "Completar 200 atividades + 10.000 pontos", 
       points: 10000,
-      unlocked: false 
+      unlocked: false,
+      description: "Lendário! Poucos chegam aqui. Você é referência na comunidade."
     },
     { 
       id: 6, 
@@ -568,7 +573,8 @@ export default function EliteLifeHome() {
       icon: "💠", 
       requirement: "Completar 500 atividades + 20.000 pontos", 
       points: 20000,
-      unlocked: false 
+      unlocked: false,
+      description: "Mestre absoluto! Você alcançou o nível máximo da Elite Life."
     },
   ];
 
@@ -893,6 +899,15 @@ export default function EliteLifeHome() {
       setShowSettingsModal(false);
     }
   };
+
+  const getNextMedal = () => {
+    const nextMedal = medals.find(m => !m.unlocked);
+    return nextMedal || medals[medals.length - 1];
+  };
+
+  const currentMedal = medals.filter(m => m.unlocked).pop() || medals[0];
+  const nextMedal = getNextMedal();
+  const progressToNextLevel = ((userPoints - currentMedal.points) / (nextMedal.points - currentMedal.points)) * 100;
 
   return (
     <div className="min-h-screen bg-[#0B0B0B]">
@@ -1477,20 +1492,20 @@ export default function EliteLifeHome() {
                 <li><a href="#" className="text-[#9A9A9A] hover:text-[#D4AF37] transition-colors">Central de Ajuda</a></li>
                 <li><a href="#" onClick={(e) => { e.preventDefault(); setShowTermsModal(true); }} className="text-[#9A9A9A] hover:text-[#D4AF37] transition-colors">Termos de Uso</a></li>
                 <li><a href="#" onClick={(e) => { e.preventDefault(); setShowPrivacyModal(true); }} className="text-[#9A9A9A] hover:text-[#D4AF37] transition-colors">Política de Privacidade</a></li>
-                <li><a href="#" className="text-[#9A9A9A] hover:text-[#D4AF37] transition-colors">Contato</a></li>
+                <li><a href="mailto:elitelife.norply@gmail.com" className="text-[#9A9A9A] hover:text-[#D4AF37] transition-colors">Contato</a></li>
               </ul>
             </div>
 
             <div>
               <h4 className="font-bold text-white mb-4">Redes Sociais</h4>
               <div className="flex gap-3">
-                <a href="#" className="w-10 h-10 bg-[#2A2A2A] rounded-xl flex items-center justify-center hover:bg-[#D4AF37]/10 transition-all">
+                <a href="https://instagram.com/elitelife" target="_blank" rel="noopener noreferrer" className="w-10 h-10 bg-[#2A2A2A] rounded-xl flex items-center justify-center hover:bg-[#D4AF37]/10 transition-all">
                   <Instagram className="w-5 h-5 text-white" />
                 </a>
-                <a href="#" className="w-10 h-10 bg-[#2A2A2A] rounded-xl flex items-center justify-center hover:bg-[#D4AF37]/10 transition-all">
+                <a href="https://t.me/elitelife" target="_blank" rel="noopener noreferrer" className="w-10 h-10 bg-[#2A2A2A] rounded-xl flex items-center justify-center hover:bg-[#D4AF37]/10 transition-all">
                   <MessageSquare className="w-5 h-5 text-white" />
                 </a>
-                <a href="#" className="w-10 h-10 bg-[#2A2A2A] rounded-xl flex items-center justify-center hover:bg-[#D4AF37]/10 transition-all">
+                <a href="mailto:elitelife.norply@gmail.com" className="w-10 h-10 bg-[#2A2A2A] rounded-xl flex items-center justify-center hover:bg-[#D4AF37]/10 transition-all">
                   <Mail className="w-5 h-5 text-white" />
                 </a>
               </div>

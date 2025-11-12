@@ -52,6 +52,8 @@ export default function EliteLifeHome() {
   const [showPrivacyModal, setShowPrivacyModal] = useState(false);
   const [showTrackerQuizModal, setShowTrackerQuizModal] = useState(false);
   const [showInitialQuizModal, setShowInitialQuizModal] = useState(false);
+  const [showVideosModal, setShowVideosModal] = useState(false);
+  const [showRankingModal, setShowRankingModal] = useState(false);
   const [selectedVideoId, setSelectedVideoId] = useState("");
   const [selectedPlan, setSelectedPlan] = useState<any>(null);
 
@@ -252,6 +254,11 @@ export default function EliteLifeHome() {
     { id: "-bqT-Z3-6js", title: "Mentalidade Vencedora", category: "motivacional", duration: "18:20" },
     { id: "_qKQ1lVNVL0", title: "Foco e Disciplina", category: "motivacional", duration: "10:15" },
     { id: "hSrFmzk6E0w", title: "Produtividade Máxima", category: "motivacional", duration: "22:40" },
+    { id: "IhoXqdUvnC0", title: "Superação e Vitória", category: "motivacional", duration: "14:20" },
+    { id: "36MkeXmnBVU", title: "Motivação Diária", category: "motivacional", duration: "11:30" },
+    { id: "MkDVZplKyTQ", title: "Força Interior", category: "motivacional", duration: "16:45" },
+    { id: "GkW5jpPfaC0", title: "Conquiste Seus Sonhos", category: "motivacional", duration: "19:10" },
+    { id: "7kR-C-Boy0Y", title: "Determinação Total", category: "motivacional", duration: "13:25" },
     
     // E-commerce
     { id: "8UNgFZ7-5Ts", title: "Mercado Livre Avançado", category: "ecommerce", duration: "17:25" },
@@ -259,6 +266,16 @@ export default function EliteLifeHome() {
     { id: "i1E4sgCeUEs", title: "Shopee Estratégias", category: "ecommerce", duration: "20:15" },
     { id: "dSFkPWhrtNg", title: "Tráfego Pago", category: "ecommerce", duration: "14:30" },
     { id: "9VuZlg-GHXk", title: "Google Ads", category: "ecommerce", duration: "18:45" },
+    { id: "-tovD0nSPsA", title: "Dropshipping Avançado", category: "ecommerce", duration: "21:30" },
+    { id: "kxm7n8BUgT0", title: "Marketplace Completo", category: "ecommerce", duration: "16:20" },
+    { id: "rF6daSPnrgc", title: "Vendas Online", category: "ecommerce", duration: "15:40" },
+    { id: "P3PU47_a-Kk", title: "E-commerce do Zero", category: "ecommerce", duration: "24:15" },
+    { id: "FYtF7FjUgU4", title: "Escalar Vendas", category: "ecommerce", duration: "19:50" },
+    { id: "32hRlmYsPa0", title: "Logística E-commerce", category: "ecommerce", duration: "17:30" },
+    { id: "ePdUc2xMW6M", title: "Precificação Estratégica", category: "ecommerce", duration: "14:45" },
+    { id: "TasDB-Gn0do", title: "Marketing para E-commerce", category: "ecommerce", duration: "20:10" },
+    { id: "cfouyjYKzn0", title: "Anúncios que Vendem", category: "ecommerce", duration: "16:35" },
+    { id: "lT_eRUHdJ7g", title: "Conversão de Vendas", category: "ecommerce", duration: "18:20" },
     
     // Influencer Pro
     { id: "B89sP7HyfrQ", title: "Crescer no Instagram", category: "influencer", duration: "17:10" },
@@ -266,6 +283,29 @@ export default function EliteLifeHome() {
     { id: "DY2CfcVvc00", title: "YouTube Estratégias", category: "influencer", duration: "23:15" },
     { id: "YpUd8YhKo-o", title: "Thumbnails que Convertem", category: "influencer", duration: "14:20" },
     { id: "ogV4_WZcw7E", title: "Scripts Virais", category: "influencer", duration: "20:45" },
+    { id: "X0Y7Rwwkh5A", title: "Conteúdo Engajador", category: "influencer", duration: "15:30" },
+    { id: "Wh44_CIxfYI", title: "Monetização Digital", category: "influencer", duration: "19:20" },
+    { id: "JCV5HQOePDg", title: "Algoritmo das Redes", category: "influencer", duration: "16:45" },
+    { id: "NdT7BRlaeVg", title: "Edição Profissional", category: "influencer", duration: "21:10" },
+    { id: "4I5QFma7Cso", title: "Hashtags Estratégicas", category: "influencer", duration: "12:30" },
+    { id: "vdCv0BiFqEQ", title: "Parcerias e Marcas", category: "influencer", duration: "18:15" },
+    { id: "x0W1kIvBerg", title: "Crescimento Orgânico", category: "influencer", duration: "20:40" },
+    { id: "_6XeJ-XGK3Y", title: "Reels que Viralizam", category: "influencer", duration: "14:50" },
+    { id: "2-rneqJ6QDU", title: "Stories Estratégicos", category: "influencer", duration: "11:25" },
+    { id: "zgbtjg1Kb4g", title: "Lives de Sucesso", category: "influencer", duration: "17:35" },
+    { id: "5f15qZNphcY", title: "Audiência Engajada", category: "influencer", duration: "16:20" },
+    { id: "-xG104jgeyo", title: "Branding Pessoal", category: "influencer", duration: "19:45" },
+    { id: "9gbLAq_CoCY", title: "Conteúdo Autêntico", category: "influencer", duration: "15:10" },
+    { id: "cYzODhgJIAQ", title: "Planejamento de Conteúdo", category: "influencer", duration: "18:30" },
+    { id: "2fjKm3Vsb-E", title: "Análise de Métricas", category: "influencer", duration: "20:15" },
+    { id: "d8T48bm-8Ps", title: "Tendências Digitais", category: "influencer", duration: "14:40" },
+    { id: "fLjUM3Puy48", title: "Colaborações Estratégicas", category: "influencer", duration: "17:20" },
+    { id: "zxk4kOaqyMU", title: "Copywriting para Redes", category: "influencer", duration: "16:55" },
+    { id: "YDoI2xGAU1g", title: "Engajamento Autêntico", category: "influencer", duration: "19:10" },
+    { id: "XjzPknnRwpQ", title: "Nichos Lucrativos", category: "influencer", duration: "21:25" },
+    { id: "5u8KFhVRWI0", title: "Comunidade Fiel", category: "influencer", duration: "15:45" },
+    { id: "GuMPTPK-qJs", title: "Vídeos Profissionais", category: "influencer", duration: "18:50" },
+    { id: "_bTtYhQsrOM", title: "Influência Digital", category: "influencer", duration: "20:30" },
 
     // Finanças
     { id: "nX5nPjcVP_I", title: "Investimentos para Iniciantes", category: "financas", duration: "18:30" },
@@ -273,6 +313,90 @@ export default function EliteLifeHome() {
     { id: "PHH-BMCuES0", title: "Ações e Dividendos", category: "financas", duration: "25:40" },
     { id: "NNMBNRcP_tU", title: "Fundos Imobiliários", category: "financas", duration: "19:20" },
     { id: "YBJwJuSkgno", title: "Tesouro Direto", category: "financas", duration: "16:45" },
+    { id: "phwa27l7fgs", title: "Planejamento Financeiro", category: "financas", duration: "20:30" },
+    { id: "T5ZgYbvHwE0", title: "Educação Financeira", category: "financas", duration: "17:50" },
+    { id: "cR5FGUBuNEw", title: "Independência Financeira", category: "financas", duration: "23:15" },
+    { id: "dxfx0Yw3n7k", title: "Carteira de Investimentos", category: "financas", duration: "19:40" },
+    { id: "Frr6cMXMcEY", title: "Criptomoedas", category: "financas", duration: "21:25" },
+    { id: "LHWJuZwx8SM", title: "Mercado de Ações", category: "financas", duration: "18:55" },
+    { id: "gpD6boRgXdI", title: "Análise Fundamentalista", category: "financas", duration: "24:10" },
+    { id: "quBBAXjMzac", title: "Day Trade", category: "financas", duration: "20:45" },
+    { id: "xws5gfEfRU4", title: "Swing Trade", category: "financas", duration: "17:30" },
+    { id: "Q5t76g9yh3g", title: "Análise Técnica", category: "financas", duration: "22:20" },
+    { id: "9j8IHdic0F0", title: "Gestão de Risco", category: "financas", duration: "16:40" },
+    { id: "pRxyQXL1eVA", title: "Diversificação", category: "financas", duration: "19:15" },
+    { id: "obvenrhem9Q", title: "Reserva de Emergência", category: "financas", duration: "15:25" },
+    { id: "zbN3mChHGDI", title: "Aposentadoria", category: "financas", duration: "21:50" },
+    { id: "WvvzpUaNvOo", title: "Impostos e Tributos", category: "financas", duration: "18:35" },
+    { id: "NN99hUNwO1A", title: "Economia Doméstica", category: "financas", duration: "14:45" },
+    { id: "Flo47gIJQfg", title: "Orçamento Pessoal", category: "financas", duration: "17:20" },
+    { id: "14h1Sn5irdE", title: "Controle de Gastos", category: "financas", duration: "16:10" },
+    { id: "mZRHqSmTiwE", title: "Dívidas e Crédito", category: "financas", duration: "19:55" },
+    { id: "l4VFryL5SC0", title: "Score de Crédito", category: "financas", duration: "15:30" },
+    { id: "5ZLAxK7jrQ4", title: "Empréstimos Inteligentes", category: "financas", duration: "18:15" },
+    { id: "-e2x7oQ9C1g", title: "Financiamento Imobiliário", category: "financas", duration: "22:40" },
+    { id: "f4m3asFg3oo", title: "Consórcio", category: "financas", duration: "17:25" },
+    { id: "yAsyW3ie8AA", title: "Previdência Privada", category: "financas", duration: "20:10" },
+    { id: "v4yMnlFR6u0", title: "Seguros e Proteção", category: "financas", duration: "16:50" },
+    { id: "FIiOd412sRs", title: "Patrimônio Líquido", category: "financas", duration: "19:30" },
+    { id: "AT7nSkn8Cs8", title: "Fluxo de Caixa", category: "financas", duration: "18:20" },
+    { id: "X71YbXctXeM", title: "Juros Compostos", category: "financas", duration: "21:15" },
+    { id: "wJBof_K85YY", title: "Inflação e Poder de Compra", category: "financas", duration: "17:45" },
+    { id: "Huii3YbR6ek", title: "Câmbio e Moedas", category: "financas", duration: "19:25" },
+    { id: "qTH_P4PBEI8", title: "Economia Global", category: "financas", duration: "23:50" },
+    { id: "ULoPE2xOBCo", title: "Mercado Financeiro", category: "financas", duration: "20:35" },
+    { id: "ywUuoTJJznA", title: "Bolsa de Valores", category: "financas", duration: "22:10" },
+    { id: "0rtNKdODxbo", title: "ETFs", category: "financas", duration: "18:40" },
+    { id: "ORe4506BNwc", title: "Renda Fixa", category: "financas", duration: "17:15" },
+    { id: "kqAex5L6D-M", title: "Renda Variável", category: "financas", duration: "21:30" },
+    { id: "ykkty8JCx30", title: "Commodities", category: "financas", duration: "19:45" },
+    { id: "s-pHHcBHwug", title: "Ouro e Metais", category: "financas", duration: "16:25" },
+    { id: "yY0_tkd-eYA", title: "Investimento Internacional", category: "financas", duration: "24:20" },
+    { id: "mcQYKxmR1DE", title: "BDRs", category: "financas", duration: "18:55" },
+    { id: "OOCcgOtauM0", title: "Fundos de Investimento", category: "financas", duration: "20:15" },
+    { id: "AujbkWYKEc4", title: "CDBs e LCIs", category: "financas", duration: "17:40" },
+    { id: "MZF1cEbFmy8", title: "Debêntures", category: "financas", duration: "19:10" },
+    { id: "AA4kFuOUOzE", title: "COE", category: "financas", duration: "16:30" },
+    { id: "5T011jO_s3g", title: "Poupança vs Investimentos", category: "financas", duration: "15:50" },
+    { id: "sgai6wVLncg", title: "Rentabilidade Real", category: "financas", duration: "18:25" },
+    { id: "o2OAqUCGOAs", title: "Liquidez", category: "financas", duration: "17:05" },
+    { id: "4bO0azzC9Ak", title: "Perfil de Investidor", category: "financas", duration: "20:40" },
+    { id: "le6Xf7XS1-o", title: "Alocação de Ativos", category: "financas", duration: "22:25" },
+    { id: "17yQpfiDFCY", title: "Rebalanceamento", category: "financas", duration: "19:15" },
+    { id: "SolU30Rl8rQ", title: "Buy and Hold", category: "financas", duration: "21:50" },
+    { id: "BOkaELzR9aM", title: "Value Investing", category: "financas", duration: "23:30" },
+    { id: "J9wbTmuPfNg", title: "Growth Investing", category: "financas", duration: "20:05" },
+    { id: "XkbDaNZTedc", title: "Dividendos Mensais", category: "financas", duration: "18:45" },
+    { id: "NaPFO4O5llo", title: "Reinvestimento", category: "financas", duration: "17:20" },
+    { id: "_LPIyvLLzyo", title: "Efeito Bola de Neve", category: "financas", duration: "19:35" },
+    { id: "RNB9uCQVEBI", title: "Liberdade Financeira", category: "financas", duration: "24:10" },
+    { id: "ROYi13bMbbQ", title: "FIRE Movement", category: "financas", duration: "21:40" },
+    { id: "gIqiopx5qvQ", title: "Minimalismo Financeiro", category: "financas", duration: "16:55" },
+    { id: "lof9u_8ULf0", title: "Consumo Consciente", category: "financas", duration: "18:30" },
+    { id: "exbgpMKPowo", title: "Investimento Sustentável", category: "financas", duration: "20:20" },
+    { id: "Em0UqsiYij8", title: "ESG", category: "financas", duration: "19:50" },
+    { id: "XVOZItdAUbw", title: "Finanças Comportamentais", category: "financas", duration: "22:15" },
+    { id: "CtfOALRAf8s", title: "Psicologia do Dinheiro", category: "financas", duration: "21:05" },
+    { id: "vpU4zJ7MlzQ", title: "Mentalidade de Abundância", category: "financas", duration: "17:50" },
+    { id: "gMLJfHko1II", title: "Crenças Limitantes", category: "financas", duration: "19:25" },
+    { id: "PPDECleQNtc", title: "Prosperidade", category: "financas", duration: "20:40" },
+    { id: "m-6r2sAV8QE", title: "Riqueza Sustentável", category: "financas", duration: "23:20" },
+    { id: "hcluoA_zvzQ", title: "Legado Financeiro", category: "financas", duration: "21:30" },
+    { id: "eyEXJ3agKuU", title: "Sucessão Patrimonial", category: "financas", duration: "19:15" },
+    { id: "GN0KWrj8gEA", title: "Testamento e Herança", category: "financas", duration: "18:40" },
+    { id: "iyTAeHp7vFE", title: "Holding Familiar", category: "financas", duration: "22:50" },
+    { id: "LDWKS9z005M", title: "Blindagem Patrimonial", category: "financas", duration: "20:25" },
+    { id: "5G4VLBmszyY", title: "Offshore", category: "financas", duration: "24:35" },
+    { id: "RqIv0hFd5QQ", title: "Investimento no Exterior", category: "financas", duration: "21:15" },
+    { id: "AcjPz8Qr_i8", title: "Conta Internacional", category: "financas", duration: "17:30" },
+    { id: "PpN4_nj7WE4", title: "Remessa Internacional", category: "financas", duration: "16:45" },
+    { id: "Hir6lj4WX18", title: "Dólar e Euro", category: "financas", duration: "19:20" },
+    { id: "eif5_XolUDM", title: "Proteção Cambial", category: "financas", duration: "18:10" },
+    { id: "n30Qz6EcHEM", title: "Hedge", category: "financas", duration: "20:55" },
+    { id: "tCx9HKdORso", title: "Derivativos", category: "financas", duration: "23:40" },
+    { id: "m7Med0-y88I", title: "Opções", category: "financas", duration: "22:25" },
+    { id: "ZtgcWbcIWy4", title: "Futuros", category: "financas", duration: "21:10" },
+    { id: "TVtCJbpQQ74", title: "Estratégias Avançadas", category: "financas", duration: "25:15" },
   ];
 
   const filteredVideos = activeVideoCategory === "all" 
@@ -423,7 +547,7 @@ export default function EliteLifeHome() {
   ];
 
   const stats = [
-    { label: "+ de 50.000 alunos", value: "50k+" },
+    { label: "+ de 50K alunos transformados", value: "50K+" },
     { label: "+ de 100 cursos", value: "100+" },
     { label: "+ de 1000 atividades", value: "1000+" },
     { label: "Certificados ELITE LIFE", value: "✓" }
@@ -453,7 +577,7 @@ export default function EliteLifeHome() {
       signup: "Criar Conta",
       hero: {
         title: "Transforme sua vida em 90 dias",
-        subtitle: "Corpo, mente e dinheiro no mesmo lugar. + de 50 mil alunos transformados."
+        subtitle: "Corpo, mente e dinheiro no mesmo lugar. + de 50K alunos transformados."
       }
     },
     en: {
@@ -473,7 +597,7 @@ export default function EliteLifeHome() {
       signup: "Sign Up",
       hero: {
         title: "Transform your life in 90 days",
-        subtitle: "Body, mind and money in one place. + 50k students transformed."
+        subtitle: "Body, mind and money in one place. + 50K students transformed."
       }
     },
     es: {
@@ -493,7 +617,7 @@ export default function EliteLifeHome() {
       signup: "Crear Cuenta",
       hero: {
         title: "Transforma tu vida en 90 días",
-        subtitle: "Cuerpo, mente y dinero en un solo lugar. + de 50 mil alumnos transformados."
+        subtitle: "Cuerpo, mente y dinero en un solo lugar. + de 50K alumnos transformados."
       }
     }
   };
@@ -703,6 +827,10 @@ export default function EliteLifeHome() {
     window.location.href = "#planos";
   };
 
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
   const handleAISubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!aiInput.trim()) return;
@@ -910,28 +1038,29 @@ export default function EliteLifeHome() {
   const progressToNextLevel = ((userPoints - currentMedal.points) / (nextMedal.points - currentMedal.points)) * 100;
 
   return (
-    <div className="min-h-screen bg-[#0B0B0B]">
+    <div className="min-h-screen bg-[#0B0B0B] w-full overflow-x-hidden">
       {/* HEADER MODERNO E RESPONSIVO */}
       <header className="fixed top-0 left-0 right-0 z-50 bg-gradient-to-r from-[#0B0B0B] via-[#1A1A1A] to-[#0B0B0B] border-b border-[#D4AF37]/20 backdrop-blur-lg shadow-2xl">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="w-full max-w-[1920px] mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-20">
             {/* Logo */}
-            <div className="flex items-center gap-3 group cursor-pointer">
-              <div className="w-12 h-12 bg-gradient-to-br from-[#D4AF37] to-amber-600 rounded-xl flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300">
-                <Crown className="w-7 h-7 text-[#0B0B0B]" />
-              </div>
+            <div className="flex items-center gap-3 group cursor-pointer" onClick={scrollToTop}>
+              <img 
+                src="https://k6hrqrxuu8obbfwn.public.blob.vercel-storage.com/temp/cfc3787e-8f3c-4fd6-b923-b1658b779ff7.jpg" 
+                alt="Elite Life Logo" 
+                className="h-12 w-auto rounded-xl shadow-lg group-hover:scale-110 transition-transform duration-300"
+              />
               <div className="hidden sm:block">
                 <h1 className="text-2xl font-bold bg-gradient-to-r from-[#D4AF37] to-amber-500 bg-clip-text text-transparent">
                   Elite Life
                 </h1>
-                <p className="text-xs text-[#9A9A9A]">Transforme sua vida</p>
               </div>
             </div>
 
             {/* Desktop Navigation */}
             <nav className="hidden lg:flex items-center gap-2">
               <button
-                onClick={() => setActiveSection("home")}
+                onClick={scrollToTop}
                 className="flex items-center gap-2 px-4 py-2.5 rounded-xl text-white hover:bg-[#D4AF37]/10 hover:text-[#D4AF37] transition-all duration-300 group"
               >
                 <Home className="w-5 h-5 group-hover:scale-110 transition-transform" />
@@ -939,19 +1068,21 @@ export default function EliteLifeHome() {
               </button>
               
               <button
-                onClick={() => setShowCoursesModal(true)}
+                onClick={() => userPlan === "free" ? handleLockedClick("/courses") : setShowCoursesModal(true)}
                 className="flex items-center gap-2 px-4 py-2.5 rounded-xl text-white hover:bg-purple-500/10 hover:text-purple-400 transition-all duration-300 group"
               >
                 <GraduationCap className="w-5 h-5 group-hover:scale-110 transition-transform" />
                 <span className="font-medium">{t.courses}</span>
+                {userPlan === "free" && <Lock className="w-3 h-3" />}
               </button>
 
               <button
-                onClick={() => setActiveSection("videos")}
+                onClick={() => userPlan === "free" ? handleLockedClick("/videos") : setShowVideosModal(true)}
                 className="flex items-center gap-2 px-4 py-2.5 rounded-xl text-white hover:bg-red-500/10 hover:text-red-400 transition-all duration-300 group"
               >
                 <Video className="w-5 h-5 group-hover:scale-110 transition-transform" />
                 <span className="font-medium">{t.videos}</span>
+                {userPlan === "free" && <Lock className="w-3 h-3" />}
               </button>
 
               <button
@@ -968,6 +1099,7 @@ export default function EliteLifeHome() {
               >
                 <Activity className="w-5 h-5 group-hover:scale-110 transition-transform" />
                 <span className="font-medium">{t.tracker}</span>
+                {userPlan === "free" && <Lock className="w-3 h-3" />}
               </button>
 
               <button
@@ -980,19 +1112,21 @@ export default function EliteLifeHome() {
               </button>
 
               <button
-                onClick={() => setShowInfluencerModal(true)}
+                onClick={() => userPlan === "free" ? handleLockedClick("/influencer") : setShowInfluencerModal(true)}
                 className="flex items-center gap-2 px-4 py-2.5 rounded-xl text-white hover:bg-pink-500/10 hover:text-pink-400 transition-all duration-300 group"
               >
                 <Video className="w-5 h-5 group-hover:scale-110 transition-transform" />
-                <span className="font-medium">{t.influencer}</span>
+                <span className="font-medium text-sm">{t.influencer}</span>
+                {userPlan === "free" && <Lock className="w-3 h-3" />}
               </button>
 
               <button
-                onClick={() => setActiveSection("ecommerce")}
+                onClick={() => userPlan === "free" ? handleLockedClick("/ecommerce") : setActiveSection("ecommerce")}
                 className="flex items-center gap-2 px-4 py-2.5 rounded-xl text-white hover:bg-cyan-500/10 hover:text-cyan-400 transition-all duration-300 group"
               >
                 <ShoppingCart className="w-5 h-5 group-hover:scale-110 transition-transform" />
                 <span className="font-medium">{t.ecommerce}</span>
+                {userPlan === "free" && <Lock className="w-3 h-3" />}
               </button>
 
               <button
@@ -1004,7 +1138,7 @@ export default function EliteLifeHome() {
               </button>
 
               <button
-                onClick={() => setActiveSection("ranking")}
+                onClick={() => setShowRankingModal(true)}
                 className="flex items-center gap-2 px-4 py-2.5 rounded-xl text-white hover:bg-yellow-500/10 hover:text-yellow-400 transition-all duration-300 group"
               >
                 <Trophy className="w-5 h-5 group-hover:scale-110 transition-transform" />
@@ -1015,35 +1149,128 @@ export default function EliteLifeHome() {
             {/* Right Actions */}
             <div className="flex items-center gap-3">
               {/* Notifications */}
-              <button
-                onClick={() => setShowNotifications(!showNotifications)}
-                className="relative p-2.5 rounded-xl bg-[#1A1A1A] hover:bg-[#D4AF37]/10 transition-all duration-300 group"
-              >
-                <Bell className="w-5 h-5 text-white group-hover:text-[#D4AF37] group-hover:scale-110 transition-all" />
-                <span className="absolute -top-1 -right-1 w-5 h-5 bg-red-500 rounded-full text-xs text-white flex items-center justify-center font-bold animate-pulse">
-                  3
-                </span>
-              </button>
+              <div className="relative">
+                <button
+                  onClick={() => setShowNotifications(!showNotifications)}
+                  className="relative p-2.5 rounded-xl bg-[#1A1A1A] hover:bg-[#D4AF37]/10 transition-all duration-300 group"
+                >
+                  <Bell className="w-5 h-5 text-white group-hover:text-[#D4AF37] group-hover:scale-110 transition-all" />
+                  <span className="absolute -top-1 -right-1 w-5 h-5 bg-red-500 rounded-full text-xs text-white flex items-center justify-center font-bold animate-pulse">
+                    3
+                  </span>
+                </button>
+
+                {/* Notifications Dropdown */}
+                {showNotifications && (
+                  <div className="absolute right-0 top-full mt-2 w-80 bg-[#1A1A1A] rounded-2xl shadow-2xl border border-[#D4AF37]/20 p-4 z-50">
+                    <h3 className="text-white font-bold mb-4">Notificações</h3>
+                    <div className="space-y-3">
+                      {notifications.map(notif => (
+                        <div key={notif.id} className={`p-3 rounded-xl ${notif.read ? 'bg-[#2A2A2A]' : 'bg-[#D4AF37]/10'} cursor-pointer hover:bg-[#D4AF37]/20 transition-all`}>
+                          <div className="flex justify-between items-start mb-1">
+                            <h4 className="text-white font-semibold text-sm">{notif.title}</h4>
+                            <span className="text-xs text-[#9A9A9A]">{notif.time}</span>
+                          </div>
+                          <p className="text-[#9A9A9A] text-sm">{notif.message}</p>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </div>
 
               {/* Language */}
-              <button
-                onClick={() => setShowLanguageMenu(!showLanguageMenu)}
-                className="hidden sm:flex items-center gap-2 px-3 py-2.5 rounded-xl bg-[#1A1A1A] hover:bg-[#D4AF37]/10 transition-all duration-300 group"
-              >
-                <Globe className="w-5 h-5 text-white group-hover:text-[#D4AF37] transition-colors" />
-                <span className="text-sm font-medium text-white">{language.toUpperCase()}</span>
-              </button>
+              <div className="relative hidden sm:block">
+                <button
+                  onClick={() => setShowLanguageMenu(!showLanguageMenu)}
+                  className="flex items-center gap-2 px-3 py-2.5 rounded-xl bg-[#1A1A1A] hover:bg-[#D4AF37]/10 transition-all duration-300 group"
+                >
+                  <Globe className="w-5 h-5 text-white group-hover:text-[#D4AF37] transition-colors" />
+                  <span className="text-sm font-medium text-white">{language.toUpperCase()}</span>
+                </button>
+
+                {/* Language Dropdown */}
+                {showLanguageMenu && (
+                  <div className="absolute right-0 top-full mt-2 w-48 bg-[#1A1A1A] rounded-2xl shadow-2xl border border-[#D4AF37]/20 p-2 z-50">
+                    {languages.map(lang => (
+                      <button
+                        key={lang.code}
+                        onClick={() => {
+                          setLanguage(lang.code);
+                          setShowLanguageMenu(false);
+                        }}
+                        className="w-full flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-[#D4AF37]/10 transition-all text-left"
+                      >
+                        <span className="text-2xl">{lang.flag}</span>
+                        <span className="text-white font-medium">{lang.label}</span>
+                      </button>
+                    ))}
+                  </div>
+                )}
+              </div>
 
               {/* User Menu */}
               {isLoggedIn ? (
-                <button
-                  onClick={() => setShowUserMenu(!showUserMenu)}
-                  className="flex items-center gap-2 px-3 py-2 rounded-xl bg-gradient-to-r from-[#D4AF37] to-amber-600 hover:shadow-lg hover:shadow-[#D4AF37]/50 transition-all duration-300"
-                >
-                  <img src={userAvatar} alt="Avatar" className="w-8 h-8 rounded-full border-2 border-white" />
-                  <span className="hidden sm:block text-sm font-bold text-[#0B0B0B]">{userName}</span>
-                  <ChevronDown className="w-4 h-4 text-[#0B0B0B]" />
-                </button>
+                <div className="relative">
+                  <button
+                    onClick={() => setShowUserMenu(!showUserMenu)}
+                    className="flex items-center gap-2 px-3 py-2 rounded-xl bg-gradient-to-r from-[#D4AF37] to-amber-600 hover:shadow-lg hover:shadow-[#D4AF37]/50 transition-all duration-300"
+                  >
+                    <img src={userAvatar} alt="Avatar" className="w-8 h-8 rounded-full border-2 border-white" />
+                    <span className="hidden sm:block text-sm font-bold text-[#0B0B0B]">{userName}</span>
+                    <ChevronDown className="w-4 h-4 text-[#0B0B0B]" />
+                  </button>
+
+                  {/* User Dropdown */}
+                  {showUserMenu && (
+                    <div className="absolute right-0 top-full mt-2 w-64 bg-[#1A1A1A] rounded-2xl shadow-2xl border border-[#D4AF37]/20 p-4 z-50">
+                      <div className="flex items-center gap-3 mb-4 pb-4 border-b border-[#D4AF37]/20">
+                        <img src={userAvatar} alt="Avatar" className="w-12 h-12 rounded-full border-2 border-[#D4AF37]" />
+                        <div>
+                          <h4 className="text-white font-bold">{userName}</h4>
+                          <p className="text-xs text-[#9A9A9A]">Plano: {userPlan === "free" ? "Gratuito" : "Premium"}</p>
+                        </div>
+                      </div>
+                      <button
+                        onClick={() => {
+                          setShowAccountModal(true);
+                          setShowUserMenu(false);
+                        }}
+                        className="w-full flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-[#D4AF37]/10 transition-all text-left mb-2"
+                      >
+                        <User className="w-5 h-5 text-[#D4AF37]" />
+                        <span className="text-white font-medium">Minha Conta</span>
+                      </button>
+                      <button
+                        onClick={() => {
+                          setShowMedalsModal(true);
+                          setShowUserMenu(false);
+                        }}
+                        className="w-full flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-[#D4AF37]/10 transition-all text-left mb-2"
+                      >
+                        <Medal className="w-5 h-5 text-[#D4AF37]" />
+                        <span className="text-white font-medium">Medalhas</span>
+                      </button>
+                      <button
+                        onClick={() => {
+                          setShowSettingsModal(true);
+                          setShowUserMenu(false);
+                        }}
+                        className="w-full flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-[#D4AF37]/10 transition-all text-left mb-2"
+                      >
+                        <Settings className="w-5 h-5 text-[#D4AF37]" />
+                        <span className="text-white font-medium">Configurações</span>
+                      </button>
+                      <button
+                        onClick={handleLogout}
+                        className="w-full flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-red-500/10 transition-all text-left"
+                      >
+                        <LogOut className="w-5 h-5 text-red-500" />
+                        <span className="text-red-500 font-medium">Sair</span>
+                      </button>
+                    </div>
+                  )}
+                </div>
               ) : (
                 <div className="hidden sm:flex items-center gap-2">
                   <button
@@ -1079,98 +1306,139 @@ export default function EliteLifeHome() {
         {/* Mobile Menu */}
         {isMenuOpen && (
           <div className="lg:hidden bg-[#1A1A1A] border-t border-[#D4AF37]/20">
-            <div className="px-4 py-4 space-y-2">
+            <div className="w-full max-w-[1920px] mx-auto px-4 py-4 space-y-2">
               <button
-                onClick={() => { setActiveSection("home"); setIsMenuOpen(false); }}
-                className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-white hover:bg-[#D4AF37]/10 hover:text-[#D4AF37] transition-all"
+                onClick={() => {
+                  scrollToTop();
+                  setIsMenuOpen(false);
+                }}
+                className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-white hover:bg-[#D4AF37]/10 transition-all"
               >
                 <Home className="w-5 h-5" />
-                <span className="font-medium">{t.home}</span>
+                <span>{t.home}</span>
               </button>
-              
+
               <button
-                onClick={() => { setShowCoursesModal(true); setIsMenuOpen(false); }}
-                className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-white hover:bg-purple-500/10 hover:text-purple-400 transition-all"
+                onClick={() => {
+                  userPlan === "free" ? handleLockedClick("/courses") : setShowCoursesModal(true);
+                  setIsMenuOpen(false);
+                }}
+                className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-white hover:bg-purple-500/10 transition-all"
               >
                 <GraduationCap className="w-5 h-5" />
-                <span className="font-medium">{t.courses}</span>
+                <span>{t.courses}</span>
+                {userPlan === "free" && <Lock className="w-4 h-4 ml-auto" />}
               </button>
 
               <button
-                onClick={() => { setActiveSection("videos"); setIsMenuOpen(false); }}
-                className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-white hover:bg-red-500/10 hover:text-red-400 transition-all"
+                onClick={() => {
+                  userPlan === "free" ? handleLockedClick("/videos") : setShowVideosModal(true);
+                  setIsMenuOpen(false);
+                }}
+                className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-white hover:bg-red-500/10 transition-all"
               >
                 <Video className="w-5 h-5" />
-                <span className="font-medium">{t.videos}</span>
+                <span>{t.videos}</span>
+                {userPlan === "free" && <Lock className="w-4 h-4 ml-auto" />}
               </button>
 
               <button
-                onClick={() => { setShowAgendaModal(true); setIsMenuOpen(false); }}
-                className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-white hover:bg-blue-500/10 hover:text-blue-400 transition-all"
+                onClick={() => {
+                  setShowAgendaModal(true);
+                  setIsMenuOpen(false);
+                }}
+                className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-white hover:bg-blue-500/10 transition-all"
               >
                 <Calendar className="w-5 h-5" />
-                <span className="font-medium">{t.agenda}</span>
+                <span>{t.agenda}</span>
               </button>
 
               <button
-                onClick={() => { userPlan === "free" ? setShowTrackerQuizModal(true) : setShowTrackerModal(true); setIsMenuOpen(false); }}
-                className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-white hover:bg-green-500/10 hover:text-green-400 transition-all"
+                onClick={() => {
+                  userPlan === "free" ? setShowTrackerQuizModal(true) : setShowTrackerModal(true);
+                  setIsMenuOpen(false);
+                }}
+                className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-white hover:bg-green-500/10 transition-all"
               >
                 <Activity className="w-5 h-5" />
-                <span className="font-medium">{t.tracker}</span>
+                <span>{t.tracker}</span>
+                {userPlan === "free" && <Lock className="w-4 h-4 ml-auto" />}
               </button>
 
               <button
-                onClick={() => { canAccessWallet() ? setShowWalletModal(true) : handleLockedClick("/wallet"); setIsMenuOpen(false); }}
-                className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-white hover:bg-emerald-500/10 hover:text-emerald-400 transition-all"
+                onClick={() => {
+                  canAccessWallet() ? setShowWalletModal(true) : handleLockedClick("/wallet");
+                  setIsMenuOpen(false);
+                }}
+                className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-white hover:bg-emerald-500/10 transition-all"
               >
                 <Wallet className="w-5 h-5" />
-                <span className="font-medium">{t.wallet}</span>
-                {!canAccessWallet() && <Lock className="w-4 h-4" />}
+                <span>{t.wallet}</span>
+                {!canAccessWallet() && <Lock className="w-4 h-4 ml-auto" />}
               </button>
 
               <button
-                onClick={() => { setShowInfluencerModal(true); setIsMenuOpen(false); }}
-                className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-white hover:bg-pink-500/10 hover:text-pink-400 transition-all"
+                onClick={() => {
+                  userPlan === "free" ? handleLockedClick("/influencer") : setShowInfluencerModal(true);
+                  setIsMenuOpen(false);
+                }}
+                className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-white hover:bg-pink-500/10 transition-all"
               >
                 <Video className="w-5 h-5" />
-                <span className="font-medium">{t.influencer}</span>
+                <span>{t.influencer}</span>
+                {userPlan === "free" && <Lock className="w-4 h-4 ml-auto" />}
               </button>
 
               <button
-                onClick={() => { setActiveSection("ecommerce"); setIsMenuOpen(false); }}
-                className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-white hover:bg-cyan-500/10 hover:text-cyan-400 transition-all"
+                onClick={() => {
+                  userPlan === "free" ? handleLockedClick("/ecommerce") : setActiveSection("ecommerce");
+                  setIsMenuOpen(false);
+                }}
+                className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-white hover:bg-cyan-500/10 transition-all"
               >
                 <ShoppingCart className="w-5 h-5" />
-                <span className="font-medium">{t.ecommerce}</span>
+                <span>{t.ecommerce}</span>
+                {userPlan === "free" && <Lock className="w-4 h-4 ml-auto" />}
               </button>
 
               <button
-                onClick={() => { setShowAffiliateModal(true); setIsMenuOpen(false); }}
-                className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-white hover:bg-orange-500/10 hover:text-orange-400 transition-all"
+                onClick={() => {
+                  setShowAffiliateModal(true);
+                  setIsMenuOpen(false);
+                }}
+                className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-white hover:bg-orange-500/10 transition-all"
               >
                 <Users className="w-5 h-5" />
-                <span className="font-medium">{t.affiliates}</span>
+                <span>{t.affiliates}</span>
               </button>
 
               <button
-                onClick={() => { setActiveSection("ranking"); setIsMenuOpen(false); }}
-                className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-white hover:bg-yellow-500/10 hover:text-yellow-400 transition-all"
+                onClick={() => {
+                  setShowRankingModal(true);
+                  setIsMenuOpen(false);
+                }}
+                className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-white hover:bg-yellow-500/10 transition-all"
               >
                 <Trophy className="w-5 h-5" />
-                <span className="font-medium">{t.ranking}</span>
+                <span>{t.ranking}</span>
               </button>
 
               {!isLoggedIn && (
                 <div className="pt-4 border-t border-[#D4AF37]/20 space-y-2">
                   <button
-                    onClick={() => { setShowLoginModal(true); setIsMenuOpen(false); }}
+                    onClick={() => {
+                      setShowLoginModal(true);
+                      setIsMenuOpen(false);
+                    }}
                     className="w-full px-4 py-3 rounded-xl text-white bg-[#2A2A2A] hover:bg-[#3A3A3A] transition-all font-medium"
                   >
                     {t.login}
                   </button>
                   <button
-                    onClick={() => { setShowSignupModal(true); setIsMenuOpen(false); }}
+                    onClick={() => {
+                      setShowSignupModal(true);
+                      setIsMenuOpen(false);
+                    }}
                     className="w-full px-4 py-3 rounded-xl bg-gradient-to-r from-[#D4AF37] to-amber-600 text-[#0B0B0B] font-bold hover:shadow-lg transition-all"
                   >
                     {t.signup}
@@ -1180,121 +1448,13 @@ export default function EliteLifeHome() {
             </div>
           </div>
         )}
-
-        {/* User Dropdown Menu */}
-        {showUserMenu && isLoggedIn && (
-          <div className="absolute right-4 top-24 w-72 bg-[#1A1A1A] rounded-2xl shadow-2xl border border-[#D4AF37]/20 overflow-hidden z-50">
-            <div className="p-4 bg-gradient-to-r from-[#D4AF37]/10 to-amber-600/10 border-b border-[#D4AF37]/20">
-              <div className="flex items-center gap-3">
-                <img src={userAvatar} alt="Avatar" className="w-16 h-16 rounded-full border-2 border-[#D4AF37]" />
-                <div>
-                  <h3 className="font-bold text-white">{userName}</h3>
-                  <p className="text-sm text-[#9A9A9A]">{userEmail}</p>
-                  <div className="flex items-center gap-2 mt-1">
-                    <Star className="w-4 h-4 text-[#D4AF37]" />
-                    <span className="text-sm font-bold text-[#D4AF37]">{userPoints} pontos</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-            
-            <div className="p-2">
-              <button
-                onClick={() => { setShowAccountModal(true); setShowUserMenu(false); }}
-                className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-white hover:bg-[#D4AF37]/10 transition-all"
-              >
-                <User className="w-5 h-5" />
-                <span>Minha Conta</span>
-              </button>
-              
-              <button
-                onClick={() => { setShowMedalsModal(true); setShowUserMenu(false); }}
-                className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-white hover:bg-[#D4AF37]/10 transition-all"
-              >
-                <Medal className="w-5 h-5" />
-                <span>Medalhas e Pontos</span>
-              </button>
-              
-              <button
-                onClick={() => { setShowSettingsModal(true); setShowUserMenu(false); }}
-                className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-white hover:bg-[#D4AF37]/10 transition-all"
-              >
-                <Settings className="w-5 h-5" />
-                <span>Configurações</span>
-              </button>
-              
-              <button
-                onClick={handleLogout}
-                className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-red-400 hover:bg-red-500/10 transition-all"
-              >
-                <LogOut className="w-5 h-5" />
-                <span>Sair</span>
-              </button>
-            </div>
-          </div>
-        )}
-
-        {/* Notifications Dropdown */}
-        {showNotifications && (
-          <div className="absolute right-4 top-24 w-96 bg-[#1A1A1A] rounded-2xl shadow-2xl border border-[#D4AF37]/20 overflow-hidden z-50">
-            <div className="p-4 bg-gradient-to-r from-[#D4AF37]/10 to-amber-600/10 border-b border-[#D4AF37]/20">
-              <h3 className="font-bold text-white">Notificações</h3>
-            </div>
-            
-            <div className="max-h-96 overflow-y-auto">
-              {notifications.map((notif) => (
-                <div
-                  key={notif.id}
-                  className={`p-4 border-b border-[#2A2A2A] hover:bg-[#2A2A2A] transition-all cursor-pointer ${!notif.read ? 'bg-[#D4AF37]/5' : ''}`}
-                >
-                  <div className="flex items-start gap-3">
-                    <div className="w-10 h-10 rounded-full bg-gradient-to-r from-[#D4AF37] to-amber-600 flex items-center justify-center flex-shrink-0">
-                      <Bell className="w-5 h-5 text-[#0B0B0B]" />
-                    </div>
-                    <div className="flex-1">
-                      <h4 className="font-bold text-white text-sm">{notif.title}</h4>
-                      <p className="text-sm text-[#9A9A9A] mt-1">{notif.message}</p>
-                      <span className="text-xs text-[#D4AF37] mt-2 block">{notif.time}</span>
-                    </div>
-                    {!notif.read && (
-                      <div className="w-2 h-2 rounded-full bg-[#D4AF37]"></div>
-                    )}
-                  </div>
-                </div>
-              ))}
-            </div>
-            
-            <div className="p-3 bg-[#2A2A2A] border-t border-[#D4AF37]/20">
-              <button className="w-full text-center text-sm text-[#D4AF37] hover:text-amber-500 font-medium">
-                Ver todas as notificações
-              </button>
-            </div>
-          </div>
-        )}
-
-        {/* Language Dropdown */}
-        {showLanguageMenu && (
-          <div className="absolute right-4 top-24 w-48 bg-[#1A1A1A] rounded-2xl shadow-2xl border border-[#D4AF37]/20 overflow-hidden z-50">
-            {languages.map((lang) => (
-              <button
-                key={lang.code}
-                onClick={() => { setLanguage(lang.code); setShowLanguageMenu(false); }}
-                className="w-full flex items-center gap-3 px-4 py-3 text-white hover:bg-[#D4AF37]/10 transition-all"
-              >
-                <span className="text-2xl">{lang.flag}</span>
-                <span className="font-medium">{lang.label}</span>
-                {language === lang.code && <Check className="w-5 h-5 text-[#D4AF37] ml-auto" />}
-              </button>
-            ))}
-          </div>
-        )}
       </header>
 
       {/* HERO SECTION COM QUIZ INICIAL */}
-      <section className="pt-32 pb-20 px-4 relative overflow-hidden">
+      <section className="pt-32 pb-20 px-4 relative overflow-hidden w-full">
         <div className="absolute inset-0 bg-gradient-to-b from-[#D4AF37]/5 to-transparent"></div>
         
-        <div className="max-w-7xl mx-auto relative z-10">
+        <div className="w-full max-w-7xl mx-auto relative z-10">
           {/* Quiz Inicial Banner */}
           {!isLoggedIn && (
             <div className="mb-12 bg-gradient-to-r from-[#D4AF37] to-amber-600 rounded-3xl p-8 text-center shadow-2xl">
@@ -1350,8 +1510,8 @@ export default function EliteLifeHome() {
       </section>
 
       {/* PLANOS SECTION */}
-      <section id="planos" className="py-20 px-4 bg-[#0B0B0B]">
-        <div className="max-w-7xl mx-auto">
+      <section id="planos" className="py-20 px-4 bg-[#0B0B0B] w-full">
+        <div className="w-full max-w-7xl mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
               Escolha Seu Plano
@@ -1418,8 +1578,8 @@ export default function EliteLifeHome() {
       </section>
 
       {/* TESTIMONIALS */}
-      <section className="py-20 px-4 bg-[#0B0B0B]">
-        <div className="max-w-7xl mx-auto">
+      <section className="py-20 px-4 bg-[#0B0B0B] w-full">
+        <div className="w-full max-w-7xl mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
               Resultados Reais
@@ -1461,14 +1621,16 @@ export default function EliteLifeHome() {
       </section>
 
       {/* FOOTER */}
-      <footer className="bg-[#1A1A1A] border-t border-[#D4AF37]/20 py-12 px-4">
-        <div className="max-w-7xl mx-auto">
+      <footer className="bg-[#1A1A1A] border-t border-[#D4AF37]/20 py-12 px-4 w-full">
+        <div className="w-full max-w-7xl mx-auto">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
             <div>
               <div className="flex items-center gap-3 mb-4">
-                <div className="w-12 h-12 bg-gradient-to-br from-[#D4AF37] to-amber-600 rounded-xl flex items-center justify-center">
-                  <Crown className="w-7 h-7 text-[#0B0B0B]" />
-                </div>
+                <img 
+                  src="https://k6hrqrxuu8obbfwn.public.blob.vercel-storage.com/temp/cfc3787e-8f3c-4fd6-b923-b1658b779ff7.jpg" 
+                  alt="Elite Life Logo" 
+                  className="h-12 w-auto rounded-xl"
+                />
                 <h3 className="text-xl font-bold text-white">Elite Life</h3>
               </div>
               <p className="text-[#9A9A9A] text-sm">
@@ -1499,10 +1661,10 @@ export default function EliteLifeHome() {
             <div>
               <h4 className="font-bold text-white mb-4">Redes Sociais</h4>
               <div className="flex gap-3">
-                <a href="https://instagram.com/elitelife" target="_blank" rel="noopener noreferrer" className="w-10 h-10 bg-[#2A2A2A] rounded-xl flex items-center justify-center hover:bg-[#D4AF37]/10 transition-all">
+                <a href="https://www.instagram.com/elitelife_experience" target="_blank" rel="noopener noreferrer" className="w-10 h-10 bg-[#2A2A2A] rounded-xl flex items-center justify-center hover:bg-[#D4AF37]/10 transition-all">
                   <Instagram className="w-5 h-5 text-white" />
                 </a>
-                <a href="https://t.me/elitelife" target="_blank" rel="noopener noreferrer" className="w-10 h-10 bg-[#2A2A2A] rounded-xl flex items-center justify-center hover:bg-[#D4AF37]/10 transition-all">
+                <a href="https://t.me/boost/elitelifeApp" target="_blank" rel="noopener noreferrer" className="w-10 h-10 bg-[#2A2A2A] rounded-xl flex items-center justify-center hover:bg-[#D4AF37]/10 transition-all">
                   <MessageSquare className="w-5 h-5 text-white" />
                 </a>
                 <a href="mailto:elitelife.norply@gmail.com" className="w-10 h-10 bg-[#2A2A2A] rounded-xl flex items-center justify-center hover:bg-[#D4AF37]/10 transition-all">
@@ -1528,8 +1690,7 @@ export default function EliteLifeHome() {
         <MessageSquare className="w-8 h-8 text-[#0B0B0B]" />
       </button>
 
-      {/* MODALS - Continuação com todos os modais implementados... */}
-      {/* Por questão de espaço, os modais serão implementados na próxima parte */}
+      {/* MODALS - Continuação no próximo arquivo devido ao limite */}
 
       <style jsx>{`
         @keyframes shake {

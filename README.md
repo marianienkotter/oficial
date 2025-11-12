@@ -1,2 +1,2 @@
-# oficial
-Projeto criado via Lasy - OFICIAL
+# Elite Life
+Projeto criado via Lasy - Elite Life

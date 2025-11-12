@@ -17,8 +17,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Criado com a Lasy",
-  description: "Projeto criado com Lasy AI",
+  title: "ELITE LIFE - Transforme sua vida em 90 dias",
+  description: "Corpo, mente e dinheiro no mesmo lugar. + de 50 mil alunos transformados.",
 };
 
 export default function RootLayout({

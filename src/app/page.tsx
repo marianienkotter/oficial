@@ -10,7 +10,8 @@ import {
   AlertCircle, Upload, ExternalLink, Trophy, Medal,
   Target, Flame, CheckCircle, XCircle, Plus, Minus,
   DollarSign, PieChart, TrendingDown, Send, Image as ImageIcon,
-  Mail, Eye, EyeOff, Phone, LogOut, Settings, Instagram
+  Mail, Eye, EyeOff, Phone, LogOut, Settings, Instagram,
+  Edit, Copy, Share2, Gift, Briefcase, LineChart, Save
 } from "lucide-react";
 
 export default function EliteLifeHome() {
@@ -27,11 +28,44 @@ export default function EliteLifeHome() {
   const [showPasswordLogin, setShowPasswordLogin] = useState(false);
   const [showPasswordSignup, setShowPasswordSignup] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [showAIChat, setShowAIChat] = useState(false);
+  const [showAgendaModal, setShowAgendaModal] = useState(false);
+  const [showWalletModal, setShowWalletModal] = useState(false);
+  const [showMedalsModal, setShowMedalsModal] = useState(false);
+  const [showAccountModal, setShowAccountModal] = useState(false);
+  const [showAffiliateModal, setShowAffiliateModal] = useState(false);
 
   // User state
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userName, setUserName] = useState("");
   const [userPlan, setUserPlan] = useState<"free" | "paid">("free");
+  const [userAvatar, setUserAvatar] = useState("https://i.pravatar.cc/150?img=12");
+  const [userDescription, setUserDescription] = useState("");
+
+  // AI Chat state
+  const [aiMessages, setAiMessages] = useState<Array<{role: string, content: string}>>([
+    { role: "assistant", content: "Olá! Sou a IA da Elite Life. Como posso ajudar você hoje?" }
+  ]);
+  const [aiInput, setAiInput] = useState("");
+
+  // Agenda state
+  const [agendaItems, setAgendaItems] = useState([
+    { id: 1, time: "07:00", title: "Treino Matinal", type: "fitness", editable: true },
+    { id: 2, time: "12:00", title: "Almoço Saudável", type: "nutrition", editable: true },
+    { id: 3, time: "15:00", title: "Estudar Curso", type: "learning", editable: true },
+    { id: 4, time: "19:00", title: "Jantar", type: "nutrition", editable: true },
+  ]);
+
+  // Wallet state
+  const [walletInvestments, setWalletInvestments] = useState([
+    { id: 1, name: "Ações Tech", amount: 5000, profit: 12.5, editable: true },
+    { id: 2, name: "Fundos Imobiliários", amount: 3000, profit: 8.3, editable: true },
+    { id: 3, name: "Renda Fixa", amount: 2000, profit: 5.1, editable: true },
+  ]);
+
+  // Affiliate state
+  const [affiliateCode, setAffiliateCode] = useState("ELITE-" + Math.random().toString(36).substr(2, 6).toUpperCase());
+  const [affiliateLink, setAffiliateLink] = useState(`https://elitelife.com/ref/${affiliateCode}`);
 
   // Video categories
   const videoCategories = [
@@ -117,7 +151,7 @@ export default function EliteLifeHome() {
         "1000 atividades e 1000 questionários",
         "Acesso à IA de suporte",
         "Relatórios semanais",
-        "Agenda completa",
+        "Agenda completa editável",
         "Tracker avançado (alimentação e nutrição)",
         "Certificado Elite Life a cada módulo"
       ]
@@ -154,7 +188,7 @@ export default function EliteLifeHome() {
         "Tudo do PRO PLUS +",
         "Funções premium da IA (planos automáticos fitness + financeiros)",
         "Chat social da comunidade",
-        "Carteira de investimentos simulada",
+        "Carteira Personalizada editável com relatórios de investimentos",
         "Dashboards avançados",
         "Relatórios detalhados de progresso físico e financeiro"
       ]
@@ -172,7 +206,7 @@ export default function EliteLifeHome() {
         "Todos os recursos do plano ELITE",
         "Pagamento anual com desconto",
         "Acesso completo a certificados",
-        "Agenda completa",
+        "Agenda completa editável",
         "Relatórios automáticos",
         "IA completa",
         "Suporte exclusivo"
@@ -235,6 +269,74 @@ export default function EliteLifeHome() {
     { id: 3, title: "Lembrete de agenda", message: "Treino em 30 minutos", time: "2h atrás", read: true },
   ];
 
+  const translations = {
+    pt: {
+      home: "Início",
+      courses: "Cursos",
+      videos: "Vídeos",
+      agenda: "Agenda",
+      tracker: "Tracker",
+      wallet: "Carteira",
+      influencer: "Influencer Pro",
+      ecommerce: "E-commerce",
+      affiliates: "Afiliados",
+      ranking: "Ranking",
+      dashboard: "Dashboard",
+      certificates: "Certificados",
+      support: "Suporte IA",
+      login: "Entrar",
+      signup: "Criar Conta",
+      hero: {
+        title: "Transforme sua vida em 90 dias",
+        subtitle: "Corpo, mente e dinheiro no mesmo lugar. + de 50 mil alunos transformados."
+      }
+    },
+    en: {
+      home: "Home",
+      courses: "Courses",
+      videos: "Videos",
+      agenda: "Schedule",
+      tracker: "Tracker",
+      wallet: "Wallet",
+      influencer: "Influencer Pro",
+      ecommerce: "E-commerce",
+      affiliates: "Affiliates",
+      ranking: "Ranking",
+      dashboard: "Dashboard",
+      certificates: "Certificates",
+      support: "AI Support",
+      login: "Login",
+      signup: "Sign Up",
+      hero: {
+        title: "Transform your life in 90 days",
+        subtitle: "Body, mind and money in one place. + 50k students transformed."
+      }
+    },
+    es: {
+      home: "Inicio",
+      courses: "Cursos",
+      videos: "Videos",
+      agenda: "Agenda",
+      tracker: "Tracker",
+      wallet: "Cartera",
+      influencer: "Influencer Pro",
+      ecommerce: "E-commerce",
+      affiliates: "Afiliados",
+      ranking: "Ranking",
+      dashboard: "Dashboard",
+      certificates: "Certificados",
+      support: "Soporte IA",
+      login: "Entrar",
+      signup: "Crear Cuenta",
+      hero: {
+        title: "Transforma tu vida en 90 días",
+        subtitle: "Cuerpo, mente y dinero en un solo lugar. + de 50 mil alumnos transformados."
+      }
+    }
+  };
+
+  const t = translations[language as keyof typeof translations];
+
   const languages = [
     { code: "pt", label: "Português", flag: "🇧🇷" },
     { code: "en", label: "English", flag: "🇺🇸" },
@@ -273,11 +375,20 @@ export default function EliteLifeHome() {
   ];
 
   const rankingData = [
-    { position: 1, name: "João Silva", points: 15420, earnings: "R$ 3.450,00", medal: "🥇" },
-    { position: 2, name: "Maria Santos", points: 14890, earnings: "R$ 2.890,00", medal: "🥈" },
-    { position: 3, name: "Pedro Costa", points: 13750, earnings: "R$ 2.340,00", medal: "🥉" },
-    { position: 4, name: "Ana Oliveira", points: 12340, earnings: "R$ 1.890,00", medal: "" },
-    { position: 5, name: "Carlos Souza", points: 11890, earnings: "R$ 1.560,00", medal: "" },
+    { position: 1, name: "João Silva", points: 15420, earnings: "R$ 3.450,00", medal: "🥇", badge: "Diamante" },
+    { position: 2, name: "Maria Santos", points: 14890, earnings: "R$ 2.890,00", medal: "🥈", badge: "Platina" },
+    { position: 3, name: "Pedro Costa", points: 13750, earnings: "R$ 2.340,00", medal: "🥉", badge: "Ouro" },
+    { position: 4, name: "Ana Oliveira", points: 12340, earnings: "R$ 1.890,00", medal: "", badge: "Prata" },
+    { position: 5, name: "Carlos Souza", points: 11890, earnings: "R$ 1.560,00", medal: "", badge: "Bronze" },
+  ];
+
+  const medals = [
+    { id: 1, name: "Iniciante", icon: "🌱", requirement: "Completar 5 atividades", unlocked: true },
+    { id: 2, name: "Bronze", icon: "🥉", requirement: "Completar 20 atividades", unlocked: true },
+    { id: 3, name: "Prata", icon: "🥈", requirement: "Completar 50 atividades", unlocked: false },
+    { id: 4, name: "Ouro", icon: "🥇", requirement: "Completar 100 atividades", unlocked: false },
+    { id: 5, name: "Platina", icon: "💎", requirement: "Completar 200 atividades", unlocked: false },
+    { id: 6, name: "Diamante", icon: "💠", requirement: "Completar 500 atividades", unlocked: false },
   ];
 
   const affiliateStats = [
@@ -314,6 +425,20 @@ export default function EliteLifeHome() {
       role: "Coach de Fitness",
       image: "https://i.pravatar.cc/150?img=7",
       text: "A combinação de treino, nutrição e mindset da Elite Life é perfeita. Meus clientes adoram!",
+      rating: 5
+    },
+    {
+      name: "Fernanda Lima",
+      role: "Investidora",
+      image: "https://i.pravatar.cc/150?img=9",
+      text: "A carteira personalizada me ajudou a organizar meus investimentos e aumentar meus lucros em 25%!",
+      rating: 5
+    },
+    {
+      name: "Lucas Mendes",
+      role: "Estudante",
+      image: "https://i.pravatar.cc/150?img=11",
+      text: "Consegui meu primeiro emprego aplicando o que aprendi nos cursos. Elite Life mudou minha vida!",
       rating: 5
     }
   ];
@@ -357,6 +482,27 @@ export default function EliteLifeHome() {
     window.location.href = "#planos";
   };
 
+  const handleAISubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!aiInput.trim()) return;
+
+    setAiMessages([...aiMessages, 
+      { role: "user", content: aiInput },
+      { role: "assistant", content: "Entendi sua pergunta! Como assistente da Elite Life, posso ajudar com informações sobre cursos, planos, agenda, tracker e muito mais. O que você gostaria de saber especificamente?" }
+    ]);
+    setAiInput("");
+  };
+
+  const copyAffiliateCode = () => {
+    navigator.clipboard.writeText(affiliateCode);
+    alert("Código copiado!");
+  };
+
+  const copyAffiliateLink = () => {
+    navigator.clipboard.writeText(affiliateLink);
+    alert("Link copiado!");
+  };
+
   return (
     <div className="min-h-screen bg-[#0B0B0B]">
       {/* Login Modal */}
@@ -374,7 +520,7 @@ export default function EliteLifeHome() {
               <div className="w-16 h-16 bg-gradient-to-br from-[#D4AF37] to-amber-600 rounded-xl flex items-center justify-center mx-auto mb-4">
                 <Crown className="w-8 h-8 text-[#0B0B0B]" />
               </div>
-              <h2 className="text-3xl font-bold text-white mb-2">Entrar</h2>
+              <h2 className="text-3xl font-bold text-white mb-2">{t.login}</h2>
               <p className="text-[#9A9A9A]">Acesse sua conta Elite Life</p>
             </div>
 
@@ -416,7 +562,7 @@ export default function EliteLifeHome() {
                 type="submit"
                 className="w-full bg-gradient-to-r from-[#D4AF37] to-amber-600 text-[#0B0B0B] font-bold py-3 rounded-xl hover:scale-105 transition-all duration-300"
               >
-                Entrar
+                {t.login}
               </button>
             </form>
 
@@ -430,7 +576,7 @@ export default function EliteLifeHome() {
                   }}
                   className="text-[#D4AF37] hover:text-amber-500 font-medium transition-colors"
                 >
-                  Criar conta
+                  {t.signup}
                 </button>
               </p>
             </div>
@@ -453,7 +599,7 @@ export default function EliteLifeHome() {
               <div className="w-16 h-16 bg-gradient-to-br from-[#D4AF37] to-amber-600 rounded-xl flex items-center justify-center mx-auto mb-4">
                 <Crown className="w-8 h-8 text-[#0B0B0B]" />
               </div>
-              <h2 className="text-3xl font-bold text-white mb-2">Criar Conta</h2>
+              <h2 className="text-3xl font-bold text-white mb-2">{t.signup}</h2>
               <p className="text-[#9A9A9A]">Comece sua transformação hoje</p>
             </div>
 
@@ -539,7 +685,7 @@ export default function EliteLifeHome() {
                 type="submit"
                 className="w-full bg-gradient-to-r from-[#D4AF37] to-amber-600 text-[#0B0B0B] font-bold py-3 rounded-xl hover:scale-105 transition-all duration-300"
               >
-                Criar Conta
+                {t.signup}
               </button>
             </form>
 
@@ -553,9 +699,421 @@ export default function EliteLifeHome() {
                   }}
                   className="text-[#D4AF37] hover:text-amber-500 font-medium transition-colors"
                 >
-                  Entrar
+                  {t.login}
                 </button>
               </p>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* AI Chat Modal */}
+      {showAIChat && (
+        <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/80 backdrop-blur-sm p-4">
+          <div className="bg-[#1A1A1A] border border-white/10 rounded-2xl w-full max-w-2xl h-[600px] flex flex-col relative">
+            <button 
+              onClick={() => setShowAIChat(false)}
+              className="absolute top-4 right-4 text-[#9A9A9A] hover:text-white transition-colors z-10"
+            >
+              <X className="w-6 h-6" />
+            </button>
+
+            <div className="p-6 border-b border-white/10">
+              <div className="flex items-center gap-3">
+                <div className="w-12 h-12 bg-gradient-to-br from-[#D4AF37] to-amber-600 rounded-xl flex items-center justify-center">
+                  <MessageSquare className="w-6 h-6 text-[#0B0B0B]" />
+                </div>
+                <div>
+                  <h3 className="text-white font-bold">Suporte IA Elite Life</h3>
+                  <p className="text-[#9A9A9A] text-sm">Pergunte qualquer coisa sobre a plataforma</p>
+                </div>
+              </div>
+            </div>
+
+            <div className="flex-1 overflow-y-auto p-6 space-y-4">
+              {aiMessages.map((msg, idx) => (
+                <div key={idx} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
+                  <div className={`max-w-[80%] p-4 rounded-2xl ${
+                    msg.role === 'user' 
+                      ? 'bg-gradient-to-r from-[#D4AF37] to-amber-600 text-[#0B0B0B]' 
+                      : 'bg-white/5 text-white'
+                  }`}>
+                    {msg.content}
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            <form onSubmit={handleAISubmit} className="p-6 border-t border-white/10">
+              <div className="flex gap-3">
+                <input 
+                  type="text"
+                  value={aiInput}
+                  onChange={(e) => setAiInput(e.target.value)}
+                  placeholder="Digite sua pergunta..."
+                  className="flex-1 bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white placeholder:text-[#9A9A9A] focus:outline-none focus:border-[#D4AF37] transition-colors"
+                />
+                <button 
+                  type="submit"
+                  className="px-6 py-3 bg-gradient-to-r from-[#D4AF37] to-amber-600 text-[#0B0B0B] font-bold rounded-xl hover:scale-105 transition-all duration-300"
+                >
+                  Enviar
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+
+      {/* Agenda Modal */}
+      {showAgendaModal && (
+        <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/80 backdrop-blur-sm p-4">
+          <div className="bg-[#1A1A1A] border border-white/10 rounded-2xl w-full max-w-2xl max-h-[80vh] overflow-y-auto relative">
+            <button 
+              onClick={() => setShowAgendaModal(false)}
+              className="absolute top-4 right-4 text-[#9A9A9A] hover:text-white transition-colors z-10"
+            >
+              <X className="w-6 h-6" />
+            </button>
+
+            <div className="p-8">
+              <div className="text-center mb-8">
+                <Calendar className="w-16 h-16 text-[#D4AF37] mx-auto mb-4" />
+                <h3 className="text-3xl font-bold text-white mb-2">Agenda Personalizada</h3>
+                <p className="text-[#9A9A9A]">
+                  {userPlan === "paid" 
+                    ? "Edite sua agenda conforme suas necessidades" 
+                    : "Assine um plano para desbloquear a agenda completa editável"}
+                </p>
+              </div>
+
+              {userPlan === "free" && (
+                <div className="bg-yellow-500/10 border border-yellow-500/30 rounded-xl p-4 mb-6">
+                  <div className="flex items-center gap-3">
+                    <AlertCircle className="w-5 h-5 text-yellow-400" />
+                    <p className="text-yellow-400 text-sm">
+                      Você está usando a versão gratuita. Assine para liberar rotinas ilimitadas, IA e relatórios.
+                    </p>
+                  </div>
+                  <button 
+                    onClick={navigateToPlans}
+                    className="w-full mt-4 px-6 py-3 bg-gradient-to-r from-[#D4AF37] to-amber-600 text-[#0B0B0B] font-bold rounded-xl hover:scale-105 transition-all duration-300"
+                  >
+                    Ver Planos
+                  </button>
+                </div>
+              )}
+
+              <div className="space-y-3">
+                {agendaItems.map((item) => (
+                  <div key={item.id} className="bg-white/5 border border-white/10 rounded-xl p-4 flex items-center justify-between">
+                    <div className="flex items-center gap-4">
+                      <div className="text-[#D4AF37] font-bold">{item.time}</div>
+                      <div>
+                        <div className="text-white font-medium">{item.title}</div>
+                        <div className="text-[#9A9A9A] text-xs capitalize">{item.type}</div>
+                      </div>
+                    </div>
+                    {userPlan === "paid" && (
+                      <button className="p-2 hover:bg-white/5 rounded-lg transition-colors">
+                        <Edit className="w-5 h-5 text-[#9A9A9A]" />
+                      </button>
+                    )}
+                  </div>
+                ))}
+              </div>
+
+              {userPlan === "paid" && (
+                <button className="w-full mt-6 px-6 py-3 bg-white/5 border border-white/10 text-white font-bold rounded-xl hover:bg-white/10 transition-all duration-300 flex items-center justify-center gap-2">
+                  <Plus className="w-5 h-5" />
+                  Adicionar Item
+                </button>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Wallet Modal */}
+      {showWalletModal && (
+        <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/80 backdrop-blur-sm p-4">
+          <div className="bg-[#1A1A1A] border border-white/10 rounded-2xl w-full max-w-3xl max-h-[80vh] overflow-y-auto relative">
+            <button 
+              onClick={() => setShowWalletModal(false)}
+              className="absolute top-4 right-4 text-[#9A9A9A] hover:text-white transition-colors z-10"
+            >
+              <X className="w-6 h-6" />
+            </button>
+
+            <div className="p-8">
+              <div className="text-center mb-8">
+                <Wallet className="w-16 h-16 text-[#D4AF37] mx-auto mb-4" />
+                <h3 className="text-3xl font-bold text-white mb-2">Carteira Personalizada</h3>
+                <p className="text-[#9A9A9A]">
+                  Gerencie seus investimentos e teste estratégias
+                </p>
+              </div>
+
+              <div className="grid md:grid-cols-3 gap-4 mb-8">
+                <div className="bg-gradient-to-br from-green-500/20 to-emerald-600/20 border border-green-500/30 rounded-xl p-4">
+                  <div className="text-green-400 text-sm mb-1">Total Investido</div>
+                  <div className="text-2xl font-bold text-white">R$ 10.000,00</div>
+                </div>
+                <div className="bg-gradient-to-br from-blue-500/20 to-cyan-600/20 border border-blue-500/30 rounded-xl p-4">
+                  <div className="text-blue-400 text-sm mb-1">Lucro Total</div>
+                  <div className="text-2xl font-bold text-white">R$ 1.245,00</div>
+                </div>
+                <div className="bg-gradient-to-br from-[#D4AF37]/20 to-amber-600/20 border border-[#D4AF37]/30 rounded-xl p-4">
+                  <div className="text-[#D4AF37] text-sm mb-1">Rentabilidade</div>
+                  <div className="text-2xl font-bold text-white">+12.45%</div>
+                </div>
+              </div>
+
+              <div className="space-y-3 mb-6">
+                {walletInvestments.map((inv) => (
+                  <div key={inv.id} className="bg-white/5 border border-white/10 rounded-xl p-4">
+                    <div className="flex items-center justify-between mb-2">
+                      <div className="text-white font-bold">{inv.name}</div>
+                      <div className="flex items-center gap-2">
+                        <span className={`text-sm font-bold ${inv.profit > 0 ? 'text-green-400' : 'text-red-400'}`}>
+                          {inv.profit > 0 ? '+' : ''}{inv.profit}%
+                        </span>
+                        {userPlan === "paid" && (
+                          <button className="p-1 hover:bg-white/5 rounded-lg transition-colors">
+                            <Edit className="w-4 h-4 text-[#9A9A9A]" />
+                          </button>
+                        )}
+                      </div>
+                    </div>
+                    <div className="text-[#9A9A9A] text-sm">
+                      Investido: R$ {inv.amount.toLocaleString('pt-BR')}
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              {userPlan === "paid" ? (
+                <>
+                  <button className="w-full mb-4 px-6 py-3 bg-white/5 border border-white/10 text-white font-bold rounded-xl hover:bg-white/10 transition-all duration-300 flex items-center justify-center gap-2">
+                    <Plus className="w-5 h-5" />
+                    Adicionar Investimento
+                  </button>
+                  <button className="w-full px-6 py-3 bg-gradient-to-r from-[#D4AF37] to-amber-600 text-[#0B0B0B] font-bold rounded-xl hover:scale-105 transition-all duration-300 flex items-center justify-center gap-2">
+                    <LineChart className="w-5 h-5" />
+                    Gerar Relatório de Testes
+                  </button>
+                </>
+              ) : (
+                <div className="bg-yellow-500/10 border border-yellow-500/30 rounded-xl p-6 text-center">
+                  <Lock className="w-12 h-12 text-yellow-400 mx-auto mb-3" />
+                  <p className="text-yellow-400 mb-4">Assine para editar sua carteira e gerar relatórios</p>
+                  <button 
+                    onClick={navigateToPlans}
+                    className="px-6 py-3 bg-gradient-to-r from-[#D4AF37] to-amber-600 text-[#0B0B0B] font-bold rounded-xl hover:scale-105 transition-all duration-300"
+                  >
+                    Ver Planos
+                  </button>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Medals Modal */}
+      {showMedalsModal && (
+        <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/80 backdrop-blur-sm p-4">
+          <div className="bg-[#1A1A1A] border border-white/10 rounded-2xl w-full max-w-2xl max-h-[80vh] overflow-y-auto relative">
+            <button 
+              onClick={() => setShowMedalsModal(false)}
+              className="absolute top-4 right-4 text-[#9A9A9A] hover:text-white transition-colors z-10"
+            >
+              <X className="w-6 h-6" />
+            </button>
+
+            <div className="p-8">
+              <div className="text-center mb-8">
+                <Medal className="w-16 h-16 text-[#D4AF37] mx-auto mb-4" />
+                <h3 className="text-3xl font-bold text-white mb-2">Medalhas Disponíveis</h3>
+                <p className="text-[#9A9A9A]">Complete atividades para desbloquear medalhas</p>
+              </div>
+
+              <div className="grid md:grid-cols-2 gap-4">
+                {medals.map((medal) => (
+                  <div 
+                    key={medal.id} 
+                    className={`p-6 rounded-xl border ${
+                      medal.unlocked 
+                        ? 'bg-gradient-to-br from-[#D4AF37]/20 to-amber-600/20 border-[#D4AF37]/30' 
+                        : 'bg-white/5 border-white/10'
+                    }`}
+                  >
+                    <div className="text-center">
+                      <div className="text-5xl mb-3">{medal.icon}</div>
+                      <h4 className="text-white font-bold mb-2">{medal.name}</h4>
+                      <p className="text-[#9A9A9A] text-sm mb-3">{medal.requirement}</p>
+                      {medal.unlocked ? (
+                        <div className="flex items-center justify-center gap-2 text-[#D4AF37] text-sm font-bold">
+                          <CheckCircle className="w-4 h-4" />
+                          Desbloqueada
+                        </div>
+                      ) : (
+                        <div className="flex items-center justify-center gap-2 text-[#9A9A9A] text-sm">
+                          <Lock className="w-4 h-4" />
+                          Bloqueada
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Account Modal */}
+      {showAccountModal && (
+        <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/80 backdrop-blur-sm p-4">
+          <div className="bg-[#1A1A1A] border border-white/10 rounded-2xl w-full max-w-md relative">
+            <button 
+              onClick={() => setShowAccountModal(false)}
+              className="absolute top-4 right-4 text-[#9A9A9A] hover:text-white transition-colors z-10"
+            >
+              <X className="w-6 h-6" />
+            </button>
+
+            <div className="p-8">
+              <div className="text-center mb-8">
+                <div className="relative inline-block mb-4">
+                  <img 
+                    src={userAvatar} 
+                    alt="Avatar"
+                    className="w-24 h-24 rounded-full border-4 border-[#D4AF37]"
+                  />
+                  <button className="absolute bottom-0 right-0 w-8 h-8 bg-[#D4AF37] rounded-full flex items-center justify-center hover:scale-110 transition-all">
+                    <Upload className="w-4 h-4 text-[#0B0B0B]" />
+                  </button>
+                </div>
+                <h3 className="text-2xl font-bold text-white mb-2">Minha Conta</h3>
+              </div>
+
+              <div className="space-y-4">
+                <div>
+                  <label className="block text-white text-sm font-medium mb-2">Nome</label>
+                  <input 
+                    type="text"
+                    value={userName}
+                    onChange={(e) => setUserName(e.target.value)}
+                    className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-[#D4AF37] transition-colors"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-white text-sm font-medium mb-2">Descrição</label>
+                  <textarea 
+                    value={userDescription}
+                    onChange={(e) => setUserDescription(e.target.value)}
+                    placeholder="Conte um pouco sobre você..."
+                    rows={4}
+                    className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white placeholder:text-[#9A9A9A] focus:outline-none focus:border-[#D4AF37] transition-colors resize-none"
+                  />
+                </div>
+
+                <button className="w-full px-6 py-3 bg-gradient-to-r from-[#D4AF37] to-amber-600 text-[#0B0B0B] font-bold rounded-xl hover:scale-105 transition-all duration-300 flex items-center justify-center gap-2">
+                  <Save className="w-5 h-5" />
+                  Salvar Alterações
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Affiliate Modal */}
+      {showAffiliateModal && (
+        <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/80 backdrop-blur-sm p-4">
+          <div className="bg-[#1A1A1A] border border-white/10 rounded-2xl w-full max-w-3xl max-h-[80vh] overflow-y-auto relative">
+            <button 
+              onClick={() => setShowAffiliateModal(false)}
+              className="absolute top-4 right-4 text-[#9A9A9A] hover:text-white transition-colors z-10"
+            >
+              <X className="w-6 h-6" />
+            </button>
+
+            <div className="p-8">
+              <div className="text-center mb-8">
+                <Gift className="w-16 h-16 text-[#D4AF37] mx-auto mb-4" />
+                <h3 className="text-3xl font-bold text-white mb-2">Programa de Afiliados</h3>
+                <p className="text-[#9A9A9A]">Ganhe 15% de comissão em cada venda</p>
+              </div>
+
+              <div className="grid md:grid-cols-2 gap-4 mb-8">
+                {affiliateStats.map((stat, idx) => {
+                  const Icon = stat.icon;
+                  return (
+                    <div key={idx} className="bg-white/5 border border-white/10 rounded-xl p-4">
+                      <div className="flex items-center gap-3">
+                        <div className="w-12 h-12 bg-[#D4AF37]/20 rounded-xl flex items-center justify-center">
+                          <Icon className="w-6 h-6 text-[#D4AF37]" />
+                        </div>
+                        <div>
+                          <div className="text-[#9A9A9A] text-sm">{stat.label}</div>
+                          <div className="text-white font-bold text-lg">{stat.value}</div>
+                        </div>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+
+              <div className="space-y-4 mb-8">
+                <div className="bg-white/5 border border-white/10 rounded-xl p-4">
+                  <div className="flex items-center justify-between mb-2">
+                    <span className="text-white font-medium">Seu Código</span>
+                    <button 
+                      onClick={copyAffiliateCode}
+                      className="flex items-center gap-2 px-3 py-1 bg-[#D4AF37]/20 text-[#D4AF37] rounded-lg hover:bg-[#D4AF37]/30 transition-colors text-sm"
+                    >
+                      <Copy className="w-4 h-4" />
+                      Copiar
+                    </button>
+                  </div>
+                  <div className="text-[#D4AF37] font-mono text-lg">{affiliateCode}</div>
+                </div>
+
+                <div className="bg-white/5 border border-white/10 rounded-xl p-4">
+                  <div className="flex items-center justify-between mb-2">
+                    <span className="text-white font-medium">Seu Link</span>
+                    <button 
+                      onClick={copyAffiliateLink}
+                      className="flex items-center gap-2 px-3 py-1 bg-[#D4AF37]/20 text-[#D4AF37] rounded-lg hover:bg-[#D4AF37]/30 transition-colors text-sm"
+                    >
+                      <Copy className="w-4 h-4" />
+                      Copiar
+                    </button>
+                  </div>
+                  <div className="text-[#9A9A9A] text-sm break-all">{affiliateLink}</div>
+                </div>
+              </div>
+
+              <div className="bg-gradient-to-r from-[#D4AF37]/10 to-amber-500/10 border border-[#D4AF37]/30 rounded-xl p-6">
+                <h4 className="text-white font-bold mb-3">Ranking de Afiliados</h4>
+                <div className="space-y-2">
+                  {rankingData.slice(0, 3).map((user) => (
+                    <div key={user.position} className="flex items-center justify-between p-3 bg-white/5 rounded-lg">
+                      <div className="flex items-center gap-3">
+                        <span className="text-2xl">{user.medal}</span>
+                        <div>
+                          <div className="text-white font-medium">{user.name}</div>
+                          <div className="text-[#9A9A9A] text-xs">{user.earnings}</div>
+                        </div>
+                      </div>
+                      <div className="text-[#D4AF37] font-bold">#{user.position}</div>
+                    </div>
+                  ))}
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -568,9 +1126,11 @@ export default function EliteLifeHome() {
           <div className="flex items-center justify-between py-4 border-b border-white/5">
             {/* Logo */}
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 bg-gradient-to-br from-[#D4AF37] to-amber-600 rounded-xl flex items-center justify-center">
-                <Crown className="w-6 h-6 text-[#0B0B0B]" />
-              </div>
+              <img 
+                src="https://k6hrqrxuu8obbfwn.public.blob.vercel-storage.com/temp/e52a264a-59c5-4588-b926-9e121ca1f989.jpg" 
+                alt="Elite Life Logo"
+                className="w-10 h-10 rounded-xl object-cover"
+              />
               <h1 className="text-2xl font-bold text-[#D4AF37]">ELITE LIFE</h1>
             </div>
 
@@ -680,9 +1240,11 @@ export default function EliteLifeHome() {
                     onClick={() => setShowUserMenu(!showUserMenu)}
                     className="flex items-center gap-3 px-4 py-2 hover:bg-white/5 rounded-lg transition-colors"
                   >
-                    <div className="w-8 h-8 bg-gradient-to-br from-[#D4AF37] to-amber-600 rounded-full flex items-center justify-center">
-                      <User className="w-5 h-5 text-[#0B0B0B]" />
-                    </div>
+                    <img 
+                      src={userAvatar}
+                      alt="Avatar"
+                      className="w-8 h-8 rounded-full"
+                    />
                     <div className="hidden md:block text-left">
                       <div className="text-sm font-medium text-white">{userName}</div>
                       <div className="text-xs text-[#D4AF37]">Elite Member</div>
@@ -693,7 +1255,13 @@ export default function EliteLifeHome() {
                   {/* User Dropdown */}
                   {showUserMenu && (
                     <div className="absolute right-0 mt-2 w-56 bg-[#1A1A1A] border border-white/10 rounded-xl shadow-2xl overflow-hidden">
-                      <button className="w-full flex items-center gap-3 px-4 py-3 hover:bg-white/5 transition-colors text-left">
+                      <button 
+                        onClick={() => {
+                          setShowAccountModal(true);
+                          setShowUserMenu(false);
+                        }}
+                        className="w-full flex items-center gap-3 px-4 py-3 hover:bg-white/5 transition-colors text-left"
+                      >
                         <User className="w-5 h-5 text-[#9A9A9A]" />
                         <span className="text-white text-sm">Minha Conta</span>
                       </button>
@@ -704,7 +1272,13 @@ export default function EliteLifeHome() {
                         <Crown className="w-5 h-5 text-[#D4AF37]" />
                         <span className="text-white text-sm">Editar Plano</span>
                       </button>
-                      <button className="w-full flex items-center gap-3 px-4 py-3 hover:bg-white/5 transition-colors text-left">
+                      <button 
+                        onClick={() => {
+                          setShowMedalsModal(true);
+                          setShowUserMenu(false);
+                        }}
+                        className="w-full flex items-center gap-3 px-4 py-3 hover:bg-white/5 transition-colors text-left"
+                      >
                         <Medal className="w-5 h-5 text-[#9A9A9A]" />
                         <span className="text-white text-sm">Medalhas</span>
                       </button>
@@ -731,14 +1305,14 @@ export default function EliteLifeHome() {
                     className="px-4 py-2 text-white hover:bg-white/5 rounded-lg transition-colors text-sm font-medium"
                     title="Entrar na sua conta"
                   >
-                    Entrar
+                    {t.login}
                   </button>
                   <button 
                     onClick={() => setShowSignupModal(true)}
                     className="px-4 py-2 bg-gradient-to-r from-[#D4AF37] to-amber-600 text-[#0B0B0B] rounded-lg hover:scale-105 transition-all duration-300 text-sm font-bold"
                     title="Crie sua conta"
                   >
-                    Criar Conta
+                    {t.signup}
                   </button>
                 </div>
               )}
@@ -760,7 +1334,7 @@ export default function EliteLifeHome() {
           {/* Main Navigation */}
           <nav className={`${isMenuOpen ? 'block' : 'hidden'} md:block py-4`}>
             <ul className="flex flex-col md:flex-row md:items-center md:justify-center gap-1 md:gap-6 text-sm">
-              <li><a href="#" onClick={() => setActiveSection("home")} className="block px-4 py-2 text-[#D4AF37] hover:bg-white/5 rounded-lg transition-colors font-medium" title="Início">Início</a></li>
+              <li><a href="#" onClick={() => setActiveSection("home")} className="block px-4 py-2 text-[#D4AF37] hover:bg-white/5 rounded-lg transition-colors font-medium" title="Início">{t.home}</a></li>
               
               <li>
                 <button 
@@ -769,7 +1343,7 @@ export default function EliteLifeHome() {
                   title="+ de 100 Cursos"
                 >
                   {userPlan === "free" && <Lock className="w-4 h-4" />}
-                  Cursos
+                  {t.courses}
                 </button>
               </li>
               
@@ -780,21 +1354,30 @@ export default function EliteLifeHome() {
                   title="Vídeos"
                 >
                   {userPlan === "free" && <Lock className="w-4 h-4" />}
-                  Vídeos
+                  {t.videos}
                 </button>
               </li>
               
-              <li><a href="#agenda" onClick={() => setActiveSection("agenda")} className="block px-4 py-2 text-[#9A9A9A] hover:text-white hover:bg-white/5 rounded-lg transition-colors" title="Agenda">Agenda</a></li>
-              <li><a href="#tracker" onClick={() => setActiveSection("tracker")} className="block px-4 py-2 text-[#9A9A9A] hover:text-white hover:bg-white/5 rounded-lg transition-colors" title="Tracker">Tracker</a></li>
+              <li>
+                <button 
+                  onClick={() => setShowAgendaModal(true)}
+                  className="block px-4 py-2 text-[#9A9A9A] hover:text-white hover:bg-white/5 rounded-lg transition-colors" 
+                  title="Agenda"
+                >
+                  {t.agenda}
+                </button>
+              </li>
+              
+              <li><a href="#tracker" onClick={() => setActiveSection("tracker")} className="block px-4 py-2 text-[#9A9A9A] hover:text-white hover:bg-white/5 rounded-lg transition-colors" title="Tracker">{t.tracker}</a></li>
               
               <li>
                 <button 
-                  onClick={() => userPlan === "paid" ? window.location.href = "#carteira" : handleLockedClick("/carteira")}
+                  onClick={() => userPlan === "paid" ? setShowWalletModal(true) : handleLockedClick("/carteira")}
                   className="w-full text-left flex items-center gap-2 px-4 py-2 text-[#9A9A9A] hover:text-white hover:bg-white/5 rounded-lg transition-colors"
-                  title="Carteira"
+                  title="Carteira Personalizada"
                 >
                   {userPlan === "free" && <Lock className="w-4 h-4" />}
-                  Carteira
+                  {t.wallet}
                 </button>
               </li>
               
@@ -805,24 +1388,33 @@ export default function EliteLifeHome() {
                   title="Influencer Pro"
                 >
                   <Lock className="w-4 h-4" />
-                  Influencer Pro
+                  {t.influencer}
                 </button>
               </li>
               
-              <li><a href="#ecommerce" onClick={() => setActiveSection("ecommerce")} className="block px-4 py-2 text-cyan-400 hover:text-cyan-300 hover:bg-white/5 rounded-lg transition-colors" title="E-commerce">E-commerce</a></li>
+              <li>
+                <a 
+                  href="#ecommerce" 
+                  onClick={() => setActiveSection("ecommerce")} 
+                  className="block px-4 py-2 text-cyan-400 hover:text-cyan-300 hover:bg-white/5 rounded-lg transition-colors" 
+                  title="E-commerce"
+                >
+                  {t.ecommerce}
+                </a>
+              </li>
               
               <li>
                 <button 
-                  onClick={() => isLoggedIn ? window.location.href = "#afilhados" : setShowLoginModal(true)}
+                  onClick={() => isLoggedIn ? setShowAffiliateModal(true) : setShowLoginModal(true)}
                   className="w-full text-left flex items-center gap-2 px-4 py-2 text-[#9A9A9A] hover:text-white hover:bg-white/5 rounded-lg transition-colors"
                   title="Afiliados"
                 >
                   {!isLoggedIn && <Lock className="w-4 h-4" />}
-                  Afiliados
+                  {t.affiliates}
                 </button>
               </li>
               
-              <li><a href="#ranking" onClick={() => setActiveSection("ranking")} className="block px-4 py-2 text-[#9A9A9A] hover:text-white hover:bg-white/5 rounded-lg transition-colors" title="Top pontos, medalhas e afiliados">Ranking</a></li>
+              <li><a href="#ranking" onClick={() => setActiveSection("ranking")} className="block px-4 py-2 text-[#9A9A9A] hover:text-white hover:bg-white/5 rounded-lg transition-colors" title="Top pontos, medalhas e afiliados">{t.ranking}</a></li>
               
               <li>
                 <button 
@@ -831,7 +1423,7 @@ export default function EliteLifeHome() {
                   title="Resumo do seu progresso (requer plano)"
                 >
                   {userPlan === "free" && <Lock className="w-4 h-4" />}
-                  Dashboard
+                  {t.dashboard}
                 </button>
               </li>
               
@@ -842,11 +1434,9 @@ export default function EliteLifeHome() {
                   title="Certificados ELITE LIFE (desbloqueados ao concluir cursos)"
                 >
                   {userPlan === "free" && <Lock className="w-4 h-4" />}
-                  Certificados
+                  {t.certificates}
                 </button>
               </li>
-              
-              <li><a href="#suporte" className="block px-4 py-2 text-[#9A9A9A] hover:text-white hover:bg-white/5 rounded-lg transition-colors" title="Ajuda por IA">Suporte IA</a></li>
             </ul>
           </nav>
         </div>
@@ -867,15 +1457,15 @@ export default function EliteLifeHome() {
 
             {/* Headline */}
             <h2 className="text-4xl md:text-6xl lg:text-7xl font-bold text-white mb-6 leading-tight">
-              Transforme sua vida em{" "}
+              {t.hero.title.split(' ').slice(0, -2).join(' ')}{" "}
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#D4AF37] to-amber-500">
-                90 dias
+                {t.hero.title.split(' ').slice(-2).join(' ')}
               </span>
             </h2>
 
             {/* Subheadline */}
             <p className="text-xl md:text-2xl text-[#9A9A9A] mb-12 max-w-2xl mx-auto">
-              Corpo, mente e dinheiro no mesmo lugar. + de 50 mil alunos transformados.
+              {t.hero.subtitle}
             </p>
 
             {/* CTAs */}
@@ -884,7 +1474,7 @@ export default function EliteLifeHome() {
                 onClick={() => setShowSignupModal(true)}
                 className="w-full sm:w-auto px-8 py-4 bg-gradient-to-r from-[#D4AF37] to-amber-600 text-[#0B0B0B] font-bold rounded-xl hover:scale-105 transition-all duration-300 shadow-lg shadow-[#D4AF37]/20"
               >
-                Criar Conta Grátis
+                {t.signup}
               </button>
               <a 
                 href="#planos"
@@ -921,9 +1511,9 @@ export default function EliteLifeHome() {
             <p className="text-xl text-[#9A9A9A]">Veja o que nossos alunos estão dizendo</p>
           </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-7xl mx-auto mb-12">
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-7xl mx-auto mb-12">
             {testimonials.map((testimonial, index) => (
-              <div key={index} className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-6">
+              <div key={index} className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-6 hover:scale-105 transition-all duration-300">
                 <div className="flex items-center gap-3 mb-4">
                   <img 
                     src={testimonial.image} 
@@ -1105,7 +1695,10 @@ export default function EliteLifeHome() {
               <button className="px-6 py-3 bg-white/5 border border-white/10 text-[#9A9A9A] rounded-xl font-bold hover:bg-white/10">
                 Ranking de Medalhas
               </button>
-              <button className="px-6 py-3 bg-white/5 border border-white/10 text-[#9A9A9A] rounded-xl font-bold hover:bg-white/10">
+              <button 
+                onClick={() => setShowAffiliateModal(true)}
+                className="px-6 py-3 bg-white/5 border border-white/10 text-[#9A9A9A] rounded-xl font-bold hover:bg-white/10"
+              >
                 Ranking de Afilhados
               </button>
             </div>
@@ -1130,7 +1723,7 @@ export default function EliteLifeHome() {
                         </div>
                         <div>
                           <div className="text-white font-bold">{user.name}</div>
-                          <div className="text-[#9A9A9A] text-sm">{user.points.toLocaleString('pt-BR')} pontos</div>
+                          <div className="text-[#9A9A9A] text-sm">{user.points.toLocaleString('pt-BR')} pontos • Medalha: {user.badge}</div>
                         </div>
                       </div>
                       <div className="text-right">
@@ -1161,7 +1754,7 @@ export default function EliteLifeHome() {
       </section>
 
       {/* Plans Section */}
-      <section id="planos" className="py-20">
+      <section id="planos" className="py-20 bg-gradient-to-b from-white/5 to-transparent">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
             <h3 className="text-4xl md:text-5xl font-bold text-white mb-4">
@@ -1251,6 +1844,13 @@ export default function EliteLifeHome() {
 
                   {/* CTA Button */}
                   <button
+                    onClick={() => {
+                      if (plan.id === 1) {
+                        setShowSignupModal(true);
+                      } else {
+                        alert(`Você selecionou o plano ${plan.name}! Redirecionando para pagamento...`);
+                      }
+                    }}
                     className={`w-full py-3 rounded-xl font-bold text-white transition-all duration-300 hover:scale-105 hover:shadow-xl ${
                       plan.id === 1
                         ? 'bg-gradient-to-r from-gray-600 to-gray-700'
@@ -1268,6 +1868,7 @@ export default function EliteLifeHome() {
 
       {/* AI Support Chat Button */}
       <button 
+        onClick={() => setShowAIChat(true)}
         className="fixed bottom-6 right-6 w-16 h-16 bg-gradient-to-r from-[#D4AF37] to-amber-600 rounded-full shadow-2xl shadow-[#D4AF37]/30 flex items-center justify-center hover:scale-110 transition-all duration-300 z-50"
         title="Ajuda por IA"
       >
@@ -1281,9 +1882,11 @@ export default function EliteLifeHome() {
             {/* Logo & Description */}
             <div>
               <div className="flex items-center gap-3 mb-4">
-                <div className="w-10 h-10 bg-gradient-to-br from-[#D4AF37] to-amber-600 rounded-xl flex items-center justify-center">
-                  <Crown className="w-6 h-6 text-[#0B0B0B]" />
-                </div>
+                <img 
+                  src="https://k6hrqrxuu8obbfwn.public.blob.vercel-storage.com/temp/e52a264a-59c5-4588-b926-9e121ca1f989.jpg" 
+                  alt="Elite Life Logo"
+                  className="w-10 h-10 rounded-xl object-cover"
+                />
                 <h1 className="text-2xl font-bold text-[#D4AF37]">ELITE LIFE</h1>
               </div>
               <p className="text-[#9A9A9A] text-sm">

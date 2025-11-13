@@ -54,6 +54,7 @@ export default function EliteLifeHome() {
   const [showInitialQuizModal, setShowInitialQuizModal] = useState(false);
   const [showVideosModal, setShowVideosModal] = useState(false);
   const [showRankingModal, setShowRankingModal] = useState(false);
+  const [showCouponModal, setShowCouponModal] = useState(false);
   const [selectedVideoId, setSelectedVideoId] = useState("");
   const [selectedPlan, setSelectedPlan] = useState<any>(null);
 
@@ -66,6 +67,8 @@ export default function EliteLifeHome() {
   const [userEmail, setUserEmail] = useState("usuario@email.com");
   const [userPhone, setUserPhone] = useState("(11) 99999-9999");
   const [userPoints, setUserPoints] = useState(2450);
+  const [couponUsed, setCouponUsed] = useState(false);
+  const [discountCode, setDiscountCode] = useState("");
 
   // Initial Quiz state
   const [initialQuizStep, setInitialQuizStep] = useState(0);
@@ -93,6 +96,14 @@ export default function EliteLifeHome() {
     waterGoal: 2000,
     calories: 0,
     caloriesGoal: 2000,
+    protein: 0,
+    proteinGoal: 150,
+    carbs: 0,
+    carbsGoal: 250,
+    fat: 0,
+    fatGoal: 70,
+    fiber: 0,
+    fiberGoal: 30,
     steps: 0,
     stepsGoal: 10000,
     exercise: 0,
@@ -120,9 +131,9 @@ export default function EliteLifeHome() {
 
   // Wallet state
   const [walletInvestments, setWalletInvestments] = useState([
-    { id: 1, name: "Ações Tech", amount: 5000, profit: 12.5, editable: true },
-    { id: 2, name: "Fundos Imobiliários", amount: 3000, profit: 8.3, editable: true },
-    { id: 3, name: "Renda Fixa", amount: 2000, profit: 5.1, editable: true },
+    { id: 1, name: "Ações Tech", amount: 5000, profit: 12.5, type: "stocks", editable: true },
+    { id: 2, name: "Fundos Imobiliários", amount: 3000, profit: 8.3, type: "realestate", editable: true },
+    { id: 3, name: "Renda Fixa", amount: 2000, profit: 5.1, type: "fixed", editable: true },
   ]);
 
   // Affiliate state
@@ -135,44 +146,6 @@ export default function EliteLifeHome() {
     commission: 0,
     conversionRate: 0
   });
-
-  // Notifications system - a cada 30 minutos
-  useEffect(() => {
-    const notificationMessages = [
-      "💪 Hora de treinar! Não deixe para amanhã.",
-      "📚 Continue seus estudos! Você está quase lá.",
-      "💧 Lembre-se de beber água!",
-      "🎯 Foco! Você está no caminho certo.",
-      "⭐ Nova medalha disponível! Continue assim.",
-      "🔥 Seu progresso está incrível!",
-      "📈 Confira seu dashboard atualizado!",
-      "🎓 Novo curso disponível para você!"
-    ];
-
-    const interval = setInterval(() => {
-      const randomMessage = notificationMessages[Math.floor(Math.random() * notificationMessages.length)];
-      
-      // Criar notificação visual
-      const toast = document.createElement('div');
-      toast.className = 'fixed top-20 right-4 bg-gradient-to-r from-[#D4AF37] to-amber-600 text-[#0B0B0B] px-6 py-4 rounded-xl font-bold shadow-2xl z-[200] animate-slide-in max-w-sm';
-      toast.innerHTML = `
-        <div class="flex items-center gap-3">
-          <div class="text-2xl">🔔</div>
-          <div>
-            <div class="font-bold mb-1">Elite Life</div>
-            <div class="text-sm">${randomMessage}</div>
-          </div>
-        </div>
-      `;
-      document.body.appendChild(toast);
-      
-      setTimeout(() => {
-        toast.remove();
-      }, 5000);
-    }, 30 * 60 * 1000); // 30 minutos
-
-    return () => clearInterval(interval);
-  }, []);
 
   const initialQuizQuestions = [
     {
@@ -554,9 +527,9 @@ export default function EliteLifeHome() {
   ];
 
   const notifications = [
-    { id: 1, title: "Boas-vindas!", message: "Bem-vindo à Elite Life", time: "Agora", read: false },
-    { id: 2, title: "Desconto disponível", message: "Cupom de 5% liberado", time: "1h atrás", read: false },
-    { id: 3, title: "Lembrete de agenda", message: "Treino em 30 minutos", time: "2h atrás", read: true },
+    { id: 1, title: "Boas-vindas!", message: "Bem-vindo à Elite Life! Comece sua jornada de transformação agora.", time: "Agora", read: false, type: "welcome" },
+    { id: 2, title: "Desconto disponível", message: "Cupom de 5% liberado: ELITE5OFF", time: "1h atrás", read: false, type: "coupon" },
+    { id: 3, title: "Lembrete de agenda", message: "Treino em 30 minutos", time: "2h atrás", read: true, type: "reminder" },
   ];
 
   const translations = {
@@ -795,7 +768,6 @@ export default function EliteLifeHome() {
     setUserName("Novo Usuário");
     setUserPlan("free");
     setShowSignupModal(false);
-    // Zerar stats de afiliado para novo usuário
     setAffiliateStats({
       sales: 0,
       clicks: 0,
@@ -976,7 +948,11 @@ export default function EliteLifeHome() {
       ...trackerData,
       caloriesGoal: Math.round(calories),
       waterGoal: Math.round(water),
-      stepsGoal: stepsGoals[activityLevel]
+      stepsGoal: stepsGoals[activityLevel],
+      proteinGoal: Math.round(w * 2),
+      carbsGoal: Math.round(calories * 0.5 / 4),
+      fatGoal: Math.round(calories * 0.25 / 9),
+      fiberGoal: 30
     });
     
     setShowTrackerQuizModal(false);
@@ -987,23 +963,21 @@ export default function EliteLifeHome() {
 
   const analyzeInitialQuiz = () => {
     const answers = initialQuizAnswers;
-    let recommendedPlan = plans[1]; // PRO por padrão
+    let recommendedPlan = plans[1];
     
-    // Lógica de análise
     if (answers[4] === "Sim, muito" || answers[5] === "Sim, já vendo") {
-      recommendedPlan = plans[6]; // E-COMMERCE PRO
+      recommendedPlan = plans[6];
     } else if (answers[4] === "Sim, muito") {
-      recommendedPlan = plans[5]; // INFLUENCER PRO
+      recommendedPlan = plans[5];
     } else if (answers[3] === "Sim, já invisto" && answers[7] === "Avançado") {
-      recommendedPlan = plans[3]; // ELITE
+      recommendedPlan = plans[3];
     } else if (answers[1] === "Mais de 2h") {
-      recommendedPlan = plans[2]; // PRO PLUS
+      recommendedPlan = plans[2];
     }
     
     setShowInitialQuizModal(false);
     alert(`Baseado no seu perfil, recomendamos o plano ${recommendedPlan.name}!\n\n${recommendedPlan.features.slice(0, 3).map((f: any) => typeof f === 'string' ? f : f.text).join('\n')}`);
     
-    // Scroll para planos
     setTimeout(() => {
       window.location.href = "#planos";
     }, 1000);
@@ -1037,24 +1011,44 @@ export default function EliteLifeHome() {
   const nextMedal = getNextMedal();
   const progressToNextLevel = ((userPoints - currentMedal.points) / (nextMedal.points - currentMedal.points)) * 100;
 
+  const handleNotificationClick = (notif: any) => {
+    if (notif.type === "coupon") {
+      setShowCouponModal(true);
+      setShowNotifications(false);
+    } else if (notif.type === "welcome") {
+      alert("Bem-vindo à Elite Life! 🎉\n\nEstamos muito felizes em tê-lo conosco. Comece explorando nossos cursos, vídeos e ferramentas para transformar sua vida em 90 dias!\n\nQualquer dúvida, nossa IA está sempre disponível para ajudar.");
+    }
+  };
+
+  const handleApplyDiscount = () => {
+    if (discountCode === "ELITE5OFF" && !couponUsed && selectedPlan) {
+      const originalPrice = parseFloat(selectedPlan.price.replace("R$ ", "").replace(",", "."));
+      const discountedPrice = originalPrice * 0.95;
+      alert(`Desconto aplicado! Novo valor: R$ ${discountedPrice.toFixed(2).replace(".", ",")}`);
+      setCouponUsed(true);
+    } else if (couponUsed) {
+      alert("Este cupom já foi utilizado!");
+    } else {
+      alert("Cupom inválido!");
+    }
+  };
+
   return (
     <div className="min-h-screen bg-[#0B0B0B] w-full overflow-x-hidden">
       {/* HEADER MODERNO E RESPONSIVO */}
       <header className="fixed top-0 left-0 right-0 z-50 bg-gradient-to-r from-[#0B0B0B] via-[#1A1A1A] to-[#0B0B0B] border-b border-[#D4AF37]/20 backdrop-blur-lg shadow-2xl">
         <div className="w-full max-w-[1920px] mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-20">
-            {/* Logo */}
-            <div className="flex items-center gap-3 group cursor-pointer" onClick={scrollToTop}>
+            {/* Logo e Nome */}
+            <div className="flex items-center gap-3">
               <img 
-                src="https://k6hrqrxuu8obbfwn.public.blob.vercel-storage.com/temp/cfc3787e-8f3c-4fd6-b923-b1658b779ff7.jpg" 
+                src="https://k6hrqrxuu8obbfwn.public.blob.vercel-storage.com/temp/63e7ff74-0183-4d37-90a3-89096c2f65ac.jpg" 
                 alt="Elite Life Logo" 
-                className="h-12 w-auto rounded-xl shadow-lg group-hover:scale-110 transition-transform duration-300"
+                className="h-12 w-12 rounded-xl shadow-lg object-cover"
               />
-              <div className="hidden sm:block">
-                <h1 className="text-2xl font-bold bg-gradient-to-r from-[#D4AF37] to-amber-500 bg-clip-text text-transparent">
-                  Elite Life
-                </h1>
-              </div>
+              <span className="text-2xl font-bold bg-gradient-to-r from-[#D4AF37] to-amber-600 bg-clip-text text-transparent">
+                Elite Life
+              </span>
             </div>
 
             {/* Desktop Navigation */}
@@ -1148,6 +1142,26 @@ export default function EliteLifeHome() {
 
             {/* Right Actions */}
             <div className="flex items-center gap-3">
+              {/* Social Links */}
+              <div className="hidden md:flex items-center gap-2">
+                <a 
+                  href="https://www.instagram.com/elitelife_experience?igsh=MWlhZzh0NGgxNTR1ag%3D%3D&utm_source=qr"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="p-2.5 rounded-xl bg-gradient-to-r from-pink-500 to-rose-600 hover:shadow-lg hover:shadow-pink-500/50 transition-all duration-300 group"
+                >
+                  <Instagram className="w-5 h-5 text-white group-hover:scale-110 transition-transform" />
+                </a>
+                <a 
+                  href="https://t.me/boost/elitelifeApp"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="p-2.5 rounded-xl bg-gradient-to-r from-blue-500 to-cyan-600 hover:shadow-lg hover:shadow-blue-500/50 transition-all duration-300 group"
+                >
+                  <MessageSquare className="w-5 h-5 text-white group-hover:scale-110 transition-transform" />
+                </a>
+              </div>
+
               {/* Notifications */}
               <div className="relative">
                 <button
@@ -1156,7 +1170,7 @@ export default function EliteLifeHome() {
                 >
                   <Bell className="w-5 h-5 text-white group-hover:text-[#D4AF37] group-hover:scale-110 transition-all" />
                   <span className="absolute -top-1 -right-1 w-5 h-5 bg-red-500 rounded-full text-xs text-white flex items-center justify-center font-bold animate-pulse">
-                    3
+                    2
                   </span>
                 </button>
 
@@ -1166,7 +1180,11 @@ export default function EliteLifeHome() {
                     <h3 className="text-white font-bold mb-4">Notificações</h3>
                     <div className="space-y-3">
                       {notifications.map(notif => (
-                        <div key={notif.id} className={`p-3 rounded-xl ${notif.read ? 'bg-[#2A2A2A]' : 'bg-[#D4AF37]/10'} cursor-pointer hover:bg-[#D4AF37]/20 transition-all`}>
+                        <div 
+                          key={notif.id} 
+                          onClick={() => handleNotificationClick(notif)}
+                          className={`p-3 rounded-xl ${notif.read ? 'bg-[#2A2A2A]' : 'bg-[#D4AF37]/10'} cursor-pointer hover:bg-[#D4AF37]/20 transition-all`}
+                        >
                           <div className="flex justify-between items-start mb-1">
                             <h4 className="text-white font-semibold text-sm">{notif.title}</h4>
                             <span className="text-xs text-[#9A9A9A]">{notif.time}</span>
@@ -1307,6 +1325,28 @@ export default function EliteLifeHome() {
         {isMenuOpen && (
           <div className="lg:hidden bg-[#1A1A1A] border-t border-[#D4AF37]/20">
             <div className="w-full max-w-[1920px] mx-auto px-4 py-4 space-y-2">
+              {/* Social Links Mobile */}
+              <div className="flex items-center gap-2 pb-4 border-b border-[#D4AF37]/20">
+                <a 
+                  href="https://www.instagram.com/elitelife_experience?igsh=MWlhZzh0NGgxNTR1ag%3D%3D&utm_source=qr"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex-1 flex items-center justify-center gap-2 p-3 rounded-xl bg-gradient-to-r from-pink-500 to-rose-600 hover:shadow-lg transition-all"
+                >
+                  <Instagram className="w-5 h-5 text-white" />
+                  <span className="text-white font-medium">Instagram</span>
+                </a>
+                <a 
+                  href="https://t.me/boost/elitelifeApp"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex-1 flex items-center justify-center gap-2 p-3 rounded-xl bg-gradient-to-r from-blue-500 to-cyan-600 hover:shadow-lg transition-all"
+                >
+                  <MessageSquare className="w-5 h-5 text-white" />
+                  <span className="text-white font-medium">Telegram</span>
+                </a>
+              </div>
+
               <button
                 onClick={() => {
                   scrollToTop();
@@ -1561,6 +1601,17 @@ export default function EliteLifeHome() {
                   ))}
                 </ul>
 
+                {plan.marketplaces && (
+                  <div className="flex items-center justify-center gap-3 mb-4 p-3 bg-[#2A2A2A] rounded-xl">
+                    <span className="text-xs text-[#9A9A9A]">Integração:</span>
+                    <div className="flex gap-2">
+                      <div className="w-6 h-6 bg-yellow-500 rounded flex items-center justify-center text-xs font-bold">ML</div>
+                      <div className="w-6 h-6 bg-orange-500 rounded flex items-center justify-center text-xs font-bold">S</div>
+                      <div className="w-6 h-6 bg-blue-500 rounded flex items-center justify-center text-xs font-bold">A</div>
+                    </div>
+                  </div>
+                )}
+
                 <button
                   onClick={() => handleSelectPlan(plan)}
                   className={`w-full py-3 rounded-xl font-bold transition-all duration-300 ${
@@ -1627,9 +1678,9 @@ export default function EliteLifeHome() {
             <div>
               <div className="flex items-center gap-3 mb-4">
                 <img 
-                  src="https://k6hrqrxuu8obbfwn.public.blob.vercel-storage.com/temp/cfc3787e-8f3c-4fd6-b923-b1658b779ff7.jpg" 
+                  src="https://k6hrqrxuu8obbfwn.public.blob.vercel-storage.com/temp/63e7ff74-0183-4d37-90a3-89096c2f65ac.jpg" 
                   alt="Elite Life Logo" 
-                  className="h-12 w-auto rounded-xl"
+                  className="h-12 w-12 rounded-xl object-cover"
                 />
                 <h3 className="text-xl font-bold text-white">Elite Life</h3>
               </div>
@@ -1690,7 +1741,167 @@ export default function EliteLifeHome() {
         <MessageSquare className="w-8 h-8 text-[#0B0B0B]" />
       </button>
 
-      {/* MODALS - Continuação no próximo arquivo devido ao limite */}
+      {/* MODALS - Login */}
+      {showLoginModal && (
+        <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-[100] p-4">
+          <div className="bg-[#1A1A1A] rounded-3xl p-8 max-w-md w-full border border-[#D4AF37]/20">
+            <div className="flex justify-between items-center mb-6">
+              <h2 className="text-2xl font-bold text-white">Entrar</h2>
+              <button onClick={() => setShowLoginModal(false)} className="text-white hover:text-[#D4AF37]">
+                <X className="w-6 h-6" />
+              </button>
+            </div>
+            <form onSubmit={handleLogin} className="space-y-4">
+              <div>
+                <label className="block text-white mb-2">E-mail</label>
+                <input
+                  type="email"
+                  required
+                  className="w-full px-4 py-3 rounded-xl bg-[#2A2A2A] text-white border border-[#D4AF37]/20 focus:border-[#D4AF37] outline-none"
+                  placeholder="seu@email.com"
+                />
+              </div>
+              <div>
+                <label className="block text-white mb-2">Senha</label>
+                <div className="relative">
+                  <input
+                    type={showPasswordLogin ? "text" : "password"}
+                    required
+                    className="w-full px-4 py-3 rounded-xl bg-[#2A2A2A] text-white border border-[#D4AF37]/20 focus:border-[#D4AF37] outline-none"
+                    placeholder="••••••••"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowPasswordLogin(!showPasswordLogin)}
+                    className="absolute right-3 top-1/2 -translate-y-1/2 text-[#9A9A9A] hover:text-white"
+                  >
+                    {showPasswordLogin ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
+                  </button>
+                </div>
+              </div>
+              <button
+                type="submit"
+                className="w-full py-3 bg-gradient-to-r from-[#D4AF37] to-amber-600 text-[#0B0B0B] rounded-xl font-bold hover:shadow-lg transition-all"
+              >
+                Entrar
+              </button>
+            </form>
+          </div>
+        </div>
+      )}
+
+      {/* MODALS - Signup */}
+      {showSignupModal && (
+        <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-[100] p-4">
+          <div className="bg-[#1A1A1A] rounded-3xl p-8 max-w-md w-full border border-[#D4AF37]/20">
+            <div className="flex justify-between items-center mb-6">
+              <h2 className="text-2xl font-bold text-white">Criar Conta</h2>
+              <button onClick={() => setShowSignupModal(false)} className="text-white hover:text-[#D4AF37]">
+                <X className="w-6 h-6" />
+              </button>
+            </div>
+            <form onSubmit={handleSignup} className="space-y-4">
+              <div>
+                <label className="block text-white mb-2">E-mail</label>
+                <input
+                  type="email"
+                  required
+                  className="w-full px-4 py-3 rounded-xl bg-[#2A2A2A] text-white border border-[#D4AF37]/20 focus:border-[#D4AF37] outline-none"
+                  placeholder="seu@email.com"
+                />
+              </div>
+              <div>
+                <label className="block text-white mb-2">Telefone</label>
+                <input
+                  type="tel"
+                  required
+                  className="w-full px-4 py-3 rounded-xl bg-[#2A2A2A] text-white border border-[#D4AF37]/20 focus:border-[#D4AF37] outline-none"
+                  placeholder="(11) 99999-9999"
+                />
+              </div>
+              <div>
+                <label className="block text-white mb-2">Senha</label>
+                <div className="relative">
+                  <input
+                    type={showPasswordSignup ? "text" : "password"}
+                    required
+                    className="w-full px-4 py-3 rounded-xl bg-[#2A2A2A] text-white border border-[#D4AF37]/20 focus:border-[#D4AF37] outline-none"
+                    placeholder="••••••••"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowPasswordSignup(!showPasswordSignup)}
+                    className="absolute right-3 top-1/2 -translate-y-1/2 text-[#9A9A9A] hover:text-white"
+                  >
+                    {showPasswordSignup ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
+                  </button>
+                </div>
+              </div>
+              <div>
+                <label className="block text-white mb-2">Confirmar Senha</label>
+                <div className="relative">
+                  <input
+                    type={showConfirmPassword ? "text" : "password"}
+                    required
+                    className="w-full px-4 py-3 rounded-xl bg-[#2A2A2A] text-white border border-[#D4AF37]/20 focus:border-[#D4AF37] outline-none"
+                    placeholder="••••••••"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                    className="absolute right-3 top-1/2 -translate-y-1/2 text-[#9A9A9A] hover:text-white"
+                  >
+                    {showConfirmPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
+                  </button>
+                </div>
+              </div>
+              <button
+                type="submit"
+                className="w-full py-3 bg-gradient-to-r from-[#D4AF37] to-amber-600 text-[#0B0B0B] rounded-xl font-bold hover:shadow-lg transition-all"
+              >
+                Criar Conta Grátis
+              </button>
+            </form>
+          </div>
+        </div>
+      )}
+
+      {/* MODAL - Cupom */}
+      {showCouponModal && (
+        <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-[100] p-4">
+          <div className="bg-[#1A1A1A] rounded-3xl p-8 max-w-md w-full border border-[#D4AF37]/20">
+            <div className="flex justify-between items-center mb-6">
+              <h2 className="text-2xl font-bold text-white">🎁 Cupom de Desconto</h2>
+              <button onClick={() => setShowCouponModal(false)} className="text-white hover:text-[#D4AF37]">
+                <X className="w-6 h-6" />
+              </button>
+            </div>
+            <div className="text-center">
+              <div className="bg-gradient-to-r from-[#D4AF37] to-amber-600 rounded-2xl p-6 mb-6">
+                <p className="text-[#0B0B0B] font-bold text-lg mb-2">Seu Cupom de 5% OFF</p>
+                <div className="bg-white rounded-xl p-4 flex items-center justify-between">
+                  <span className="text-2xl font-bold text-[#0B0B0B]">ELITE5OFF</span>
+                  <button
+                    onClick={() => {
+                      navigator.clipboard.writeText("ELITE5OFF");
+                      alert("Cupom copiado!");
+                    }}
+                    className="p-2 bg-[#D4AF37] rounded-lg hover:bg-amber-600 transition-all"
+                  >
+                    <Copy className="w-5 h-5 text-[#0B0B0B]" />
+                  </button>
+                </div>
+              </div>
+              <p className="text-[#9A9A9A] mb-4">
+                Use este cupom na hora de assinar qualquer plano e ganhe 5% de desconto!
+              </p>
+              <p className="text-sm text-[#D4AF37]">
+                ⚠️ Válido apenas para primeira compra
+              </p>
+            </div>
+          </div>
+        </div>
+      )}
 
       <style jsx>{`
         @keyframes shake {

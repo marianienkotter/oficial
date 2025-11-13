@@ -14,7 +14,8 @@ import {
   Edit, Copy, Share2, Gift, Briefcase, LineChart, Save,
   Download, FileText, Search, Filter, ChevronRight, CreditCard,
   Smartphone, QrCode, Trash2, BookMarked, Lightbulb, GraduationCap,
-  Shield, FileCheck, Newspaper, Tv, Popcorn, Library, Home
+  Shield, FileCheck, Newspaper, Tv, Popcorn, Library, Home,
+  MessageCircle
 } from "lucide-react";
 
 export default function EliteLifeHome() {
@@ -1158,6 +1159,22 @@ export default function EliteLifeHome() {
                   rel="noopener noreferrer"
                   className="p-2.5 rounded-xl bg-gradient-to-r from-blue-500 to-cyan-600 hover:shadow-lg hover:shadow-blue-500/50 transition-all duration-300 group"
                 >
+                  <Send className="w-5 h-5 text-white group-hover:scale-110 transition-transform" />
+                </a>
+                <a 
+                  href="https://discord.gg/yVPMQG8tkh"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="p-2.5 rounded-xl bg-gradient-to-r from-indigo-500 to-purple-600 hover:shadow-lg hover:shadow-indigo-500/50 transition-all duration-300 group"
+                >
+                  <MessageCircle className="w-5 h-5 text-white group-hover:scale-110 transition-transform" />
+                </a>
+                <a 
+                  href="https://whatsapp.com/channel/0029Vb79nXTBvvsjVktkoE05"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="p-2.5 rounded-xl bg-gradient-to-r from-green-500 to-emerald-600 hover:shadow-lg hover:shadow-green-500/50 transition-all duration-300 group"
+                >
                   <MessageSquare className="w-5 h-5 text-white group-hover:scale-110 transition-transform" />
                 </a>
               </div>
@@ -1326,24 +1343,42 @@ export default function EliteLifeHome() {
           <div className="lg:hidden bg-[#1A1A1A] border-t border-[#D4AF37]/20">
             <div className="w-full max-w-[1920px] mx-auto px-4 py-4 space-y-2">
               {/* Social Links Mobile */}
-              <div className="flex items-center gap-2 pb-4 border-b border-[#D4AF37]/20">
+              <div className="grid grid-cols-2 gap-2 pb-4 border-b border-[#D4AF37]/20">
                 <a 
                   href="https://www.instagram.com/elitelife_experience?igsh=MWlhZzh0NGgxNTR1ag%3D%3D&utm_source=qr"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex-1 flex items-center justify-center gap-2 p-3 rounded-xl bg-gradient-to-r from-pink-500 to-rose-600 hover:shadow-lg transition-all"
+                  className="flex items-center justify-center gap-2 p-3 rounded-xl bg-gradient-to-r from-pink-500 to-rose-600 hover:shadow-lg transition-all"
                 >
                   <Instagram className="w-5 h-5 text-white" />
-                  <span className="text-white font-medium">Instagram</span>
+                  <span className="text-white font-medium text-sm">Instagram</span>
                 </a>
                 <a 
                   href="https://t.me/boost/elitelifeApp"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex-1 flex items-center justify-center gap-2 p-3 rounded-xl bg-gradient-to-r from-blue-500 to-cyan-600 hover:shadow-lg transition-all"
+                  className="flex items-center justify-center gap-2 p-3 rounded-xl bg-gradient-to-r from-blue-500 to-cyan-600 hover:shadow-lg transition-all"
+                >
+                  <Send className="w-5 h-5 text-white" />
+                  <span className="text-white font-medium text-sm">Telegram</span>
+                </a>
+                <a 
+                  href="https://discord.gg/yVPMQG8tkh"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center justify-center gap-2 p-3 rounded-xl bg-gradient-to-r from-indigo-500 to-purple-600 hover:shadow-lg transition-all"
+                >
+                  <MessageCircle className="w-5 h-5 text-white" />
+                  <span className="text-white font-medium text-sm">Discord</span>
+                </a>
+                <a 
+                  href="https://whatsapp.com/channel/0029Vb79nXTBvvsjVktkoE05"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center justify-center gap-2 p-3 rounded-xl bg-gradient-to-r from-green-500 to-emerald-600 hover:shadow-lg transition-all"
                 >
                   <MessageSquare className="w-5 h-5 text-white" />
-                  <span className="text-white font-medium">Telegram</span>
+                  <span className="text-white font-medium text-sm">WhatsApp</span>
                 </a>
               </div>
 
@@ -1712,10 +1747,16 @@ export default function EliteLifeHome() {
             <div>
               <h4 className="font-bold text-white mb-4">Redes Sociais</h4>
               <div className="flex gap-3">
-                <a href="https://www.instagram.com/elitelife_experience" target="_blank" rel="noopener noreferrer" className="w-10 h-10 bg-[#2A2A2A] rounded-xl flex items-center justify-center hover:bg-[#D4AF37]/10 transition-all">
+                <a href="https://www.instagram.com/elitelife_experience?igsh=MWlhZzh0NGgxNTR1ag%3D%3D&utm_source=qr" target="_blank" rel="noopener noreferrer" className="w-10 h-10 bg-[#2A2A2A] rounded-xl flex items-center justify-center hover:bg-[#D4AF37]/10 transition-all">
                   <Instagram className="w-5 h-5 text-white" />
                 </a>
                 <a href="https://t.me/boost/elitelifeApp" target="_blank" rel="noopener noreferrer" className="w-10 h-10 bg-[#2A2A2A] rounded-xl flex items-center justify-center hover:bg-[#D4AF37]/10 transition-all">
+                  <Send className="w-5 h-5 text-white" />
+                </a>
+                <a href="https://discord.gg/yVPMQG8tkh" target="_blank" rel="noopener noreferrer" className="w-10 h-10 bg-[#2A2A2A] rounded-xl flex items-center justify-center hover:bg-[#D4AF37]/10 transition-all">
+                  <MessageCircle className="w-5 h-5 text-white" />
+                </a>
+                <a href="https://whatsapp.com/channel/0029Vb79nXTBvvsjVktkoE05" target="_blank" rel="noopener noreferrer" className="w-10 h-10 bg-[#2A2A2A] rounded-xl flex items-center justify-center hover:bg-[#D4AF37]/10 transition-all">
                   <MessageSquare className="w-5 h-5 text-white" />
                 </a>
                 <a href="mailto:elitelife.norply@gmail.com" className="w-10 h-10 bg-[#2A2A2A] rounded-xl flex items-center justify-center hover:bg-[#D4AF37]/10 transition-all">

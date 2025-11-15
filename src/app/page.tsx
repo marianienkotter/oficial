@@ -243,6 +243,11 @@ export default function EliteLifeHome() {
     { id: "rF6daSPnrgc", title: "Vendas Online", category: "ecommerce", duration: "15:40" },
     { id: "P3PU47_a-Kk", title: "E-commerce do Zero", category: "ecommerce", duration: "24:15" },
     { id: "FYtF7FjUgU4", title: "Escalar Vendas", category: "ecommerce", duration: "19:50" },
+    { id: "32hRlmYsPa0", title: "Logística E-commerce", category: "ecommerce", duration: "17:30" },
+    { id: "ePdUc2xMW6M", title: "Precificação Estratégica", category: "ecommerce", duration: "14:45" },
+    { id: "TasDB-Gn0do", title: "Marketing para E-commerce", category: "ecommerce", duration: "20:10" },
+    { id: "cfouyjYKzn0", title: "Anúncios que Vendem", category: "ecommerce", duration: "16:35" },
+    { id: "lT_eRUHdJ7g", title: "Conversão de Vendas", category: "ecommerce", duration: "18:20" },
     
     // Influencer Pro
     { id: "B89sP7HyfrQ", title: "Crescer no Instagram", category: "influencer", duration: "17:10" },
@@ -285,16 +290,6 @@ export default function EliteLifeHome() {
     { id: "cR5FGUBuNEw", title: "Independência Financeira", category: "financas", duration: "23:15" },
     { id: "dxfx0Yw3n7k", title: "Carteira de Investimentos", category: "financas", duration: "19:40" },
     { id: "Frr6cMXMcEY", title: "Criptomoedas", category: "financas", duration: "21:25" },
-    { id: "LHWJuZwx8SM", title: "Análise Fundamentalista", category: "financas", duration: "24:10" },
-    { id: "gpD6boRgXdI", title: "Day Trade Básico", category: "financas", duration: "20:50" },
-    { id: "quBBAXjMzac", title: "Swing Trade", category: "financas", duration: "18:35" },
-    { id: "xws5gfEfRU4", title: "Diversificação de Portfólio", category: "financas", duration: "22:20" },
-    { id: "Q5t76g9yh3g", title: "Impostos e Declaração", category: "financas", duration: "19:15" },
-    { id: "9j8IHdic0F0", title: "Previdência Privada", category: "financas", duration: "17:40" },
-    { id: "pRxyQXL1eVA", title: "Economia Doméstica", category: "financas", duration: "16:25" },
-    { id: "obvenrhem9Q", title: "Crédito Consciente", category: "financas", duration: "15:50" },
-    { id: "zbN3mChHGDI", title: "Reserva de Emergência", category: "financas", duration: "18:10" },
-    { id: "WvvzpUaNvOo", title: "Aposentadoria Planejada", category: "financas", duration: "21:30" },
   ];
 
   const filteredVideos = activeVideoCategory === "all" 
@@ -1557,107 +1552,459 @@ export default function EliteLifeHome() {
         )}
       </header>
 
-      {/* MODAL - Videos com Cadeado */}
-      {showVideosModal && (
-        <div className="fixed inset-0 bg-black/90 flex items-center justify-center z-[100] p-4">
-          <div className="bg-[#1A1A1A] rounded-3xl p-6 sm:p-8 max-w-6xl w-full max-h-[90vh] overflow-y-auto border border-[#D4AF37]/20">
-            <div className="flex justify-between items-center mb-6">
-              <h2 className="text-2xl sm:text-3xl font-bold text-white flex items-center gap-3">
-                <Video className="w-8 h-8 text-[#D4AF37]" />
-                Biblioteca de Vídeos
-              </h2>
-              <button onClick={() => setShowVideosModal(false)} className="text-white hover:text-[#D4AF37]">
-                <X className="w-7 h-7" />
+      {/* HERO SECTION - Mobile First + Desktop Perfeito */}
+      <section className="pt-24 sm:pt-28 lg:pt-40 pb-12 sm:pb-16 lg:pb-32 px-4 sm:px-6 lg:px-12 relative overflow-hidden w-full">
+        {/* Background Animado */}
+        <div className="absolute inset-0 bg-gradient-to-b from-[#D4AF37]/10 via-transparent to-transparent"></div>
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(212,175,55,0.1),transparent_50%)]"></div>
+        
+        <div className="w-full max-w-7xl mx-auto relative z-10">
+          {/* Quiz Inicial Banner - Responsivo */}
+          {!isLoggedIn && (
+            <div className="mb-8 sm:mb-12 lg:mb-16 bg-gradient-to-r from-[#D4AF37] via-amber-500 to-[#D4AF37] rounded-2xl sm:rounded-3xl p-6 sm:p-8 lg:p-12 text-center shadow-2xl transform hover:scale-[1.02] transition-transform duration-300">
+              <div className="flex items-center justify-center gap-2 mb-3 sm:mb-4">
+                <Sparkles className="w-6 h-6 sm:w-8 sm:h-8 text-[#0B0B0B] animate-pulse" />
+                <h2 className="text-2xl sm:text-3xl lg:text-4xl xl:text-5xl font-bold text-[#0B0B0B]">
+                  {t.quiz.title}
+                </h2>
+                <Sparkles className="w-6 h-6 sm:w-8 sm:h-8 text-[#0B0B0B] animate-pulse" />
+              </div>
+              <p className="text-base sm:text-lg lg:text-xl xl:text-2xl text-[#0B0B0B]/80 mb-4 sm:mb-6 lg:mb-8 max-w-3xl mx-auto">
+                {t.quiz.subtitle}
+              </p>
+              <button
+                onClick={() => setShowInitialQuizModal(true)}
+                className="px-6 sm:px-8 lg:px-12 py-3 sm:py-4 lg:py-5 bg-[#0B0B0B] text-[#D4AF37] rounded-xl font-bold text-base sm:text-lg lg:text-xl hover:scale-105 hover:shadow-2xl transition-all duration-300 inline-flex items-center gap-2"
+              >
+                <Target className="w-5 h-5 sm:w-6 sm:h-6" />
+                {t.quiz.button}
+                <ChevronRight className="w-5 h-5 sm:w-6 sm:h-6" />
+              </button>
+            </div>
+          )}
+
+          <div className="text-center">
+            {/* Título Principal - Responsivo */}
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl 2xl:text-8xl font-bold text-white mb-4 sm:mb-6 lg:mb-8 leading-tight">
+              <span className="bg-gradient-to-r from-white via-[#D4AF37] to-white bg-clip-text text-transparent">
+                {t.hero.title}
+              </span>
+            </h1>
+            
+            {/* Subtítulo - Responsivo */}
+            <p className="text-base sm:text-lg md:text-xl lg:text-2xl xl:text-3xl text-[#9A9A9A] mb-6 sm:mb-8 lg:mb-12 max-w-4xl mx-auto leading-relaxed">
+              {t.hero.subtitle}
+            </p>
+            
+            {/* CTAs - Responsivo */}
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 lg:gap-6 mb-8 sm:mb-12 lg:mb-16">
+              <button
+                onClick={() => setShowSignupModal(true)}
+                className="w-full sm:w-auto px-6 sm:px-8 lg:px-12 py-3 sm:py-4 lg:py-5 bg-gradient-to-r from-[#D4AF37] via-amber-500 to-[#D4AF37] text-[#0B0B0B] rounded-xl font-bold text-base sm:text-lg lg:text-xl hover:shadow-2xl hover:shadow-[#D4AF37]/50 hover:scale-105 transition-all duration-300 inline-flex items-center justify-center gap-2"
+              >
+                <Zap className="w-5 h-5 sm:w-6 sm:h-6" />
+                {t.cta.startFree}
+              </button>
+              <button
+                onClick={() => window.location.href = "#planos"}
+                className="w-full sm:w-auto px-6 sm:px-8 lg:px-12 py-3 sm:py-4 lg:py-5 bg-[#1A1A1A] text-white rounded-xl font-bold text-base sm:text-lg lg:text-xl hover:bg-[#2A2A2A] hover:scale-105 transition-all duration-300 inline-flex items-center justify-center gap-2 border border-[#D4AF37]/30"
+              >
+                <Crown className="w-5 h-5 sm:w-6 sm:h-6 text-[#D4AF37]" />
+                {t.cta.viewPlans}
               </button>
             </div>
 
-            {/* Filtros de Categoria */}
-            <div className="flex flex-wrap gap-2 mb-6">
-              {videoCategories.map(cat => (
-                <button
-                  key={cat.id}
-                  onClick={() => setActiveVideoCategory(cat.id)}
-                  className={`px-4 py-2 rounded-xl font-medium transition-all ${
-                    activeVideoCategory === cat.id
-                      ? 'bg-gradient-to-r from-[#D4AF37] to-amber-600 text-[#0B0B0B]'
-                      : 'bg-[#2A2A2A] text-white hover:bg-[#3A3A3A]'
-                  }`}
+            {/* Stats - Grid Responsivo */}
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 lg:gap-8 max-w-6xl mx-auto">
+              {stats.map((stat, index) => (
+                <div 
+                  key={index} 
+                  className="bg-gradient-to-br from-[#1A1A1A] to-[#2A2A2A] rounded-xl sm:rounded-2xl p-4 sm:p-6 lg:p-8 border border-[#D4AF37]/20 hover:border-[#D4AF37]/50 hover:scale-105 transition-all duration-300 group"
                 >
-                  {cat.label}
-                </button>
-              ))}
-            </div>
-
-            {/* Grid de Vídeos */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-              {filteredVideos.map(video => (
-                <div
-                  key={video.id}
-                  onClick={() => handleVideoClick(video.id)}
-                  className="relative bg-[#2A2A2A] rounded-xl overflow-hidden cursor-pointer hover:scale-105 transition-transform group"
-                >
-                  {/* Thumbnail */}
-                  <div className="relative aspect-video bg-gradient-to-br from-[#D4AF37]/20 to-[#2A2A2A]">
-                    <img 
-                      src={`https://img.youtube.com/vi/${video.id}/mqdefault.jpg`}
-                      alt={video.title}
-                      className="w-full h-full object-cover"
-                    />
-                    
-                    {/* Overlay com Cadeado se bloqueado */}
-                    {userPlan === "free" && (
-                      <div className="absolute inset-0 bg-black/80 flex items-center justify-center">
-                        <Lock className="w-12 h-12 text-[#D4AF37]" />
-                      </div>
-                    )}
-
-                    {/* Play Button */}
-                    {userPlan !== "free" && (
-                      <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity bg-black/50">
-                        <Play className="w-16 h-16 text-white" />
-                      </div>
-                    )}
-
-                    {/* Duração */}
-                    <div className="absolute bottom-2 right-2 bg-black/80 px-2 py-1 rounded text-xs text-white">
-                      {video.duration}
-                    </div>
-                  </div>
-
-                  {/* Info */}
-                  <div className="p-4">
-                    <h3 className="text-white font-semibold mb-1 line-clamp-2">{video.title}</h3>
-                    <p className="text-[#9A9A9A] text-sm capitalize">{video.category}</p>
-                  </div>
+                  <stat.icon className="w-8 h-8 sm:w-10 sm:h-10 lg:w-12 lg:h-12 text-[#D4AF37] mx-auto mb-2 sm:mb-3 group-hover:scale-110 transition-transform" />
+                  <div className="text-2xl sm:text-3xl lg:text-4xl xl:text-5xl font-bold text-[#D4AF37] mb-1 sm:mb-2 lg:mb-3">{stat.value}</div>
+                  <div className="text-xs sm:text-sm lg:text-base text-[#9A9A9A]">{stat.label}</div>
                 </div>
               ))}
             </div>
+          </div>
+        </div>
+      </section>
 
-            {/* Mensagem se não tiver acesso */}
-            {userPlan === "free" && (
-              <div className="mt-6 p-6 bg-gradient-to-r from-[#D4AF37]/10 to-amber-600/10 rounded-2xl border border-[#D4AF37]/20 text-center">
-                <Lock className="w-12 h-12 text-[#D4AF37] mx-auto mb-3" />
-                <h3 className="text-xl font-bold text-white mb-2">Conteúdo Bloqueado</h3>
-                <p className="text-[#9A9A9A] mb-4">
-                  Assine um plano premium para ter acesso completo a todos os vídeos organizados por nicho!
-                </p>
+      {/* PLANOS SECTION - Grid Responsivo Perfeito */}
+      <section id="planos" className="py-12 sm:py-16 lg:py-32 px-4 sm:px-6 lg:px-12 bg-[#0B0B0B] w-full">
+        <div className="w-full max-w-7xl mx-auto">
+          <div className="text-center mb-8 sm:mb-12 lg:mb-20">
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-bold text-white mb-3 sm:mb-4 lg:mb-6">
+              <span className="bg-gradient-to-r from-white via-[#D4AF37] to-white bg-clip-text text-transparent">
+                {t.plans.title}
+              </span>
+            </h2>
+            <p className="text-base sm:text-lg lg:text-2xl text-[#9A9A9A]">
+              {t.plans.subtitle}
+            </p>
+          </div>
+
+          {/* Grid Responsivo de Planos */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6 lg:gap-8">
+            {plans.map((plan) => (
+              <div
+                key={plan.id}
+                className="bg-gradient-to-br from-[#1A1A1A] to-[#2A2A2A] rounded-2xl sm:rounded-3xl p-5 sm:p-6 lg:p-8 border border-[#D4AF37]/20 hover:border-[#D4AF37]/50 hover:scale-105 transition-all duration-300 relative overflow-hidden group"
+              >
+                {/* Badge */}
+                {plan.badge && (
+                  <div className={`absolute top-3 sm:top-4 right-3 sm:right-4 ${plan.badgeColor} px-2 sm:px-3 py-1 rounded-full text-xs font-bold z-10`}>
+                    {plan.badge}
+                  </div>
+                )}
+
+                {/* Icon */}
+                <div className={`w-14 h-14 sm:w-16 sm:h-16 lg:w-20 lg:h-20 rounded-2xl bg-gradient-to-br ${plan.color} flex items-center justify-center mb-4 sm:mb-5 lg:mb-6 group-hover:scale-110 transition-transform`}>
+                  <plan.icon className="w-7 h-7 sm:w-8 sm:h-8 lg:w-10 lg:h-10 text-white" />
+                </div>
+
+                {/* Nome e Preço */}
+                <h3 className="text-xl sm:text-2xl lg:text-3xl font-bold text-white mb-2">{plan.name}</h3>
+                <div className="flex items-baseline gap-1 mb-5 sm:mb-6 lg:mb-8">
+                  <span className="text-3xl sm:text-4xl lg:text-5xl font-bold text-[#D4AF37]">{plan.price}</span>
+                  <span className="text-[#9A9A9A] text-sm sm:text-base">{plan.period}</span>
+                </div>
+
+                {/* Features */}
+                <ul className="space-y-2 sm:space-y-3 mb-5 sm:mb-6 lg:mb-8">
+                  {plan.features.map((feature, index) => (
+                    <li key={index} className="flex items-start gap-2 text-sm sm:text-base">
+                      {typeof feature === 'string' ? (
+                        <>
+                          <Check className="w-4 h-4 sm:w-5 sm:h-5 text-green-500 flex-shrink-0 mt-0.5" />
+                          <span className="text-[#9A9A9A]">{feature}</span>
+                        </>
+                      ) : (
+                        <>
+                          <XCircle className="w-4 h-4 sm:w-5 sm:h-5 text-red-500 flex-shrink-0 mt-0.5" />
+                          <span className="text-[#9A9A9A]">{feature.text}</span>
+                        </>
+                      )}
+                    </li>
+                  ))}
+                </ul>
+
+                {/* Marketplaces Badge */}
+                {plan.marketplaces && (
+                  <div className="flex items-center justify-center gap-2 sm:gap-3 mb-4 p-2 sm:p-3 bg-[#2A2A2A] rounded-xl">
+                    <span className="text-xs text-[#9A9A9A]">Integração:</span>
+                    <div className="flex gap-1 sm:gap-2">
+                      <div className="w-5 h-5 sm:w-6 sm:h-6 bg-yellow-500 rounded flex items-center justify-center text-xs font-bold">ML</div>
+                      <div className="w-5 h-5 sm:w-6 sm:h-6 bg-orange-500 rounded flex items-center justify-center text-xs font-bold">S</div>
+                      <div className="w-5 h-5 sm:w-6 sm:h-6 bg-blue-500 rounded flex items-center justify-center text-xs font-bold">A</div>
+                    </div>
+                  </div>
+                )}
+
+                {/* CTA Button */}
                 <button
-                  onClick={() => {
-                    setShowVideosModal(false);
-                    window.location.href = "#planos";
-                  }}
-                  className="px-6 py-3 bg-gradient-to-r from-[#D4AF37] to-amber-600 text-[#0B0B0B] rounded-xl font-bold hover:shadow-lg transition-all"
+                  onClick={() => handleSelectPlan(plan)}
+                  className={`w-full py-3 sm:py-3.5 lg:py-4 rounded-xl font-bold transition-all duration-300 text-sm sm:text-base lg:text-lg ${
+                    plan.id === 1
+                      ? 'bg-[#2A2A2A] text-white hover:bg-[#3A3A3A]'
+                      : `bg-gradient-to-r ${plan.color} text-white hover:shadow-lg hover:scale-105`
+                  }`}
                 >
-                  Ver Planos
+                  {plan.id === 1 ? t.plans.free : t.plans.subscribe}
                 </button>
               </div>
-            )}
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* TESTIMONIALS - Grid Responsivo */}
+      <section className="py-12 sm:py-16 lg:py-32 px-4 sm:px-6 lg:px-12 bg-gradient-to-b from-[#0B0B0B] to-[#1A1A1A] w-full">
+        <div className="w-full max-w-7xl mx-auto">
+          <div className="text-center mb-8 sm:mb-12 lg:mb-20">
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-bold text-white mb-3 sm:mb-4 lg:mb-6">
+              <span className="bg-gradient-to-r from-white via-[#D4AF37] to-white bg-clip-text text-transparent">
+                {t.testimonials.title}
+              </span>
+            </h2>
+            <p className="text-base sm:text-lg lg:text-2xl text-[#9A9A9A]">
+              {t.testimonials.subtitle}
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8">
+            {testimonials.map((testimonial, index) => (
+              <div
+                key={index}
+                className="bg-gradient-to-br from-[#1A1A1A] to-[#2A2A2A] rounded-2xl sm:rounded-3xl p-5 sm:p-6 lg:p-8 border border-[#D4AF37]/20 hover:border-[#D4AF37]/50 hover:scale-105 transition-all duration-300"
+              >
+                <div className="flex items-center gap-3 sm:gap-4 mb-4 sm:mb-5 lg:mb-6">
+                  <img
+                    src={testimonial.image}
+                    alt={testimonial.name}
+                    className="w-14 h-14 sm:w-16 sm:h-16 lg:w-20 lg:h-20 rounded-full border-2 border-[#D4AF37]"
+                  />
+                  <div>
+                    <h4 className="font-bold text-white text-base sm:text-lg">{testimonial.name}</h4>
+                    <p className="text-sm text-[#9A9A9A]">{testimonial.role}</p>
+                  </div>
+                </div>
+                
+                <div className="flex gap-1 mb-3 sm:mb-4">
+                  {[...Array(testimonial.rating)].map((_, i) => (
+                    <Star key={i} className="w-4 h-4 sm:w-5 sm:h-5 text-[#D4AF37] fill-[#D4AF37]" />
+                  ))}
+                </div>
+                
+                <p className="text-[#9A9A9A] text-sm sm:text-base leading-relaxed">{testimonial.text}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* FOOTER - Responsivo */}
+      <footer className="bg-[#1A1A1A] border-t border-[#D4AF37]/20 py-8 sm:py-12 lg:py-16 px-4 sm:px-6 lg:px-12 w-full">
+        <div className="w-full max-w-7xl mx-auto">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8 lg:gap-12 mb-6 sm:mb-8">
+            <div>
+              <div className="flex items-center gap-2 sm:gap-3 mb-3 sm:mb-4">
+                <img 
+                  src="https://k6hrqrxuu8obbfwn.public.blob.vercel-storage.com/temp/63e7ff74-0183-4d37-90a3-89096c2f65ac.jpg" 
+                  alt="Elite Life Logo" 
+                  className="h-10 w-10 sm:h-12 sm:w-12 lg:h-14 lg:w-14 rounded-xl object-cover"
+                />
+                <h3 className="text-lg sm:text-xl lg:text-2xl font-bold text-white">Elite Life</h3>
+              </div>
+              <p className="text-[#9A9A9A] text-sm sm:text-base">
+                {t.footer.description}
+              </p>
+            </div>
+
+            <div>
+              <h4 className="font-bold text-white mb-3 sm:mb-4 text-base sm:text-lg">{t.footer.platform}</h4>
+              <ul className="space-y-2">
+                <li><a href="#" className="text-[#9A9A9A] hover:text-[#D4AF37] transition-colors text-sm sm:text-base">{t.courses}</a></li>
+                <li><a href="#" className="text-[#9A9A9A] hover:text-[#D4AF37] transition-colors text-sm sm:text-base">{t.videos}</a></li>
+                <li><a href="#" className="text-[#9A9A9A] hover:text-[#D4AF37] transition-colors text-sm sm:text-base">{t.certificates}</a></li>
+                <li><a href="#" className="text-[#9A9A9A] hover:text-[#D4AF37] transition-colors text-sm sm:text-base">{t.affiliates}</a></li>
+              </ul>
+            </div>
+
+            <div>
+              <h4 className="font-bold text-white mb-3 sm:mb-4 text-base sm:text-lg">{t.footer.support}</h4>
+              <ul className="space-y-2">
+                <li><a href="#" className="text-[#9A9A9A] hover:text-[#D4AF37] transition-colors text-sm sm:text-base">Central de Ajuda</a></li>
+                <li><a href="#" onClick={(e) => { e.preventDefault(); setShowTermsModal(true); }} className="text-[#9A9A9A] hover:text-[#D4AF37] transition-colors text-sm sm:text-base">Termos de Uso</a></li>
+                <li><a href="#" onClick={(e) => { e.preventDefault(); setShowPrivacyModal(true); }} className="text-[#9A9A9A] hover:text-[#D4AF37] transition-colors text-sm sm:text-base">Política de Privacidade</a></li>
+                <li><a href="mailto:elitelife.norply@gmail.com" className="text-[#9A9A9A] hover:text-[#D4AF37] transition-colors text-sm sm:text-base">Contato</a></li>
+              </ul>
+            </div>
+
+            <div>
+              <h4 className="font-bold text-white mb-3 sm:mb-4 text-base sm:text-lg">{t.footer.social}</h4>
+              <div className="flex flex-wrap gap-2 sm:gap-3">
+                <a href="https://www.instagram.com/elitelife_experience?igsh=MWlhZzh0NGgxNTR1ag%3D%3D&utm_source=qr" target="_blank" rel="noopener noreferrer" className="w-10 h-10 sm:w-12 sm:h-12 bg-[#2A2A2A] rounded-xl flex items-center justify-center hover:bg-[#D4AF37]/10 transition-all">
+                  <Instagram className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
+                </a>
+                <a href="https://t.me/boost/elitelifeApp" target="_blank" rel="noopener noreferrer" className="w-10 h-10 sm:w-12 sm:h-12 bg-[#2A2A2A] rounded-xl flex items-center justify-center hover:bg-[#D4AF37]/10 transition-all">
+                  <Send className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
+                </a>
+                <a href="https://discord.gg/yVPMQG8tkh" target="_blank" rel="noopener noreferrer" className="w-10 h-10 sm:w-12 sm:h-12 bg-[#2A2A2A] rounded-xl flex items-center justify-center hover:bg-[#D4AF37]/10 transition-all">
+                  <MessageCircle className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
+                </a>
+                <a href="https://whatsapp.com/channel/0029Vb79nXTBvvsjVktkoE05" target="_blank" rel="noopener noreferrer" className="w-10 h-10 sm:w-12 sm:h-12 bg-[#2A2A2A] rounded-xl flex items-center justify-center hover:bg-[#D4AF37]/10 transition-all">
+                  <MessageSquare className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
+                </a>
+                <a href="mailto:elitelife.norply@gmail.com" className="w-10 h-10 sm:w-12 sm:h-12 bg-[#2A2A2A] rounded-xl flex items-center justify-center hover:bg-[#D4AF37]/10 transition-all">
+                  <Mail className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <div className="border-t border-[#D4AF37]/20 pt-6 sm:pt-8 text-center">
+            <p className="text-[#9A9A9A] text-sm sm:text-base">
+              {t.footer.copyright}
+            </p>
+          </div>
+        </div>
+      </footer>
+
+      {/* AI CHAT BUTTON - Responsivo */}
+      <button
+        onClick={() => setShowAIChat(true)}
+        className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 lg:bottom-8 lg:right-8 w-14 h-14 sm:w-16 sm:h-16 lg:w-20 lg:h-20 bg-gradient-to-r from-[#D4AF37] to-amber-600 rounded-full flex items-center justify-center shadow-2xl hover:scale-110 transition-transform duration-300 z-40 group"
+      >
+        <MessageSquare className="w-7 h-7 sm:w-8 sm:h-8 lg:w-10 lg:h-10 text-[#0B0B0B] group-hover:scale-110 transition-transform" />
+        <span className="absolute -top-1 -right-1 w-4 h-4 sm:w-5 sm:h-5 bg-red-500 rounded-full animate-pulse"></span>
+      </button>
+
+      {/* MODALS - Login */}
+      {showLoginModal && (
+        <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-[100] p-4">
+          <div className="bg-[#1A1A1A] rounded-2xl sm:rounded-3xl p-6 sm:p-8 lg:p-10 max-w-md w-full border border-[#D4AF37]/20">
+            <div className="flex justify-between items-center mb-5 sm:mb-6 lg:mb-8">
+              <h2 className="text-xl sm:text-2xl lg:text-3xl font-bold text-white">{t.login}</h2>
+              <button onClick={() => setShowLoginModal(false)} className="text-white hover:text-[#D4AF37]">
+                <X className="w-6 h-6 sm:w-7 sm:h-7" />
+              </button>
+            </div>
+            <form onSubmit={handleLogin} className="space-y-4 sm:space-y-5">
+              <div>
+                <label className="block text-white mb-2 text-sm sm:text-base">E-mail</label>
+                <input
+                  type="email"
+                  required
+                  className="w-full px-4 py-3 sm:py-4 rounded-xl bg-[#2A2A2A] text-white border border-[#D4AF37]/20 focus:border-[#D4AF37] outline-none text-sm sm:text-base"
+                  placeholder="seu@email.com"
+                />
+              </div>
+              <div>
+                <label className="block text-white mb-2 text-sm sm:text-base">Senha</label>
+                <div className="relative">
+                  <input
+                    type={showPasswordLogin ? "text" : "password"}
+                    required
+                    className="w-full px-4 py-3 sm:py-4 rounded-xl bg-[#2A2A2A] text-white border border-[#D4AF37]/20 focus:border-[#D4AF37] outline-none text-sm sm:text-base"
+                    placeholder="••••••••"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowPasswordLogin(!showPasswordLogin)}
+                    className="absolute right-3 top-1/2 -translate-y-1/2 text-[#9A9A9A] hover:text-white"
+                  >
+                    {showPasswordLogin ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
+                  </button>
+                </div>
+              </div>
+              <button
+                type="submit"
+                className="w-full py-3 sm:py-4 bg-gradient-to-r from-[#D4AF37] to-amber-600 text-[#0B0B0B] rounded-xl font-bold hover:shadow-lg transition-all text-base sm:text-lg"
+              >
+                {t.login}
+              </button>
+            </form>
           </div>
         </div>
       )}
 
-      {/* Resto do código permanece igual... */}
-      {/* (Hero, Plans, Testimonials, Footer, etc.) */}
+      {/* MODALS - Signup */}
+      {showSignupModal && (
+        <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-[100] p-4">
+          <div className="bg-[#1A1A1A] rounded-2xl sm:rounded-3xl p-6 sm:p-8 lg:p-10 max-w-md w-full border border-[#D4AF37]/20">
+            <div className="flex justify-between items-center mb-5 sm:mb-6 lg:mb-8">
+              <h2 className="text-xl sm:text-2xl lg:text-3xl font-bold text-white">{t.signup}</h2>
+              <button onClick={() => setShowSignupModal(false)} className="text-white hover:text-[#D4AF37]">
+                <X className="w-6 h-6 sm:w-7 sm:h-7" />
+              </button>
+            </div>
+            <form onSubmit={handleSignup} className="space-y-4 sm:space-y-5">
+              <div>
+                <label className="block text-white mb-2 text-sm sm:text-base">E-mail</label>
+                <input
+                  type="email"
+                  required
+                  className="w-full px-4 py-3 sm:py-4 rounded-xl bg-[#2A2A2A] text-white border border-[#D4AF37]/20 focus:border-[#D4AF37] outline-none text-sm sm:text-base"
+                  placeholder="seu@email.com"
+                />
+              </div>
+              <div>
+                <label className="block text-white mb-2 text-sm sm:text-base">Telefone</label>
+                <input
+                  type="tel"
+                  required
+                  className="w-full px-4 py-3 sm:py-4 rounded-xl bg-[#2A2A2A] text-white border border-[#D4AF37]/20 focus:border-[#D4AF37] outline-none text-sm sm:text-base"
+                  placeholder="(11) 99999-9999"
+                />
+              </div>
+              <div>
+                <label className="block text-white mb-2 text-sm sm:text-base">Senha</label>
+                <div className="relative">
+                  <input
+                    type={showPasswordSignup ? "text" : "password"}
+                    required
+                    className="w-full px-4 py-3 sm:py-4 rounded-xl bg-[#2A2A2A] text-white border border-[#D4AF37]/20 focus:border-[#D4AF37] outline-none text-sm sm:text-base"
+                    placeholder="••••••••"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowPasswordSignup(!showPasswordSignup)}
+                    className="absolute right-3 top-1/2 -translate-y-1/2 text-[#9A9A9A] hover:text-white"
+                  >
+                    {showPasswordSignup ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
+                  </button>
+                </div>
+              </div>
+              <div>
+                <label className="block text-white mb-2 text-sm sm:text-base">Confirmar Senha</label>
+                <div className="relative">
+                  <input
+                    type={showConfirmPassword ? "text" : "password"}
+                    required
+                    className="w-full px-4 py-3 sm:py-4 rounded-xl bg-[#2A2A2A] text-white border border-[#D4AF37]/20 focus:border-[#D4AF37] outline-none text-sm sm:text-base"
+                    placeholder="••••••••"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                    className="absolute right-3 top-1/2 -translate-y-1/2 text-[#9A9A9A] hover:text-white"
+                  >
+                    {showConfirmPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
+                  </button>
+                </div>
+              </div>
+              <button
+                type="submit"
+                className="w-full py-3 sm:py-4 bg-gradient-to-r from-[#D4AF37] to-amber-600 text-[#0B0B0B] rounded-xl font-bold hover:shadow-lg transition-all text-base sm:text-lg"
+              >
+                {t.signup}
+              </button>
+            </form>
+          </div>
+        </div>
+      )}
+
+      {/* MODAL - Cupom */}
+      {showCouponModal && (
+        <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-[100] p-4">
+          <div className="bg-[#1A1A1A] rounded-2xl sm:rounded-3xl p-6 sm:p-8 lg:p-10 max-w-md w-full border border-[#D4AF37]/20">
+            <div className="flex justify-between items-center mb-5 sm:mb-6 lg:mb-8">
+              <h2 className="text-xl sm:text-2xl lg:text-3xl font-bold text-white flex items-center gap-2">
+                <Gift className="w-6 h-6 sm:w-7 sm:h-7 text-[#D4AF37]" />
+                Cupom de Desconto
+              </h2>
+              <button onClick={() => setShowCouponModal(false)} className="text-white hover:text-[#D4AF37]">
+                <X className="w-6 h-6 sm:w-7 sm:h-7" />
+              </button>
+            </div>
+            <div className="text-center">
+              <div className="bg-gradient-to-r from-[#D4AF37] to-amber-600 rounded-2xl p-5 sm:p-6 lg:p-8 mb-5 sm:mb-6 lg:mb-8">
+                <p className="text-[#0B0B0B] font-bold text-base sm:text-lg lg:text-xl mb-2">Seu Cupom de 5% OFF</p>
+                <div className="bg-white rounded-xl p-3 sm:p-4 lg:p-5 flex items-center justify-between">
+                  <span className="text-xl sm:text-2xl lg:text-3xl font-bold text-[#0B0B0B]">ELITE5OFF</span>
+                  <button
+                    onClick={() => {
+                      navigator.clipboard.writeText("ELITE5OFF");
+                      alert("Cupom copiado!");
+                    }}
+                    className="p-2 sm:p-2.5 lg:p-3 bg-[#D4AF37] rounded-lg hover:bg-amber-600 transition-all"
+                  >
+                    <Copy className="w-5 h-5 sm:w-6 sm:h-6 text-[#0B0B0B]" />
+                  </button>
+                </div>
+              </div>
+              <p className="text-[#9A9A9A] mb-4 text-sm sm:text-base">
+                Use este cupom na hora de assinar qualquer plano e ganhe 5% de desconto!
+              </p>
+              <p className="text-sm text-[#D4AF37]">
+                ⚠️ Válido apenas para primeira compra
+              </p>
+            </div>
+          </div>
+        </div>
+      )}
 
       <style jsx>{`
         @keyframes shake {

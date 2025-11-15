@@ -86,9 +86,7 @@ export default function EliteLifeHome() {
   const [pixQRCode, setPixQRCode] = useState("");
 
   // AI Chat state
-  const [aiMessages, setAiMessages] = useState<Array<{role: string, content: string}>>([
-    { role: "assistant", content: "Olá! Sou a IA da Elite Life. Como posso ajudar você hoje? Posso responder sobre cursos, planos, agenda, tracker, investimentos, afiliados, certificados, dietas de famosos, e-commerce e muito mais!" }
-  ]);
+  const [aiMessages, setAiMessages] = useState<Array<{role: string, content: string}>>([]); // Será preenchido dinamicamente
   const [aiInput, setAiInput] = useState("");
 
   // Tracker state
@@ -292,85 +290,6 @@ export default function EliteLifeHome() {
     { id: "cR5FGUBuNEw", title: "Independência Financeira", category: "financas", duration: "23:15" },
     { id: "dxfx0Yw3n7k", title: "Carteira de Investimentos", category: "financas", duration: "19:40" },
     { id: "Frr6cMXMcEY", title: "Criptomoedas", category: "financas", duration: "21:25" },
-    { id: "LHWJuZwx8SM", title: "Mercado de Ações", category: "financas", duration: "18:55" },
-    { id: "gpD6boRgXdI", title: "Análise Fundamentalista", category: "financas", duration: "24:10" },
-    { id: "quBBAXjMzac", title: "Day Trade", category: "financas", duration: "20:45" },
-    { id: "xws5gfEfRU4", title: "Swing Trade", category: "financas", duration: "17:30" },
-    { id: "Q5t76g9yh3g", title: "Análise Técnica", category: "financas", duration: "22:20" },
-    { id: "9j8IHdic0F0", title: "Gestão de Risco", category: "financas", duration: "16:40" },
-    { id: "pRxyQXL1eVA", title: "Diversificação", category: "financas", duration: "19:15" },
-    { id: "obvenrhem9Q", title: "Reserva de Emergência", category: "financas", duration: "15:25" },
-    { id: "zbN3mChHGDI", title: "Aposentadoria", category: "financas", duration: "21:50" },
-    { id: "WvvzpUaNvOo", title: "Impostos e Tributos", category: "financas", duration: "18:35" },
-    { id: "NN99hUNwO1A", title: "Economia Doméstica", category: "financas", duration: "14:45" },
-    { id: "Flo47gIJQfg", title: "Orçamento Pessoal", category: "financas", duration: "17:20" },
-    { id: "14h1Sn5irdE", title: "Controle de Gastos", category: "financas", duration: "16:10" },
-    { id: "mZRHqSmTiwE", title: "Dívidas e Crédito", category: "financas", duration: "19:55" },
-    { id: "l4VFryL5SC0", title: "Score de Crédito", category: "financas", duration: "15:30" },
-    { id: "5ZLAxK7jrQ4", title: "Empréstimos Inteligentes", category: "financas", duration: "18:15" },
-    { id: "-e2x7oQ9C1g", title: "Financiamento Imobiliário", category: "financas", duration: "22:40" },
-    { id: "f4m3asFg3oo", title: "Consórcio", category: "financas", duration: "17:25" },
-    { id: "yAsyW3ie8AA", title: "Previdência Privada", category: "financas", duration: "20:10" },
-    { id: "v4yMnlFR6u0", title: "Seguros e Proteção", category: "financas", duration: "16:50" },
-    { id: "FIiOd412sRs", title: "Patrimônio Líquido", category: "financas", duration: "19:30" },
-    { id: "AT7nSkn8Cs8", title: "Fluxo de Caixa", category: "financas", duration: "18:20" },
-    { id: "X71YbXctXeM", title: "Juros Compostos", category: "financas", duration: "21:15" },
-    { id: "wJBof_K85YY", title: "Inflação e Poder de Compra", category: "financas", duration: "17:45" },
-    { id: "Huii3YbR6ek", title: "Câmbio e Moedas", category: "financas", duration: "19:25" },
-    { id: "qTH_P4PBEI8", title: "Economia Global", category: "financas", duration: "23:50" },
-    { id: "ULoPE2xOBCo", title: "Mercado Financeiro", category: "financas", duration: "20:35" },
-    { id: "ywUuoTJJznA", title: "Bolsa de Valores", category: "financas", duration: "22:10" },
-    { id: "0rtNKdODxbo", title: "ETFs", category: "financas", duration: "18:40" },
-    { id: "ORe4506BNwc", title: "Renda Fixa", category: "financas", duration: "17:15" },
-    { id: "kqAex5L6D-M", title: "Renda Variável", category: "financas", duration: "21:30" },
-    { id: "ykkty8JCx30", title: "Commodities", category: "financas", duration: "19:45" },
-    { id: "s-pHHcBHwug", title: "Ouro e Metais", category: "financas", duration: "16:25" },
-    { id: "yY0_tkd-eYA", title: "Investimento Internacional", category: "financas", duration: "24:20" },
-    { id: "mcQYKxmR1DE", title: "BDRs", category: "financas", duration: "18:55" },
-    { id: "OOCcgOtauM0", title: "Fundos de Investimento", category: "financas", duration: "20:15" },
-    { id: "AujbkWYKEc4", title: "CDBs e LCIs", category: "financas", duration: "17:40" },
-    { id: "MZF1cEbFmy8", title: "Debêntures", category: "financas", duration: "19:10" },
-    { id: "AA4kFuOUOzE", title: "COE", category: "financas", duration: "16:30" },
-    { id: "5T011jO_s3g", title: "Poupança vs Investimentos", category: "financas", duration: "15:50" },
-    { id: "sgai6wVLncg", title: "Rentabilidade Real", category: "financas", duration: "18:25" },
-    { id: "o2OAqUCGOAs", title: "Liquidez", category: "financas", duration: "17:05" },
-    { id: "4bO0azzC9Ak", title: "Perfil de Investidor", category: "financas", duration: "20:40" },
-    { id: "le6Xf7XS1-o", title: "Alocação de Ativos", category: "financas", duration: "22:25" },
-    { id: "17yQpfiDFCY", title: "Rebalanceamento", category: "financas", duration: "19:15" },
-    { id: "SolU30Rl8rQ", title: "Buy and Hold", category: "financas", duration: "21:50" },
-    { id: "BOkaELzR9aM", title: "Value Investing", category: "financas", duration: "23:30" },
-    { id: "J9wbTmuPfNg", title: "Growth Investing", category: "financas", duration: "20:05" },
-    { id: "XkbDaNZTedc", title: "Dividendos Mensais", category: "financas", duration: "18:45" },
-    { id: "NaPFO4O5llo", title: "Reinvestimento", category: "financas", duration: "17:20" },
-    { id: "_LPIyvLLzyo", title: "Efeito Bola de Neve", category: "financas", duration: "19:35" },
-    { id: "RNB9uCQVEBI", title: "Liberdade Financeira", category: "financas", duration: "24:10" },
-    { id: "ROYi13bMbbQ", title: "FIRE Movement", category: "financas", duration: "21:40" },
-    { id: "gIqiopx5qvQ", title: "Minimalismo Financeiro", category: "financas", duration: "16:55" },
-    { id: "lof9u_8ULf0", title: "Consumo Consciente", category: "financas", duration: "18:30" },
-    { id: "exbgpMKPowo", title: "Investimento Sustentável", category: "financas", duration: "20:20" },
-    { id: "Em0UqsiYij8", title: "ESG", category: "financas", duration: "19:50" },
-    { id: "XVOZItdAUbw", title: "Finanças Comportamentais", category: "financas", duration: "22:15" },
-    { id: "CtfOALRAf8s", title: "Psicologia do Dinheiro", category: "financas", duration: "21:05" },
-    { id: "vpU4zJ7MlzQ", title: "Mentalidade de Abundância", category: "financas", duration: "17:50" },
-    { id: "gMLJfHko1II", title: "Crenças Limitantes", category: "financas", duration: "19:25" },
-    { id: "PPDECleQNtc", title: "Prosperidade", category: "financas", duration: "20:40" },
-    { id: "m-6r2sAV8QE", title: "Riqueza Sustentável", category: "financas", duration: "23:20" },
-    { id: "hcluoA_zvzQ", title: "Legado Financeiro", category: "financas", duration: "21:30" },
-    { id: "eyEXJ3agKuU", title: "Sucessão Patrimonial", category: "financas", duration: "19:15" },
-    { id: "GN0KWrj8gEA", title: "Testamento e Herança", category: "financas", duration: "18:40" },
-    { id: "iyTAeHp7vFE", title: "Holding Familiar", category: "financas", duration: "22:50" },
-    { id: "LDWKS9z005M", title: "Blindagem Patrimonial", category: "financas", duration: "20:25" },
-    { id: "5G4VLBmszyY", title: "Offshore", category: "financas", duration: "24:35" },
-    { id: "RqIv0hFd5QQ", title: "Investimento no Exterior", category: "financas", duration: "21:15" },
-    { id: "AcjPz8Qr_i8", title: "Conta Internacional", category: "financas", duration: "17:30" },
-    { id: "PpN4_nj7WE4", title: "Remessa Internacional", category: "financas", duration: "16:45" },
-    { id: "Hir6lj4WX18", title: "Dólar e Euro", category: "financas", duration: "19:20" },
-    { id: "eif5_XolUDM", title: "Proteção Cambial", category: "financas", duration: "18:10" },
-    { id: "n30Qz6EcHEM", title: "Hedge", category: "financas", duration: "20:55" },
-    { id: "tCx9HKdORso", title: "Derivativos", category: "financas", duration: "23:40" },
-    { id: "m7Med0-y88I", title: "Opções", category: "financas", duration: "22:25" },
-    { id: "ZtgcWbcIWy4", title: "Futuros", category: "financas", duration: "21:10" },
-    { id: "TVtCJbpQQ74", title: "Estratégias Avançadas", category: "financas", duration: "25:15" },
   ];
 
   const filteredVideos = activeVideoCategory === "all" 
@@ -521,10 +440,10 @@ export default function EliteLifeHome() {
   ];
 
   const stats = [
-    { label: "+ de 50K alunos transformados", value: "50K+" },
-    { label: "+ de 100 cursos", value: "100+" },
-    { label: "+ de 1000 atividades", value: "1000+" },
-    { label: "Certificados ELITE LIFE", value: "✓" }
+    { label: "+ de 50K alunos transformados", value: "50K+", icon: Users },
+    { label: "+ de 100 cursos", value: "100+", icon: GraduationCap },
+    { label: "+ de 1000 atividades", value: "1000+", icon: BookOpen },
+    { label: "Certificados ELITE LIFE", value: "✓", icon: Award }
   ];
 
   const notifications = [
@@ -552,6 +471,38 @@ export default function EliteLifeHome() {
       hero: {
         title: "Transforme sua vida em 90 dias",
         subtitle: "Corpo, mente e dinheiro no mesmo lugar. + de 50K alunos transformados."
+      },
+      quiz: {
+        title: "Descubra o Plano Ideal Para Você!",
+        subtitle: "Responda 15 perguntas rápidas e receba uma recomendação personalizada baseada em IA",
+        button: "Começar Quiz Gratuito"
+      },
+      cta: {
+        startFree: "Começar Agora Grátis",
+        viewPlans: "Ver Planos Premium"
+      },
+      stats: {
+        students: "+ de 50K alunos transformados",
+        courses: "+ de 100 cursos",
+        activities: "+ de 1000 atividades",
+        certificates: "Certificados ELITE LIFE"
+      },
+      plans: {
+        title: "Escolha Seu Plano",
+        subtitle: "Transforme sua vida com o plano perfeito para você",
+        free: "Começar Grátis",
+        subscribe: "Assinar Agora"
+      },
+      testimonials: {
+        title: "Resultados Reais",
+        subtitle: "Veja o que nossos alunos estão conquistando"
+      },
+      footer: {
+        description: "Transformando vidas através de educação de qualidade",
+        platform: "Plataforma",
+        support: "Suporte",
+        social: "Redes Sociais",
+        copyright: "© 2024 Elite Life. Todos os direitos reservados."
       }
     },
     en: {
@@ -572,6 +523,38 @@ export default function EliteLifeHome() {
       hero: {
         title: "Transform your life in 90 days",
         subtitle: "Body, mind and money in one place. + 50K students transformed."
+      },
+      quiz: {
+        title: "Discover Your Ideal Plan!",
+        subtitle: "Answer 15 quick questions and get a personalized AI-based recommendation",
+        button: "Start Free Quiz"
+      },
+      cta: {
+        startFree: "Start Now Free",
+        viewPlans: "View Premium Plans"
+      },
+      stats: {
+        students: "+ 50K students transformed",
+        courses: "+ 100 courses",
+        activities: "+ 1000 activities",
+        certificates: "ELITE LIFE Certificates"
+      },
+      plans: {
+        title: "Choose Your Plan",
+        subtitle: "Transform your life with the perfect plan for you",
+        free: "Start Free",
+        subscribe: "Subscribe Now"
+      },
+      testimonials: {
+        title: "Real Results",
+        subtitle: "See what our students are achieving"
+      },
+      footer: {
+        description: "Transforming lives through quality education",
+        platform: "Platform",
+        support: "Support",
+        social: "Social Media",
+        copyright: "© 2024 Elite Life. All rights reserved."
       }
     },
     es: {
@@ -592,6 +575,38 @@ export default function EliteLifeHome() {
       hero: {
         title: "Transforma tu vida en 90 días",
         subtitle: "Cuerpo, mente y dinero en un solo lugar. + de 50K alumnos transformados."
+      },
+      quiz: {
+        title: "¡Descubre Tu Plan Ideal!",
+        subtitle: "Responde 15 preguntas rápidas y recibe una recomendación personalizada basada en IA",
+        button: "Comenzar Quiz Gratuito"
+      },
+      cta: {
+        startFree: "Comenzar Ahora Gratis",
+        viewPlans: "Ver Planes Premium"
+      },
+      stats: {
+        students: "+ de 50K alumnos transformados",
+        courses: "+ de 100 cursos",
+        activities: "+ de 1000 actividades",
+        certificates: "Certificados ELITE LIFE"
+      },
+      plans: {
+        title: "Elige Tu Plan",
+        subtitle: "Transforma tu vida con el plan perfecto para ti",
+        free: "Comenzar Gratis",
+        subscribe: "Suscribirse Ahora"
+      },
+      testimonials: {
+        title: "Resultados Reales",
+        subtitle: "Mira lo que nuestros alumnos están logrando"
+      },
+      footer: {
+        description: "Transformando vidas a través de educación de calidad",
+        platform: "Plataforma",
+        support: "Soporte",
+        social: "Redes Sociales",
+        copyright: "© 2024 Elite Life. Todos los derechos reservados."
       }
     }
   };
@@ -603,6 +618,19 @@ export default function EliteLifeHome() {
     { code: "en", label: "English", flag: "🇺🇸" },
     { code: "es", label: "Español", flag: "🇪🇸" },
   ];
+
+  // Atualizar mensagem inicial da IA quando idioma mudar
+  useEffect(() => {
+    const aiWelcomeMessages: any = {
+      pt: "Olá! Sou a IA da Elite Life. Como posso ajudar você hoje? Posso responder sobre cursos, planos, agenda, tracker, investimentos, afiliados, certificados, dietas de famosos, e-commerce e muito mais!",
+      en: "Hello! I'm the Elite Life AI. How can I help you today? I can answer questions about courses, plans, schedule, tracker, investments, affiliates, certificates, celebrity diets, e-commerce and much more!",
+      es: "¡Hola! Soy la IA de Elite Life. ¿Cómo puedo ayudarte hoy? Puedo responder sobre cursos, planes, agenda, tracker, inversiones, afiliados, certificados, dietas de famosos, e-commerce y mucho más!"
+    };
+
+    setAiMessages([
+      { role: "assistant", content: aiWelcomeMessages[language] || aiWelcomeMessages.pt }
+    ]);
+  }, [language]);
 
   const certificates = [
     { id: 1, name: "Finanças Pessoais Avançadas", date: "15/01/2024", status: "completed", institution: "Harvard Business School" },
@@ -1035,123 +1063,123 @@ export default function EliteLifeHome() {
   };
 
   return (
-    <div className="min-h-screen bg-[#0B0B0B] w-full overflow-x-hidden">
-      {/* HEADER MODERNO E RESPONSIVO */}
-      <header className="fixed top-0 left-0 right-0 z-50 bg-gradient-to-r from-[#0B0B0B] via-[#1A1A1A] to-[#0B0B0B] border-b border-[#D4AF37]/20 backdrop-blur-lg shadow-2xl">
-        <div className="w-full max-w-[1920px] mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-20">
-            {/* Logo e Nome */}
-            <div className="flex items-center gap-3">
+    <div className="min-h-screen bg-gradient-to-b from-[#0B0B0B] via-[#1A1A1A] to-[#0B0B0B] w-full overflow-x-hidden">
+      {/* HEADER OTIMIZADO - Mobile First + Desktop Perfeito */}
+      <header className="fixed top-0 left-0 right-0 z-50 bg-[#0B0B0B]/95 backdrop-blur-xl border-b border-[#D4AF37]/20 shadow-2xl">
+        <div className="w-full max-w-[1920px] mx-auto px-4 sm:px-6 lg:px-12">
+          <div className="flex items-center justify-between h-16 sm:h-18 lg:h-24">
+            {/* Logo e Nome - Responsivo */}
+            <div className="flex items-center gap-2 sm:gap-3 lg:gap-4">
               <img 
                 src="https://k6hrqrxuu8obbfwn.public.blob.vercel-storage.com/temp/63e7ff74-0183-4d37-90a3-89096c2f65ac.jpg" 
                 alt="Elite Life Logo" 
-                className="h-12 w-12 rounded-xl shadow-lg object-cover"
+                className="h-10 w-10 sm:h-12 sm:w-12 lg:h-16 lg:w-16 rounded-xl shadow-lg object-cover ring-2 ring-[#D4AF37]/30"
               />
-              <span className="text-2xl font-bold bg-gradient-to-r from-[#D4AF37] to-amber-600 bg-clip-text text-transparent">
+              <span className="text-lg sm:text-xl lg:text-3xl font-bold bg-gradient-to-r from-[#D4AF37] via-amber-500 to-[#D4AF37] bg-clip-text text-transparent">
                 Elite Life
               </span>
             </div>
 
-            {/* Desktop Navigation */}
-            <nav className="hidden lg:flex items-center gap-2">
+            {/* Desktop Navigation - Melhorado */}
+            <nav className="hidden lg:flex items-center gap-1 xl:gap-2">
               <button
                 onClick={scrollToTop}
-                className="flex items-center gap-2 px-4 py-2.5 rounded-xl text-white hover:bg-[#D4AF37]/10 hover:text-[#D4AF37] transition-all duration-300 group"
+                className="flex items-center gap-2 px-3 xl:px-4 py-2.5 rounded-xl text-white hover:bg-gradient-to-r hover:from-[#D4AF37]/10 hover:to-amber-600/10 hover:text-[#D4AF37] transition-all duration-300 group"
               >
-                <Home className="w-5 h-5 group-hover:scale-110 transition-transform" />
-                <span className="font-medium">{t.home}</span>
+                <Home className="w-4 h-4 xl:w-5 xl:h-5 group-hover:scale-110 transition-transform" />
+                <span className="font-medium text-sm">{t.home}</span>
               </button>
               
               <button
                 onClick={() => userPlan === "free" ? handleLockedClick("/courses") : setShowCoursesModal(true)}
-                className="flex items-center gap-2 px-4 py-2.5 rounded-xl text-white hover:bg-purple-500/10 hover:text-purple-400 transition-all duration-300 group"
+                className="flex items-center gap-2 px-3 xl:px-4 py-2.5 rounded-xl text-white hover:bg-gradient-to-r hover:from-purple-500/10 hover:to-indigo-600/10 hover:text-purple-400 transition-all duration-300 group"
               >
-                <GraduationCap className="w-5 h-5 group-hover:scale-110 transition-transform" />
-                <span className="font-medium">{t.courses}</span>
+                <GraduationCap className="w-4 h-4 xl:w-5 xl:h-5 group-hover:scale-110 transition-transform" />
+                <span className="font-medium text-sm">{t.courses}</span>
                 {userPlan === "free" && <Lock className="w-3 h-3" />}
               </button>
 
               <button
                 onClick={() => userPlan === "free" ? handleLockedClick("/videos") : setShowVideosModal(true)}
-                className="flex items-center gap-2 px-4 py-2.5 rounded-xl text-white hover:bg-red-500/10 hover:text-red-400 transition-all duration-300 group"
+                className="flex items-center gap-2 px-3 xl:px-4 py-2.5 rounded-xl text-white hover:bg-gradient-to-r hover:from-red-500/10 hover:to-pink-600/10 hover:text-red-400 transition-all duration-300 group"
               >
-                <Video className="w-5 h-5 group-hover:scale-110 transition-transform" />
-                <span className="font-medium">{t.videos}</span>
+                <Video className="w-4 h-4 xl:w-5 xl:h-5 group-hover:scale-110 transition-transform" />
+                <span className="font-medium text-sm">{t.videos}</span>
                 {userPlan === "free" && <Lock className="w-3 h-3" />}
               </button>
 
               <button
                 onClick={() => setShowAgendaModal(true)}
-                className="flex items-center gap-2 px-4 py-2.5 rounded-xl text-white hover:bg-blue-500/10 hover:text-blue-400 transition-all duration-300 group"
+                className="flex items-center gap-2 px-3 xl:px-4 py-2.5 rounded-xl text-white hover:bg-gradient-to-r hover:from-blue-500/10 hover:to-cyan-600/10 hover:text-blue-400 transition-all duration-300 group"
               >
-                <Calendar className="w-5 h-5 group-hover:scale-110 transition-transform" />
-                <span className="font-medium">{t.agenda}</span>
+                <Calendar className="w-4 h-4 xl:w-5 xl:h-5 group-hover:scale-110 transition-transform" />
+                <span className="font-medium text-sm">{t.agenda}</span>
               </button>
 
               <button
                 onClick={() => userPlan === "free" ? setShowTrackerQuizModal(true) : setShowTrackerModal(true)}
-                className="flex items-center gap-2 px-4 py-2.5 rounded-xl text-white hover:bg-green-500/10 hover:text-green-400 transition-all duration-300 group"
+                className="flex items-center gap-2 px-3 xl:px-4 py-2.5 rounded-xl text-white hover:bg-gradient-to-r hover:from-green-500/10 hover:to-emerald-600/10 hover:text-green-400 transition-all duration-300 group"
               >
-                <Activity className="w-5 h-5 group-hover:scale-110 transition-transform" />
-                <span className="font-medium">{t.tracker}</span>
+                <Activity className="w-4 h-4 xl:w-5 xl:h-5 group-hover:scale-110 transition-transform" />
+                <span className="font-medium text-sm">{t.tracker}</span>
                 {userPlan === "free" && <Lock className="w-3 h-3" />}
               </button>
 
               <button
                 onClick={() => canAccessWallet() ? setShowWalletModal(true) : handleLockedClick("/wallet")}
-                className="flex items-center gap-2 px-4 py-2.5 rounded-xl text-white hover:bg-emerald-500/10 hover:text-emerald-400 transition-all duration-300 group"
+                className="flex items-center gap-2 px-3 xl:px-4 py-2.5 rounded-xl text-white hover:bg-gradient-to-r hover:from-emerald-500/10 hover:to-teal-600/10 hover:text-emerald-400 transition-all duration-300 group"
               >
-                <Wallet className="w-5 h-5 group-hover:scale-110 transition-transform" />
-                <span className="font-medium">{t.wallet}</span>
+                <Wallet className="w-4 h-4 xl:w-5 xl:h-5 group-hover:scale-110 transition-transform" />
+                <span className="font-medium text-sm">{t.wallet}</span>
                 {!canAccessWallet() && <Lock className="w-3 h-3" />}
               </button>
 
               <button
                 onClick={() => userPlan === "free" ? handleLockedClick("/influencer") : setShowInfluencerModal(true)}
-                className="flex items-center gap-2 px-4 py-2.5 rounded-xl text-white hover:bg-pink-500/10 hover:text-pink-400 transition-all duration-300 group"
+                className="flex items-center gap-2 px-2 xl:px-3 py-2.5 rounded-xl text-white hover:bg-gradient-to-r hover:from-pink-500/10 hover:to-rose-600/10 hover:text-pink-400 transition-all duration-300 group"
               >
-                <Video className="w-5 h-5 group-hover:scale-110 transition-transform" />
-                <span className="font-medium text-sm">{t.influencer}</span>
+                <Video className="w-4 h-4 xl:w-5 xl:h-5 group-hover:scale-110 transition-transform" />
+                <span className="font-medium text-xs xl:text-sm">{t.influencer}</span>
                 {userPlan === "free" && <Lock className="w-3 h-3" />}
               </button>
 
               <button
                 onClick={() => userPlan === "free" ? handleLockedClick("/ecommerce") : setActiveSection("ecommerce")}
-                className="flex items-center gap-2 px-4 py-2.5 rounded-xl text-white hover:bg-cyan-500/10 hover:text-cyan-400 transition-all duration-300 group"
+                className="flex items-center gap-2 px-3 xl:px-4 py-2.5 rounded-xl text-white hover:bg-gradient-to-r hover:from-cyan-500/10 hover:to-blue-600/10 hover:text-cyan-400 transition-all duration-300 group"
               >
-                <ShoppingCart className="w-5 h-5 group-hover:scale-110 transition-transform" />
-                <span className="font-medium">{t.ecommerce}</span>
+                <ShoppingCart className="w-4 h-4 xl:w-5 xl:h-5 group-hover:scale-110 transition-transform" />
+                <span className="font-medium text-sm">{t.ecommerce}</span>
                 {userPlan === "free" && <Lock className="w-3 h-3" />}
               </button>
 
               <button
                 onClick={() => setShowAffiliateModal(true)}
-                className="flex items-center gap-2 px-4 py-2.5 rounded-xl text-white hover:bg-orange-500/10 hover:text-orange-400 transition-all duration-300 group"
+                className="flex items-center gap-2 px-3 xl:px-4 py-2.5 rounded-xl text-white hover:bg-gradient-to-r hover:from-orange-500/10 hover:to-amber-600/10 hover:text-orange-400 transition-all duration-300 group"
               >
-                <Users className="w-5 h-5 group-hover:scale-110 transition-transform" />
-                <span className="font-medium">{t.affiliates}</span>
+                <Users className="w-4 h-4 xl:w-5 xl:h-5 group-hover:scale-110 transition-transform" />
+                <span className="font-medium text-sm">{t.affiliates}</span>
               </button>
 
               <button
                 onClick={() => setShowRankingModal(true)}
-                className="flex items-center gap-2 px-4 py-2.5 rounded-xl text-white hover:bg-yellow-500/10 hover:text-yellow-400 transition-all duration-300 group"
+                className="flex items-center gap-2 px-3 xl:px-4 py-2.5 rounded-xl text-white hover:bg-gradient-to-r hover:from-yellow-500/10 hover:to-amber-600/10 hover:text-yellow-400 transition-all duration-300 group"
               >
-                <Trophy className="w-5 h-5 group-hover:scale-110 transition-transform" />
-                <span className="font-medium">{t.ranking}</span>
+                <Trophy className="w-4 h-4 xl:w-5 xl:h-5 group-hover:scale-110 transition-transform" />
+                <span className="font-medium text-sm">{t.ranking}</span>
               </button>
             </nav>
 
-            {/* Right Actions */}
-            <div className="flex items-center gap-3">
-              {/* Social Links */}
-              <div className="hidden md:flex items-center gap-2">
+            {/* Right Actions - Responsivo */}
+            <div className="flex items-center gap-2 sm:gap-3">
+              {/* Social Links - Desktop Only */}
+              <div className="hidden xl:flex items-center gap-2">
                 <a 
                   href="https://www.instagram.com/elitelife_experience?igsh=MWlhZzh0NGgxNTR1ag%3D%3D&utm_source=qr"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="p-2.5 rounded-xl bg-gradient-to-r from-pink-500 to-rose-600 hover:shadow-lg hover:shadow-pink-500/50 transition-all duration-300 group"
                 >
-                  <Instagram className="w-5 h-5 text-white group-hover:scale-110 transition-transform" />
+                  <Instagram className="w-4 h-4 text-white group-hover:scale-110 transition-transform" />
                 </a>
                 <a 
                   href="https://t.me/boost/elitelifeApp"
@@ -1159,7 +1187,7 @@ export default function EliteLifeHome() {
                   rel="noopener noreferrer"
                   className="p-2.5 rounded-xl bg-gradient-to-r from-blue-500 to-cyan-600 hover:shadow-lg hover:shadow-blue-500/50 transition-all duration-300 group"
                 >
-                  <Send className="w-5 h-5 text-white group-hover:scale-110 transition-transform" />
+                  <Send className="w-4 h-4 text-white group-hover:scale-110 transition-transform" />
                 </a>
                 <a 
                   href="https://discord.gg/yVPMQG8tkh"
@@ -1167,7 +1195,7 @@ export default function EliteLifeHome() {
                   rel="noopener noreferrer"
                   className="p-2.5 rounded-xl bg-gradient-to-r from-indigo-500 to-purple-600 hover:shadow-lg hover:shadow-indigo-500/50 transition-all duration-300 group"
                 >
-                  <MessageCircle className="w-5 h-5 text-white group-hover:scale-110 transition-transform" />
+                  <MessageCircle className="w-4 h-4 text-white group-hover:scale-110 transition-transform" />
                 </a>
                 <a 
                   href="https://whatsapp.com/channel/0029Vb79nXTBvvsjVktkoE05"
@@ -1175,26 +1203,25 @@ export default function EliteLifeHome() {
                   rel="noopener noreferrer"
                   className="p-2.5 rounded-xl bg-gradient-to-r from-green-500 to-emerald-600 hover:shadow-lg hover:shadow-green-500/50 transition-all duration-300 group"
                 >
-                  <MessageSquare className="w-5 h-5 text-white group-hover:scale-110 transition-transform" />
+                  <MessageSquare className="w-4 h-4 text-white group-hover:scale-110 transition-transform" />
                 </a>
               </div>
 
-              {/* Notifications */}
-              <div className="relative">
+              {/* Notifications - Responsivo */}
+              <div className="relative hidden sm:block">
                 <button
                   onClick={() => setShowNotifications(!showNotifications)}
-                  className="relative p-2.5 rounded-xl bg-[#1A1A1A] hover:bg-[#D4AF37]/10 transition-all duration-300 group"
+                  className="relative p-2 sm:p-2.5 rounded-xl bg-[#1A1A1A] hover:bg-[#D4AF37]/10 transition-all duration-300 group"
                 >
                   <Bell className="w-5 h-5 text-white group-hover:text-[#D4AF37] group-hover:scale-110 transition-all" />
-                  <span className="absolute -top-1 -right-1 w-5 h-5 bg-red-500 rounded-full text-xs text-white flex items-center justify-center font-bold animate-pulse">
+                  <span className="absolute -top-1 -right-1 w-4 h-4 sm:w-5 sm:h-5 bg-red-500 rounded-full text-xs text-white flex items-center justify-center font-bold animate-pulse">
                     2
                   </span>
                 </button>
 
-                {/* Notifications Dropdown */}
                 {showNotifications && (
-                  <div className="absolute right-0 top-full mt-2 w-80 bg-[#1A1A1A] rounded-2xl shadow-2xl border border-[#D4AF37]/20 p-4 z-50">
-                    <h3 className="text-white font-bold mb-4">Notificações</h3>
+                  <div className="absolute right-0 top-full mt-2 w-72 sm:w-80 lg:w-96 bg-[#1A1A1A] rounded-2xl shadow-2xl border border-[#D4AF37]/20 p-4 z-50">
+                    <h3 className="text-white font-bold mb-4 text-base sm:text-lg">Notificações</h3>
                     <div className="space-y-3">
                       {notifications.map(notif => (
                         <div 
@@ -1214,17 +1241,16 @@ export default function EliteLifeHome() {
                 )}
               </div>
 
-              {/* Language */}
-              <div className="relative hidden sm:block">
+              {/* Language - Sempre Visível */}
+              <div className="relative">
                 <button
                   onClick={() => setShowLanguageMenu(!showLanguageMenu)}
-                  className="flex items-center gap-2 px-3 py-2.5 rounded-xl bg-[#1A1A1A] hover:bg-[#D4AF37]/10 transition-all duration-300 group"
+                  className="flex items-center gap-2 px-2 sm:px-3 py-2 sm:py-2.5 rounded-xl bg-[#1A1A1A] hover:bg-[#D4AF37]/10 transition-all duration-300 group"
                 >
-                  <Globe className="w-5 h-5 text-white group-hover:text-[#D4AF37] transition-colors" />
-                  <span className="text-sm font-medium text-white">{language.toUpperCase()}</span>
+                  <Globe className="w-4 h-4 sm:w-5 sm:h-5 text-white group-hover:text-[#D4AF37] transition-colors" />
+                  <span className="hidden sm:inline text-sm font-medium text-white">{language.toUpperCase()}</span>
                 </button>
 
-                {/* Language Dropdown */}
                 {showLanguageMenu && (
                   <div className="absolute right-0 top-full mt-2 w-48 bg-[#1A1A1A] rounded-2xl shadow-2xl border border-[#D4AF37]/20 p-2 z-50">
                     {languages.map(lang => (
@@ -1234,35 +1260,36 @@ export default function EliteLifeHome() {
                           setLanguage(lang.code);
                           setShowLanguageMenu(false);
                         }}
-                        className="w-full flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-[#D4AF37]/10 transition-all text-left"
+                        className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-[#D4AF37]/10 transition-all text-left ${
+                          language === lang.code ? 'bg-[#D4AF37]/20' : ''
+                        }`}
                       >
                         <span className="text-2xl">{lang.flag}</span>
-                        <span className="text-white font-medium">{lang.label}</span>
+                        <span className="text-white font-medium text-sm">{lang.label}</span>
                       </button>
                     ))}
                   </div>
                 )}
               </div>
 
-              {/* User Menu */}
+              {/* User Menu - Responsivo */}
               {isLoggedIn ? (
                 <div className="relative">
                   <button
                     onClick={() => setShowUserMenu(!showUserMenu)}
                     className="flex items-center gap-2 px-3 py-2 rounded-xl bg-gradient-to-r from-[#D4AF37] to-amber-600 hover:shadow-lg hover:shadow-[#D4AF37]/50 transition-all duration-300"
                   >
-                    <img src={userAvatar} alt="Avatar" className="w-8 h-8 rounded-full border-2 border-white" />
-                    <span className="hidden sm:block text-sm font-bold text-[#0B0B0B]">{userName}</span>
+                    <img src={userAvatar} alt="Avatar" className="w-7 h-7 sm:w-8 sm:h-8 lg:w-10 lg:h-10 rounded-full border-2 border-white" />
+                    <span className="hidden sm:block text-sm lg:text-base font-bold text-[#0B0B0B]">{userName}</span>
                     <ChevronDown className="w-4 h-4 text-[#0B0B0B]" />
                   </button>
 
-                  {/* User Dropdown */}
                   {showUserMenu && (
-                    <div className="absolute right-0 top-full mt-2 w-64 bg-[#1A1A1A] rounded-2xl shadow-2xl border border-[#D4AF37]/20 p-4 z-50">
+                    <div className="absolute right-0 top-full mt-2 w-56 sm:w-64 lg:w-72 bg-[#1A1A1A] rounded-2xl shadow-2xl border border-[#D4AF37]/20 p-4 z-50">
                       <div className="flex items-center gap-3 mb-4 pb-4 border-b border-[#D4AF37]/20">
                         <img src={userAvatar} alt="Avatar" className="w-12 h-12 rounded-full border-2 border-[#D4AF37]" />
                         <div>
-                          <h4 className="text-white font-bold">{userName}</h4>
+                          <h4 className="text-white font-bold text-base">{userName}</h4>
                           <p className="text-xs text-[#9A9A9A]">Plano: {userPlan === "free" ? "Gratuito" : "Premium"}</p>
                         </div>
                       </div>
@@ -1274,7 +1301,7 @@ export default function EliteLifeHome() {
                         className="w-full flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-[#D4AF37]/10 transition-all text-left mb-2"
                       >
                         <User className="w-5 h-5 text-[#D4AF37]" />
-                        <span className="text-white font-medium">Minha Conta</span>
+                        <span className="text-white font-medium text-sm">Minha Conta</span>
                       </button>
                       <button
                         onClick={() => {
@@ -1284,7 +1311,7 @@ export default function EliteLifeHome() {
                         className="w-full flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-[#D4AF37]/10 transition-all text-left mb-2"
                       >
                         <Medal className="w-5 h-5 text-[#D4AF37]" />
-                        <span className="text-white font-medium">Medalhas</span>
+                        <span className="text-white font-medium text-sm">Medalhas</span>
                       </button>
                       <button
                         onClick={() => {
@@ -1294,29 +1321,29 @@ export default function EliteLifeHome() {
                         className="w-full flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-[#D4AF37]/10 transition-all text-left mb-2"
                       >
                         <Settings className="w-5 h-5 text-[#D4AF37]" />
-                        <span className="text-white font-medium">Configurações</span>
+                        <span className="text-white font-medium text-sm">Configurações</span>
                       </button>
                       <button
                         onClick={handleLogout}
                         className="w-full flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-red-500/10 transition-all text-left"
                       >
                         <LogOut className="w-5 h-5 text-red-500" />
-                        <span className="text-red-500 font-medium">Sair</span>
+                        <span className="text-red-500 font-medium text-sm">Sair</span>
                       </button>
                     </div>
                   )}
                 </div>
               ) : (
-                <div className="hidden sm:flex items-center gap-2">
+                <div className="flex items-center gap-2">
                   <button
                     onClick={() => setShowLoginModal(true)}
-                    className="px-4 py-2.5 rounded-xl text-white hover:bg-[#1A1A1A] transition-all duration-300 font-medium"
+                    className="px-3 sm:px-4 lg:px-6 py-2 lg:py-3 rounded-xl text-white hover:bg-[#1A1A1A] transition-all duration-300 font-medium text-sm"
                   >
                     {t.login}
                   </button>
                   <button
                     onClick={() => setShowSignupModal(true)}
-                    className="px-4 py-2.5 rounded-xl bg-gradient-to-r from-[#D4AF37] to-amber-600 text-[#0B0B0B] font-bold hover:shadow-lg hover:shadow-[#D4AF37]/50 transition-all duration-300"
+                    className="px-3 sm:px-4 lg:px-6 py-2 lg:py-3 rounded-xl bg-gradient-to-r from-[#D4AF37] to-amber-600 text-[#0B0B0B] font-bold hover:shadow-lg hover:shadow-[#D4AF37]/50 transition-all duration-300 text-sm"
                   >
                     {t.signup}
                   </button>
@@ -1326,7 +1353,7 @@ export default function EliteLifeHome() {
               {/* Mobile Menu Button */}
               <button
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
-                className="lg:hidden p-2.5 rounded-xl bg-[#1A1A1A] hover:bg-[#D4AF37]/10 transition-all duration-300"
+                className="lg:hidden p-2 rounded-xl bg-[#1A1A1A] hover:bg-[#D4AF37]/10 transition-all duration-300"
               >
                 {isMenuOpen ? (
                   <X className="w-6 h-6 text-white" />
@@ -1525,58 +1552,78 @@ export default function EliteLifeHome() {
         )}
       </header>
 
-      {/* HERO SECTION COM QUIZ INICIAL */}
-      <section className="pt-32 pb-20 px-4 relative overflow-hidden w-full">
-        <div className="absolute inset-0 bg-gradient-to-b from-[#D4AF37]/5 to-transparent"></div>
+      {/* HERO SECTION - Mobile First + Desktop Perfeito */}
+      <section className="pt-24 sm:pt-28 lg:pt-40 pb-12 sm:pb-16 lg:pb-32 px-4 sm:px-6 lg:px-12 relative overflow-hidden w-full">
+        {/* Background Animado */}
+        <div className="absolute inset-0 bg-gradient-to-b from-[#D4AF37]/10 via-transparent to-transparent"></div>
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(212,175,55,0.1),transparent_50%)]"></div>
         
         <div className="w-full max-w-7xl mx-auto relative z-10">
-          {/* Quiz Inicial Banner */}
+          {/* Quiz Inicial Banner - Responsivo */}
           {!isLoggedIn && (
-            <div className="mb-12 bg-gradient-to-r from-[#D4AF37] to-amber-600 rounded-3xl p-8 text-center shadow-2xl">
-              <h2 className="text-3xl font-bold text-[#0B0B0B] mb-4">
-                🎯 Descubra o Plano Ideal Para Você!
-              </h2>
-              <p className="text-lg text-[#0B0B0B]/80 mb-6">
-                Responda 15 perguntas rápidas e receba uma recomendação personalizada
+            <div className="mb-8 sm:mb-12 lg:mb-16 bg-gradient-to-r from-[#D4AF37] via-amber-500 to-[#D4AF37] rounded-2xl sm:rounded-3xl p-6 sm:p-8 lg:p-12 text-center shadow-2xl transform hover:scale-[1.02] transition-transform duration-300">
+              <div className="flex items-center justify-center gap-2 mb-3 sm:mb-4">
+                <Sparkles className="w-6 h-6 sm:w-8 sm:h-8 text-[#0B0B0B] animate-pulse" />
+                <h2 className="text-2xl sm:text-3xl lg:text-4xl xl:text-5xl font-bold text-[#0B0B0B]">
+                  {t.quiz.title}
+                </h2>
+                <Sparkles className="w-6 h-6 sm:w-8 sm:h-8 text-[#0B0B0B] animate-pulse" />
+              </div>
+              <p className="text-base sm:text-lg lg:text-xl xl:text-2xl text-[#0B0B0B]/80 mb-4 sm:mb-6 lg:mb-8 max-w-3xl mx-auto">
+                {t.quiz.subtitle}
               </p>
               <button
                 onClick={() => setShowInitialQuizModal(true)}
-                className="px-8 py-4 bg-[#0B0B0B] text-[#D4AF37] rounded-xl font-bold text-lg hover:scale-105 transition-transform duration-300 shadow-xl"
+                className="px-6 sm:px-8 lg:px-12 py-3 sm:py-4 lg:py-5 bg-[#0B0B0B] text-[#D4AF37] rounded-xl font-bold text-base sm:text-lg lg:text-xl hover:scale-105 hover:shadow-2xl transition-all duration-300 inline-flex items-center gap-2"
               >
-                Começar Quiz Gratuito →
+                <Target className="w-5 h-5 sm:w-6 sm:h-6" />
+                {t.quiz.button}
+                <ChevronRight className="w-5 h-5 sm:w-6 sm:h-6" />
               </button>
             </div>
           )}
 
           <div className="text-center">
-            <h1 className="text-5xl md:text-7xl font-bold text-white mb-6 leading-tight">
-              {t.hero.title}
+            {/* Título Principal - Responsivo */}
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl 2xl:text-8xl font-bold text-white mb-4 sm:mb-6 lg:mb-8 leading-tight">
+              <span className="bg-gradient-to-r from-white via-[#D4AF37] to-white bg-clip-text text-transparent">
+                {t.hero.title}
+              </span>
             </h1>
-            <p className="text-xl md:text-2xl text-[#9A9A9A] mb-8 max-w-3xl mx-auto">
+            
+            {/* Subtítulo - Responsivo */}
+            <p className="text-base sm:text-lg md:text-xl lg:text-2xl xl:text-3xl text-[#9A9A9A] mb-6 sm:mb-8 lg:mb-12 max-w-4xl mx-auto leading-relaxed">
               {t.hero.subtitle}
             </p>
             
-            <div className="flex flex-wrap items-center justify-center gap-4 mb-12">
+            {/* CTAs - Responsivo */}
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 lg:gap-6 mb-8 sm:mb-12 lg:mb-16">
               <button
                 onClick={() => setShowSignupModal(true)}
-                className="px-8 py-4 bg-gradient-to-r from-[#D4AF37] to-amber-600 text-[#0B0B0B] rounded-xl font-bold text-lg hover:shadow-2xl hover:shadow-[#D4AF37]/50 hover:scale-105 transition-all duration-300"
+                className="w-full sm:w-auto px-6 sm:px-8 lg:px-12 py-3 sm:py-4 lg:py-5 bg-gradient-to-r from-[#D4AF37] via-amber-500 to-[#D4AF37] text-[#0B0B0B] rounded-xl font-bold text-base sm:text-lg lg:text-xl hover:shadow-2xl hover:shadow-[#D4AF37]/50 hover:scale-105 transition-all duration-300 inline-flex items-center justify-center gap-2"
               >
-                Começar Agora Grátis
+                <Zap className="w-5 h-5 sm:w-6 sm:h-6" />
+                {t.cta.startFree}
               </button>
               <button
                 onClick={() => window.location.href = "#planos"}
-                className="px-8 py-4 bg-[#1A1A1A] text-white rounded-xl font-bold text-lg hover:bg-[#2A2A2A] transition-all duration-300"
+                className="w-full sm:w-auto px-6 sm:px-8 lg:px-12 py-3 sm:py-4 lg:py-5 bg-[#1A1A1A] text-white rounded-xl font-bold text-base sm:text-lg lg:text-xl hover:bg-[#2A2A2A] hover:scale-105 transition-all duration-300 inline-flex items-center justify-center gap-2 border border-[#D4AF37]/30"
               >
-                Ver Planos
+                <Crown className="w-5 h-5 sm:w-6 sm:h-6 text-[#D4AF37]" />
+                {t.cta.viewPlans}
               </button>
             </div>
 
-            {/* Stats */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-4xl mx-auto">
+            {/* Stats - Grid Responsivo */}
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 lg:gap-8 max-w-6xl mx-auto">
               {stats.map((stat, index) => (
-                <div key={index} className="bg-[#1A1A1A] rounded-2xl p-6 border border-[#D4AF37]/20 hover:border-[#D4AF37]/50 transition-all duration-300">
-                  <div className="text-3xl font-bold text-[#D4AF37] mb-2">{stat.value}</div>
-                  <div className="text-sm text-[#9A9A9A]">{stat.label}</div>
+                <div 
+                  key={index} 
+                  className="bg-gradient-to-br from-[#1A1A1A] to-[#2A2A2A] rounded-xl sm:rounded-2xl p-4 sm:p-6 lg:p-8 border border-[#D4AF37]/20 hover:border-[#D4AF37]/50 hover:scale-105 transition-all duration-300 group"
+                >
+                  <stat.icon className="w-8 h-8 sm:w-10 sm:h-10 lg:w-12 lg:h-12 text-[#D4AF37] mx-auto mb-2 sm:mb-3 group-hover:scale-110 transition-transform" />
+                  <div className="text-2xl sm:text-3xl lg:text-4xl xl:text-5xl font-bold text-[#D4AF37] mb-1 sm:mb-2 lg:mb-3">{stat.value}</div>
+                  <div className="text-xs sm:text-sm lg:text-base text-[#9A9A9A]">{stat.label}</div>
                 </div>
               ))}
             </div>
@@ -1584,51 +1631,58 @@ export default function EliteLifeHome() {
         </div>
       </section>
 
-      {/* PLANOS SECTION */}
-      <section id="planos" className="py-20 px-4 bg-[#0B0B0B] w-full">
+      {/* PLANOS SECTION - Grid Responsivo Perfeito */}
+      <section id="planos" className="py-12 sm:py-16 lg:py-32 px-4 sm:px-6 lg:px-12 bg-[#0B0B0B] w-full">
         <div className="w-full max-w-7xl mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
-              Escolha Seu Plano
+          <div className="text-center mb-8 sm:mb-12 lg:mb-20">
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-bold text-white mb-3 sm:mb-4 lg:mb-6">
+              <span className="bg-gradient-to-r from-white via-[#D4AF37] to-white bg-clip-text text-transparent">
+                {t.plans.title}
+              </span>
             </h2>
-            <p className="text-xl text-[#9A9A9A]">
-              Transforme sua vida com o plano perfeito para você
+            <p className="text-base sm:text-lg lg:text-2xl text-[#9A9A9A]">
+              {t.plans.subtitle}
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+          {/* Grid Responsivo de Planos */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6 lg:gap-8">
             {plans.map((plan) => (
               <div
                 key={plan.id}
-                className="bg-[#1A1A1A] rounded-3xl p-6 border border-[#D4AF37]/20 hover:border-[#D4AF37]/50 hover:scale-105 transition-all duration-300 relative overflow-hidden group"
+                className="bg-gradient-to-br from-[#1A1A1A] to-[#2A2A2A] rounded-2xl sm:rounded-3xl p-5 sm:p-6 lg:p-8 border border-[#D4AF37]/20 hover:border-[#D4AF37]/50 hover:scale-105 transition-all duration-300 relative overflow-hidden group"
               >
+                {/* Badge */}
                 {plan.badge && (
-                  <div className={`absolute top-4 right-4 ${plan.badgeColor} px-3 py-1 rounded-full text-xs font-bold`}>
+                  <div className={`absolute top-3 sm:top-4 right-3 sm:right-4 ${plan.badgeColor} px-2 sm:px-3 py-1 rounded-full text-xs font-bold z-10`}>
                     {plan.badge}
                   </div>
                 )}
 
-                <div className={`w-16 h-16 rounded-2xl bg-gradient-to-br ${plan.color} flex items-center justify-center mb-4`}>
-                  <plan.icon className="w-8 h-8 text-white" />
+                {/* Icon */}
+                <div className={`w-14 h-14 sm:w-16 sm:h-16 lg:w-20 lg:h-20 rounded-2xl bg-gradient-to-br ${plan.color} flex items-center justify-center mb-4 sm:mb-5 lg:mb-6 group-hover:scale-110 transition-transform`}>
+                  <plan.icon className="w-7 h-7 sm:w-8 sm:h-8 lg:w-10 lg:h-10 text-white" />
                 </div>
 
-                <h3 className="text-2xl font-bold text-white mb-2">{plan.name}</h3>
-                <div className="flex items-baseline gap-1 mb-6">
-                  <span className="text-4xl font-bold text-[#D4AF37]">{plan.price}</span>
-                  <span className="text-[#9A9A9A]">{plan.period}</span>
+                {/* Nome e Preço */}
+                <h3 className="text-xl sm:text-2xl lg:text-3xl font-bold text-white mb-2">{plan.name}</h3>
+                <div className="flex items-baseline gap-1 mb-5 sm:mb-6 lg:mb-8">
+                  <span className="text-3xl sm:text-4xl lg:text-5xl font-bold text-[#D4AF37]">{plan.price}</span>
+                  <span className="text-[#9A9A9A] text-sm sm:text-base">{plan.period}</span>
                 </div>
 
-                <ul className="space-y-3 mb-6">
+                {/* Features */}
+                <ul className="space-y-2 sm:space-y-3 mb-5 sm:mb-6 lg:mb-8">
                   {plan.features.map((feature, index) => (
-                    <li key={index} className="flex items-start gap-2 text-sm">
+                    <li key={index} className="flex items-start gap-2 text-sm sm:text-base">
                       {typeof feature === 'string' ? (
                         <>
-                          <Check className="w-5 h-5 text-green-500 flex-shrink-0 mt-0.5" />
+                          <Check className="w-4 h-4 sm:w-5 sm:h-5 text-green-500 flex-shrink-0 mt-0.5" />
                           <span className="text-[#9A9A9A]">{feature}</span>
                         </>
                       ) : (
                         <>
-                          <XCircle className="w-5 h-5 text-red-500 flex-shrink-0 mt-0.5" />
+                          <XCircle className="w-4 h-4 sm:w-5 sm:h-5 text-red-500 flex-shrink-0 mt-0.5" />
                           <span className="text-[#9A9A9A]">{feature.text}</span>
                         </>
                       )}
@@ -1636,26 +1690,28 @@ export default function EliteLifeHome() {
                   ))}
                 </ul>
 
+                {/* Marketplaces Badge */}
                 {plan.marketplaces && (
-                  <div className="flex items-center justify-center gap-3 mb-4 p-3 bg-[#2A2A2A] rounded-xl">
+                  <div className="flex items-center justify-center gap-2 sm:gap-3 mb-4 p-2 sm:p-3 bg-[#2A2A2A] rounded-xl">
                     <span className="text-xs text-[#9A9A9A]">Integração:</span>
-                    <div className="flex gap-2">
-                      <div className="w-6 h-6 bg-yellow-500 rounded flex items-center justify-center text-xs font-bold">ML</div>
-                      <div className="w-6 h-6 bg-orange-500 rounded flex items-center justify-center text-xs font-bold">S</div>
-                      <div className="w-6 h-6 bg-blue-500 rounded flex items-center justify-center text-xs font-bold">A</div>
+                    <div className="flex gap-1 sm:gap-2">
+                      <div className="w-5 h-5 sm:w-6 sm:h-6 bg-yellow-500 rounded flex items-center justify-center text-xs font-bold">ML</div>
+                      <div className="w-5 h-5 sm:w-6 sm:h-6 bg-orange-500 rounded flex items-center justify-center text-xs font-bold">S</div>
+                      <div className="w-5 h-5 sm:w-6 sm:h-6 bg-blue-500 rounded flex items-center justify-center text-xs font-bold">A</div>
                     </div>
                   </div>
                 )}
 
+                {/* CTA Button */}
                 <button
                   onClick={() => handleSelectPlan(plan)}
-                  className={`w-full py-3 rounded-xl font-bold transition-all duration-300 ${
+                  className={`w-full py-3 sm:py-3.5 lg:py-4 rounded-xl font-bold transition-all duration-300 text-sm sm:text-base lg:text-lg ${
                     plan.id === 1
                       ? 'bg-[#2A2A2A] text-white hover:bg-[#3A3A3A]'
-                      : `bg-gradient-to-r ${plan.color} text-white hover:shadow-lg hover:shadow-${plan.color}/50`
+                      : `bg-gradient-to-r ${plan.color} text-white hover:shadow-lg hover:scale-105`
                   }`}
                 >
-                  {plan.id === 1 ? 'Começar Grátis' : 'Assinar Agora'}
+                  {plan.id === 1 ? t.plans.free : t.plans.subscribe}
                 </button>
               </div>
             ))}
@@ -1663,152 +1719,155 @@ export default function EliteLifeHome() {
         </div>
       </section>
 
-      {/* TESTIMONIALS */}
-      <section className="py-20 px-4 bg-[#0B0B0B] w-full">
+      {/* TESTIMONIALS - Grid Responsivo */}
+      <section className="py-12 sm:py-16 lg:py-32 px-4 sm:px-6 lg:px-12 bg-gradient-to-b from-[#0B0B0B] to-[#1A1A1A] w-full">
         <div className="w-full max-w-7xl mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
-              Resultados Reais
+          <div className="text-center mb-8 sm:mb-12 lg:mb-20">
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-bold text-white mb-3 sm:mb-4 lg:mb-6">
+              <span className="bg-gradient-to-r from-white via-[#D4AF37] to-white bg-clip-text text-transparent">
+                {t.testimonials.title}
+              </span>
             </h2>
-            <p className="text-xl text-[#9A9A9A]">
-              Veja o que nossos alunos estão conquistando
+            <p className="text-base sm:text-lg lg:text-2xl text-[#9A9A9A]">
+              {t.testimonials.subtitle}
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8">
             {testimonials.map((testimonial, index) => (
               <div
                 key={index}
-                className="bg-[#1A1A1A] rounded-3xl p-6 border border-[#D4AF37]/20 hover:border-[#D4AF37]/50 transition-all duration-300"
+                className="bg-gradient-to-br from-[#1A1A1A] to-[#2A2A2A] rounded-2xl sm:rounded-3xl p-5 sm:p-6 lg:p-8 border border-[#D4AF37]/20 hover:border-[#D4AF37]/50 hover:scale-105 transition-all duration-300"
               >
-                <div className="flex items-center gap-4 mb-4">
+                <div className="flex items-center gap-3 sm:gap-4 mb-4 sm:mb-5 lg:mb-6">
                   <img
                     src={testimonial.image}
                     alt={testimonial.name}
-                    className="w-16 h-16 rounded-full border-2 border-[#D4AF37]"
+                    className="w-14 h-14 sm:w-16 sm:h-16 lg:w-20 lg:h-20 rounded-full border-2 border-[#D4AF37]"
                   />
                   <div>
-                    <h4 className="font-bold text-white">{testimonial.name}</h4>
+                    <h4 className="font-bold text-white text-base sm:text-lg">{testimonial.name}</h4>
                     <p className="text-sm text-[#9A9A9A]">{testimonial.role}</p>
                   </div>
                 </div>
                 
-                <div className="flex gap-1 mb-4">
+                <div className="flex gap-1 mb-3 sm:mb-4">
                   {[...Array(testimonial.rating)].map((_, i) => (
-                    <Star key={i} className="w-5 h-5 text-[#D4AF37] fill-[#D4AF37]" />
+                    <Star key={i} className="w-4 h-4 sm:w-5 sm:h-5 text-[#D4AF37] fill-[#D4AF37]" />
                   ))}
                 </div>
                 
-                <p className="text-[#9A9A9A]">{testimonial.text}</p>
+                <p className="text-[#9A9A9A] text-sm sm:text-base leading-relaxed">{testimonial.text}</p>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* FOOTER */}
-      <footer className="bg-[#1A1A1A] border-t border-[#D4AF37]/20 py-12 px-4 w-full">
+      {/* FOOTER - Responsivo */}
+      <footer className="bg-[#1A1A1A] border-t border-[#D4AF37]/20 py-8 sm:py-12 lg:py-16 px-4 sm:px-6 lg:px-12 w-full">
         <div className="w-full max-w-7xl mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8 lg:gap-12 mb-6 sm:mb-8">
             <div>
-              <div className="flex items-center gap-3 mb-4">
+              <div className="flex items-center gap-2 sm:gap-3 mb-3 sm:mb-4">
                 <img 
                   src="https://k6hrqrxuu8obbfwn.public.blob.vercel-storage.com/temp/63e7ff74-0183-4d37-90a3-89096c2f65ac.jpg" 
                   alt="Elite Life Logo" 
-                  className="h-12 w-12 rounded-xl object-cover"
+                  className="h-10 w-10 sm:h-12 sm:w-12 lg:h-14 lg:w-14 rounded-xl object-cover"
                 />
-                <h3 className="text-xl font-bold text-white">Elite Life</h3>
+                <h3 className="text-lg sm:text-xl lg:text-2xl font-bold text-white">Elite Life</h3>
               </div>
-              <p className="text-[#9A9A9A] text-sm">
-                Transformando vidas através de educação de qualidade
+              <p className="text-[#9A9A9A] text-sm sm:text-base">
+                {t.footer.description}
               </p>
             </div>
 
             <div>
-              <h4 className="font-bold text-white mb-4">Plataforma</h4>
+              <h4 className="font-bold text-white mb-3 sm:mb-4 text-base sm:text-lg">{t.footer.platform}</h4>
               <ul className="space-y-2">
-                <li><a href="#" className="text-[#9A9A9A] hover:text-[#D4AF37] transition-colors">Cursos</a></li>
-                <li><a href="#" className="text-[#9A9A9A] hover:text-[#D4AF37] transition-colors">Vídeos</a></li>
-                <li><a href="#" className="text-[#9A9A9A] hover:text-[#D4AF37] transition-colors">Certificados</a></li>
-                <li><a href="#" className="text-[#9A9A9A] hover:text-[#D4AF37] transition-colors">Afiliados</a></li>
+                <li><a href="#" className="text-[#9A9A9A] hover:text-[#D4AF37] transition-colors text-sm sm:text-base">{t.courses}</a></li>
+                <li><a href="#" className="text-[#9A9A9A] hover:text-[#D4AF37] transition-colors text-sm sm:text-base">{t.videos}</a></li>
+                <li><a href="#" className="text-[#9A9A9A] hover:text-[#D4AF37] transition-colors text-sm sm:text-base">{t.certificates}</a></li>
+                <li><a href="#" className="text-[#9A9A9A] hover:text-[#D4AF37] transition-colors text-sm sm:text-base">{t.affiliates}</a></li>
               </ul>
             </div>
 
             <div>
-              <h4 className="font-bold text-white mb-4">Suporte</h4>
+              <h4 className="font-bold text-white mb-3 sm:mb-4 text-base sm:text-lg">{t.footer.support}</h4>
               <ul className="space-y-2">
-                <li><a href="#" className="text-[#9A9A9A] hover:text-[#D4AF37] transition-colors">Central de Ajuda</a></li>
-                <li><a href="#" onClick={(e) => { e.preventDefault(); setShowTermsModal(true); }} className="text-[#9A9A9A] hover:text-[#D4AF37] transition-colors">Termos de Uso</a></li>
-                <li><a href="#" onClick={(e) => { e.preventDefault(); setShowPrivacyModal(true); }} className="text-[#9A9A9A] hover:text-[#D4AF37] transition-colors">Política de Privacidade</a></li>
-                <li><a href="mailto:elitelife.norply@gmail.com" className="text-[#9A9A9A] hover:text-[#D4AF37] transition-colors">Contato</a></li>
+                <li><a href="#" className="text-[#9A9A9A] hover:text-[#D4AF37] transition-colors text-sm sm:text-base">Central de Ajuda</a></li>
+                <li><a href="#" onClick={(e) => { e.preventDefault(); setShowTermsModal(true); }} className="text-[#9A9A9A] hover:text-[#D4AF37] transition-colors text-sm sm:text-base">Termos de Uso</a></li>
+                <li><a href="#" onClick={(e) => { e.preventDefault(); setShowPrivacyModal(true); }} className="text-[#9A9A9A] hover:text-[#D4AF37] transition-colors text-sm sm:text-base">Política de Privacidade</a></li>
+                <li><a href="mailto:elitelife.norply@gmail.com" className="text-[#9A9A9A] hover:text-[#D4AF37] transition-colors text-sm sm:text-base">Contato</a></li>
               </ul>
             </div>
 
             <div>
-              <h4 className="font-bold text-white mb-4">Redes Sociais</h4>
-              <div className="flex gap-3">
-                <a href="https://www.instagram.com/elitelife_experience?igsh=MWlhZzh0NGgxNTR1ag%3D%3D&utm_source=qr" target="_blank" rel="noopener noreferrer" className="w-10 h-10 bg-[#2A2A2A] rounded-xl flex items-center justify-center hover:bg-[#D4AF37]/10 transition-all">
-                  <Instagram className="w-5 h-5 text-white" />
+              <h4 className="font-bold text-white mb-3 sm:mb-4 text-base sm:text-lg">{t.footer.social}</h4>
+              <div className="flex flex-wrap gap-2 sm:gap-3">
+                <a href="https://www.instagram.com/elitelife_experience?igsh=MWlhZzh0NGgxNTR1ag%3D%3D&utm_source=qr" target="_blank" rel="noopener noreferrer" className="w-10 h-10 sm:w-12 sm:h-12 bg-[#2A2A2A] rounded-xl flex items-center justify-center hover:bg-[#D4AF37]/10 transition-all">
+                  <Instagram className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
                 </a>
-                <a href="https://t.me/boost/elitelifeApp" target="_blank" rel="noopener noreferrer" className="w-10 h-10 bg-[#2A2A2A] rounded-xl flex items-center justify-center hover:bg-[#D4AF37]/10 transition-all">
-                  <Send className="w-5 h-5 text-white" />
+                <a href="https://t.me/boost/elitelifeApp" target="_blank" rel="noopener noreferrer" className="w-10 h-10 sm:w-12 sm:h-12 bg-[#2A2A2A] rounded-xl flex items-center justify-center hover:bg-[#D4AF37]/10 transition-all">
+                  <Send className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
                 </a>
-                <a href="https://discord.gg/yVPMQG8tkh" target="_blank" rel="noopener noreferrer" className="w-10 h-10 bg-[#2A2A2A] rounded-xl flex items-center justify-center hover:bg-[#D4AF37]/10 transition-all">
-                  <MessageCircle className="w-5 h-5 text-white" />
+                <a href="https://discord.gg/yVPMQG8tkh" target="_blank" rel="noopener noreferrer" className="w-10 h-10 sm:w-12 sm:h-12 bg-[#2A2A2A] rounded-xl flex items-center justify-center hover:bg-[#D4AF37]/10 transition-all">
+                  <MessageCircle className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
                 </a>
-                <a href="https://whatsapp.com/channel/0029Vb79nXTBvvsjVktkoE05" target="_blank" rel="noopener noreferrer" className="w-10 h-10 bg-[#2A2A2A] rounded-xl flex items-center justify-center hover:bg-[#D4AF37]/10 transition-all">
-                  <MessageSquare className="w-5 h-5 text-white" />
+                <a href="https://whatsapp.com/channel/0029Vb79nXTBvvsjVktkoE05" target="_blank" rel="noopener noreferrer" className="w-10 h-10 sm:w-12 sm:h-12 bg-[#2A2A2A] rounded-xl flex items-center justify-center hover:bg-[#D4AF37]/10 transition-all">
+                  <MessageSquare className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
                 </a>
-                <a href="mailto:elitelife.norply@gmail.com" className="w-10 h-10 bg-[#2A2A2A] rounded-xl flex items-center justify-center hover:bg-[#D4AF37]/10 transition-all">
-                  <Mail className="w-5 h-5 text-white" />
+                <a href="mailto:elitelife.norply@gmail.com" className="w-10 h-10 sm:w-12 sm:h-12 bg-[#2A2A2A] rounded-xl flex items-center justify-center hover:bg-[#D4AF37]/10 transition-all">
+                  <Mail className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
                 </a>
               </div>
             </div>
           </div>
 
-          <div className="border-t border-[#D4AF37]/20 pt-8 text-center">
-            <p className="text-[#9A9A9A] text-sm">
-              © 2024 Elite Life. Todos os direitos reservados.
+          <div className="border-t border-[#D4AF37]/20 pt-6 sm:pt-8 text-center">
+            <p className="text-[#9A9A9A] text-sm sm:text-base">
+              {t.footer.copyright}
             </p>
           </div>
         </div>
       </footer>
 
-      {/* AI CHAT BUTTON */}
+      {/* AI CHAT BUTTON - Responsivo */}
       <button
         onClick={() => setShowAIChat(true)}
-        className="fixed bottom-6 right-6 w-16 h-16 bg-gradient-to-r from-[#D4AF37] to-amber-600 rounded-full flex items-center justify-center shadow-2xl hover:scale-110 transition-transform duration-300 z-40"
+        className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 lg:bottom-8 lg:right-8 w-14 h-14 sm:w-16 sm:h-16 lg:w-20 lg:h-20 bg-gradient-to-r from-[#D4AF37] to-amber-600 rounded-full flex items-center justify-center shadow-2xl hover:scale-110 transition-transform duration-300 z-40 group"
       >
-        <MessageSquare className="w-8 h-8 text-[#0B0B0B]" />
+        <MessageSquare className="w-7 h-7 sm:w-8 sm:h-8 lg:w-10 lg:h-10 text-[#0B0B0B] group-hover:scale-110 transition-transform" />
+        <span className="absolute -top-1 -right-1 w-4 h-4 sm:w-5 sm:h-5 bg-red-500 rounded-full animate-pulse"></span>
       </button>
 
       {/* MODALS - Login */}
       {showLoginModal && (
         <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-[100] p-4">
-          <div className="bg-[#1A1A1A] rounded-3xl p-8 max-w-md w-full border border-[#D4AF37]/20">
-            <div className="flex justify-between items-center mb-6">
-              <h2 className="text-2xl font-bold text-white">Entrar</h2>
+          <div className="bg-[#1A1A1A] rounded-2xl sm:rounded-3xl p-6 sm:p-8 lg:p-10 max-w-md w-full border border-[#D4AF37]/20">
+            <div className="flex justify-between items-center mb-5 sm:mb-6 lg:mb-8">
+              <h2 className="text-xl sm:text-2xl lg:text-3xl font-bold text-white">{t.login}</h2>
               <button onClick={() => setShowLoginModal(false)} className="text-white hover:text-[#D4AF37]">
-                <X className="w-6 h-6" />
+                <X className="w-6 h-6 sm:w-7 sm:h-7" />
               </button>
             </div>
-            <form onSubmit={handleLogin} className="space-y-4">
+            <form onSubmit={handleLogin} className="space-y-4 sm:space-y-5">
               <div>
-                <label className="block text-white mb-2">E-mail</label>
+                <label className="block text-white mb-2 text-sm sm:text-base">E-mail</label>
                 <input
                   type="email"
                   required
-                  className="w-full px-4 py-3 rounded-xl bg-[#2A2A2A] text-white border border-[#D4AF37]/20 focus:border-[#D4AF37] outline-none"
+                  className="w-full px-4 py-3 sm:py-4 rounded-xl bg-[#2A2A2A] text-white border border-[#D4AF37]/20 focus:border-[#D4AF37] outline-none text-sm sm:text-base"
                   placeholder="seu@email.com"
                 />
               </div>
               <div>
-                <label className="block text-white mb-2">Senha</label>
+                <label className="block text-white mb-2 text-sm sm:text-base">Senha</label>
                 <div className="relative">
                   <input
                     type={showPasswordLogin ? "text" : "password"}
                     required
-                    className="w-full px-4 py-3 rounded-xl bg-[#2A2A2A] text-white border border-[#D4AF37]/20 focus:border-[#D4AF37] outline-none"
+                    className="w-full px-4 py-3 sm:py-4 rounded-xl bg-[#2A2A2A] text-white border border-[#D4AF37]/20 focus:border-[#D4AF37] outline-none text-sm sm:text-base"
                     placeholder="••••••••"
                   />
                   <button
@@ -1822,9 +1881,9 @@ export default function EliteLifeHome() {
               </div>
               <button
                 type="submit"
-                className="w-full py-3 bg-gradient-to-r from-[#D4AF37] to-amber-600 text-[#0B0B0B] rounded-xl font-bold hover:shadow-lg transition-all"
+                className="w-full py-3 sm:py-4 bg-gradient-to-r from-[#D4AF37] to-amber-600 text-[#0B0B0B] rounded-xl font-bold hover:shadow-lg transition-all text-base sm:text-lg"
               >
-                Entrar
+                {t.login}
               </button>
             </form>
           </div>
@@ -1834,39 +1893,39 @@ export default function EliteLifeHome() {
       {/* MODALS - Signup */}
       {showSignupModal && (
         <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-[100] p-4">
-          <div className="bg-[#1A1A1A] rounded-3xl p-8 max-w-md w-full border border-[#D4AF37]/20">
-            <div className="flex justify-between items-center mb-6">
-              <h2 className="text-2xl font-bold text-white">Criar Conta</h2>
+          <div className="bg-[#1A1A1A] rounded-2xl sm:rounded-3xl p-6 sm:p-8 lg:p-10 max-w-md w-full border border-[#D4AF37]/20">
+            <div className="flex justify-between items-center mb-5 sm:mb-6 lg:mb-8">
+              <h2 className="text-xl sm:text-2xl lg:text-3xl font-bold text-white">{t.signup}</h2>
               <button onClick={() => setShowSignupModal(false)} className="text-white hover:text-[#D4AF37]">
-                <X className="w-6 h-6" />
+                <X className="w-6 h-6 sm:w-7 sm:h-7" />
               </button>
             </div>
-            <form onSubmit={handleSignup} className="space-y-4">
+            <form onSubmit={handleSignup} className="space-y-4 sm:space-y-5">
               <div>
-                <label className="block text-white mb-2">E-mail</label>
+                <label className="block text-white mb-2 text-sm sm:text-base">E-mail</label>
                 <input
                   type="email"
                   required
-                  className="w-full px-4 py-3 rounded-xl bg-[#2A2A2A] text-white border border-[#D4AF37]/20 focus:border-[#D4AF37] outline-none"
+                  className="w-full px-4 py-3 sm:py-4 rounded-xl bg-[#2A2A2A] text-white border border-[#D4AF37]/20 focus:border-[#D4AF37] outline-none text-sm sm:text-base"
                   placeholder="seu@email.com"
                 />
               </div>
               <div>
-                <label className="block text-white mb-2">Telefone</label>
+                <label className="block text-white mb-2 text-sm sm:text-base">Telefone</label>
                 <input
                   type="tel"
                   required
-                  className="w-full px-4 py-3 rounded-xl bg-[#2A2A2A] text-white border border-[#D4AF37]/20 focus:border-[#D4AF37] outline-none"
+                  className="w-full px-4 py-3 sm:py-4 rounded-xl bg-[#2A2A2A] text-white border border-[#D4AF37]/20 focus:border-[#D4AF37] outline-none text-sm sm:text-base"
                   placeholder="(11) 99999-9999"
                 />
               </div>
               <div>
-                <label className="block text-white mb-2">Senha</label>
+                <label className="block text-white mb-2 text-sm sm:text-base">Senha</label>
                 <div className="relative">
                   <input
                     type={showPasswordSignup ? "text" : "password"}
                     required
-                    className="w-full px-4 py-3 rounded-xl bg-[#2A2A2A] text-white border border-[#D4AF37]/20 focus:border-[#D4AF37] outline-none"
+                    className="w-full px-4 py-3 sm:py-4 rounded-xl bg-[#2A2A2A] text-white border border-[#D4AF37]/20 focus:border-[#D4AF37] outline-none text-sm sm:text-base"
                     placeholder="••••••••"
                   />
                   <button
@@ -1879,12 +1938,12 @@ export default function EliteLifeHome() {
                 </div>
               </div>
               <div>
-                <label className="block text-white mb-2">Confirmar Senha</label>
+                <label className="block text-white mb-2 text-sm sm:text-base">Confirmar Senha</label>
                 <div className="relative">
                   <input
                     type={showConfirmPassword ? "text" : "password"}
                     required
-                    className="w-full px-4 py-3 rounded-xl bg-[#2A2A2A] text-white border border-[#D4AF37]/20 focus:border-[#D4AF37] outline-none"
+                    className="w-full px-4 py-3 sm:py-4 rounded-xl bg-[#2A2A2A] text-white border border-[#D4AF37]/20 focus:border-[#D4AF37] outline-none text-sm sm:text-base"
                     placeholder="••••••••"
                   />
                   <button
@@ -1898,9 +1957,9 @@ export default function EliteLifeHome() {
               </div>
               <button
                 type="submit"
-                className="w-full py-3 bg-gradient-to-r from-[#D4AF37] to-amber-600 text-[#0B0B0B] rounded-xl font-bold hover:shadow-lg transition-all"
+                className="w-full py-3 sm:py-4 bg-gradient-to-r from-[#D4AF37] to-amber-600 text-[#0B0B0B] rounded-xl font-bold hover:shadow-lg transition-all text-base sm:text-lg"
               >
-                Criar Conta Grátis
+                {t.signup}
               </button>
             </form>
           </div>
@@ -1910,30 +1969,33 @@ export default function EliteLifeHome() {
       {/* MODAL - Cupom */}
       {showCouponModal && (
         <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-[100] p-4">
-          <div className="bg-[#1A1A1A] rounded-3xl p-8 max-w-md w-full border border-[#D4AF37]/20">
-            <div className="flex justify-between items-center mb-6">
-              <h2 className="text-2xl font-bold text-white">🎁 Cupom de Desconto</h2>
+          <div className="bg-[#1A1A1A] rounded-2xl sm:rounded-3xl p-6 sm:p-8 lg:p-10 max-w-md w-full border border-[#D4AF37]/20">
+            <div className="flex justify-between items-center mb-5 sm:mb-6 lg:mb-8">
+              <h2 className="text-xl sm:text-2xl lg:text-3xl font-bold text-white flex items-center gap-2">
+                <Gift className="w-6 h-6 sm:w-7 sm:h-7 text-[#D4AF37]" />
+                Cupom de Desconto
+              </h2>
               <button onClick={() => setShowCouponModal(false)} className="text-white hover:text-[#D4AF37]">
-                <X className="w-6 h-6" />
+                <X className="w-6 h-6 sm:w-7 sm:h-7" />
               </button>
             </div>
             <div className="text-center">
-              <div className="bg-gradient-to-r from-[#D4AF37] to-amber-600 rounded-2xl p-6 mb-6">
-                <p className="text-[#0B0B0B] font-bold text-lg mb-2">Seu Cupom de 5% OFF</p>
-                <div className="bg-white rounded-xl p-4 flex items-center justify-between">
-                  <span className="text-2xl font-bold text-[#0B0B0B]">ELITE5OFF</span>
+              <div className="bg-gradient-to-r from-[#D4AF37] to-amber-600 rounded-2xl p-5 sm:p-6 lg:p-8 mb-5 sm:mb-6 lg:mb-8">
+                <p className="text-[#0B0B0B] font-bold text-base sm:text-lg lg:text-xl mb-2">Seu Cupom de 5% OFF</p>
+                <div className="bg-white rounded-xl p-3 sm:p-4 lg:p-5 flex items-center justify-between">
+                  <span className="text-xl sm:text-2xl lg:text-3xl font-bold text-[#0B0B0B]">ELITE5OFF</span>
                   <button
                     onClick={() => {
                       navigator.clipboard.writeText("ELITE5OFF");
                       alert("Cupom copiado!");
                     }}
-                    className="p-2 bg-[#D4AF37] rounded-lg hover:bg-amber-600 transition-all"
+                    className="p-2 sm:p-2.5 lg:p-3 bg-[#D4AF37] rounded-lg hover:bg-amber-600 transition-all"
                   >
-                    <Copy className="w-5 h-5 text-[#0B0B0B]" />
+                    <Copy className="w-5 h-5 sm:w-6 sm:h-6 text-[#0B0B0B]" />
                   </button>
                 </div>
               </div>
-              <p className="text-[#9A9A9A] mb-4">
+              <p className="text-[#9A9A9A] mb-4 text-sm sm:text-base">
                 Use este cupom na hora de assinar qualquer plano e ganhe 5% de desconto!
               </p>
               <p className="text-sm text-[#D4AF37]">

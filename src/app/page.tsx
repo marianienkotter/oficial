@@ -1190,7 +1190,7 @@ export default function EliteLifeHome() {
                   <Send className="w-4 h-4 text-white group-hover:scale-110 transition-transform" />
                 </a>
                 <a 
-                  href="https://discord.gg/yVPMQG8tkh"
+                  href="https://discord.gg/yVPMQG8tk"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="p-2.5 rounded-xl bg-gradient-to-r from-indigo-500 to-purple-600 hover:shadow-lg hover:shadow-indigo-500/50 transition-all duration-300 group"
@@ -1390,7 +1390,7 @@ export default function EliteLifeHome() {
                   <span className="text-white font-medium text-sm">Telegram</span>
                 </a>
                 <a 
-                  href="https://discord.gg/yVPMQG8tkh"
+                  href="https://discord.gg/yVPMQG8tk"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex items-center justify-center gap-2 p-3 rounded-xl bg-gradient-to-r from-indigo-500 to-purple-600 hover:shadow-lg transition-all"
@@ -1811,7 +1811,7 @@ export default function EliteLifeHome() {
                 <a href="https://t.me/boost/elitelifeApp" target="_blank" rel="noopener noreferrer" className="w-10 h-10 sm:w-12 sm:h-12 bg-[#2A2A2A] rounded-xl flex items-center justify-center hover:bg-[#D4AF37]/10 transition-all">
                   <Send className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
                 </a>
-                <a href="https://discord.gg/yVPMQG8tkh" target="_blank" rel="noopener noreferrer" className="w-10 h-10 sm:w-12 sm:h-12 bg-[#2A2A2A] rounded-xl flex items-center justify-center hover:bg-[#D4AF37]/10 transition-all">
+                <a href="https://discord.gg/yVPMQG8tk" target="_blank" rel="noopener noreferrer" className="w-10 h-10 sm:w-12 sm:h-12 bg-[#2A2A2A] rounded-xl flex items-center justify-center hover:bg-[#D4AF37]/10 transition-all">
                   <MessageCircle className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
                 </a>
                 <a href="https://whatsapp.com/channel/0029Vb79nXTBvvsjVktkoE05" target="_blank" rel="noopener noreferrer" className="w-10 h-10 sm:w-12 sm:h-12 bg-[#2A2A2A] rounded-xl flex items-center justify-center hover:bg-[#D4AF37]/10 transition-all">

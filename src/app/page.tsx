@@ -15,7 +15,7 @@ import {
   Download, FileText, Search, Filter, ChevronRight, CreditCard,
   Smartphone, QrCode, Trash2, BookMarked, Lightbulb, GraduationCap,
   Shield, FileCheck, Newspaper, Tv, Popcorn, Library, Home,
-  MessageCircle
+  MessageCircle, Camera
 } from "lucide-react";
 
 export default function EliteLifeHome() {
@@ -414,6 +414,7 @@ export default function EliteLifeHome() {
       badge: null,
       color: "from-purple-500 to-indigo-600",
       icon: Zap,
+      paymentLink: "https://pay.hotmart.com/seu-link-pro",
       features: [
         "+ de 100 cursos desbloqueados",
         "1000 atividades e 1000 questionários",
@@ -433,6 +434,7 @@ export default function EliteLifeHome() {
       badgeColor: "bg-gradient-to-r from-orange-400 to-pink-600",
       color: "from-pink-500 to-purple-600",
       icon: Crown,
+      paymentLink: "https://pay.hotmart.com/seu-link-pro-plus",
       features: [
         "Tudo do PRO +",
         "Comunidade exclusiva",
@@ -451,6 +453,7 @@ export default function EliteLifeHome() {
       badgeColor: "bg-[#D4AF37] text-[#0B0B0B]",
       color: "from-[#D4AF37] to-amber-600",
       icon: Crown,
+      paymentLink: "https://pay.hotmart.com/seu-link-elite",
       features: [
         "Tudo do PRO PLUS +",
         "IA Premium (planos automáticos)",
@@ -469,6 +472,7 @@ export default function EliteLifeHome() {
       badgeColor: "bg-gradient-to-r from-green-400 to-emerald-600",
       color: "from-emerald-500 to-teal-600",
       icon: Crown,
+      paymentLink: "https://pay.hotmart.com/seu-link-anual",
       features: [
         "Todos os recursos ELITE",
         "Pagamento anual com desconto",
@@ -487,6 +491,7 @@ export default function EliteLifeHome() {
       badgeColor: "bg-gradient-to-r from-pink-400 to-rose-600",
       color: "from-rose-400 to-pink-600",
       icon: Video,
+      paymentLink: "https://pay.hotmart.com/seu-link-influencer",
       features: [
         "IA cria thumbnails e scripts",
         "Relatórios de vídeos virais",
@@ -509,6 +514,7 @@ export default function EliteLifeHome() {
       badgeColor: "bg-gradient-to-r from-blue-400 to-cyan-600",
       color: "from-cyan-500 to-blue-600",
       icon: ShoppingCart,
+      paymentLink: "https://pay.hotmart.com/seu-link-ecommerce",
       features: [
         "Mercado Livre, Amazon, Shopee",
         "+1000 atividades e vídeos",
@@ -702,12 +708,94 @@ export default function EliteLifeHome() {
     { code: "es", label: "Español", flag: "🇪🇸" },
   ];
 
+  // Sistema de IA Elite Life - Regras da Mentora
+  const getAIResponse = (userInput: string): string => {
+    const input = userInput.toLowerCase();
+    
+    // Regras da IA Elite Life
+    const aiRules = {
+      // Temas de evolução pessoal
+      disciplina: "Disciplina é fazer o que precisa ser feito, mesmo quando não quer. Comece pequeno: escolha 1 hábito e repita por 21 dias. Use gatilhos visuais (alarmes, post-its). A consistência vence a motivação.",
+      
+      vidaFinanceira: "Vida financeira saudável: 1) Controle gastos (anote tudo por 30 dias), 2) Crie reserva de emergência (6 meses de despesas), 3) Invista 10-20% da renda. Comece hoje, não amanhã.",
+      
+      foco: "Foco é músculo: treina-se. Técnica Pomodoro: 25min foco total + 5min pausa. Elimine distrações (celular no modo avião). Uma tarefa por vez, sempre.",
+      
+      produtividade: "Produtividade real: 1) Priorize (matriz de Eisenhower), 2) Blocos de tempo (deep work), 3) Diga não ao que não importa. Qualidade > quantidade.",
+      
+      rotina: "Rotina vencedora: Acorde cedo (5h-6h), exercício físico, planejamento do dia, execução focada, revisão noturna. Consistência diária = resultados extraordinários.",
+      
+      crescimentoPessoal: "Crescimento pessoal: Leia 20min/dia, aprenda 1 skill nova/mês, saia da zona de conforto semanalmente. Invista em você antes de qualquer coisa.",
+      
+      organizacao: "Organização: Use listas (to-do), calendário digital, método GTD. Tudo tem lugar, lugar para tudo. 5min de organização economizam 30min de caos.",
+      
+      mentalidade: "Mentalidade de crescimento: Erros são aprendizados, desafios são oportunidades. Cerque-se de pessoas melhores que você. Pense grande, aja maior.",
+      
+      estudos: "Estudos eficientes: Técnica Feynman (explique para aprender), revisão espaçada, mapas mentais. Estude 1-2h focado > 5h distraído.",
+      
+      controleEmocional: "Controle emocional: Respire fundo (4-7-8), pause antes de reagir, pratique gratidão diária. Emoções são sinais, não comandos.",
+      
+      // Ganhar dinheiro
+      ganharDinheiro: "Formas reais de ganhar dinheiro: 1) Freelancer (Upwork, Fiverr), 2) Venda online (Mercado Livre, OLX), 3) Infoprodutos (cursos, ebooks), 4) Afiliados (divulgue produtos), 5) Serviços locais (limpeza, manutenção). Comece com o que tem, onde está.",
+      
+      // Motivação
+      motivacao: "Você é capaz de mais do que imagina. Cada dia é uma chance de recomeçar. Não espere estar pronto - comece e aprenda no caminho. Sua única competição é quem você foi ontem. Vai!",
+      
+      // Elite Life específico
+      eliteLife: "Elite Life oferece: 100+ cursos, 1000+ atividades, IA de suporte, tracker de saúde, agenda personalizável, certificados, comunidade exclusiva. Transforme corpo, mente e finanças em 90 dias."
+    };
+
+    // Detecção inteligente de temas
+    if (input.includes("disciplina") || input.includes("hábito")) {
+      return aiRules.disciplina;
+    }
+    if (input.includes("dinheiro") || input.includes("financ") || input.includes("investir")) {
+      return aiRules.vidaFinanceira;
+    }
+    if (input.includes("foco") || input.includes("concentra")) {
+      return aiRules.foco;
+    }
+    if (input.includes("produtiv")) {
+      return aiRules.produtividade;
+    }
+    if (input.includes("rotina") || input.includes("dia a dia")) {
+      return aiRules.rotina;
+    }
+    if (input.includes("cresci") || input.includes("evolu")) {
+      return aiRules.crescimentoPessoal;
+    }
+    if (input.includes("organiza")) {
+      return aiRules.organizacao;
+    }
+    if (input.includes("mental") || input.includes("mindset")) {
+      return aiRules.mentalidade;
+    }
+    if (input.includes("estud") || input.includes("aprend")) {
+      return aiRules.estudos;
+    }
+    if (input.includes("emoç") || input.includes("ansied") || input.includes("estress")) {
+      return aiRules.controleEmocional;
+    }
+    if (input.includes("ganhar") || input.includes("renda") || input.includes("grana")) {
+      return aiRules.ganharDinheiro;
+    }
+    if (input.includes("motiv") || input.includes("desanima") || input.includes("força")) {
+      return aiRules.motivacao;
+    }
+    if (input.includes("elite") || input.includes("plataforma") || input.includes("curso")) {
+      return aiRules.eliteLife;
+    }
+
+    // Resposta padrão com sugestões
+    return "Posso te ajudar com: disciplina, vida financeira, foco, produtividade, rotina, crescimento pessoal, organização, mentalidade, estudos, controle emocional. Também posso ensinar formas reais de ganhar dinheiro ou te motivar. O que você precisa agora?";
+  };
+
   // Atualizar mensagem inicial da IA quando idioma mudar
   useEffect(() => {
     const aiWelcomeMessages: any = {
-      pt: "Olá! Sou a IA da Elite Life. Como posso ajudar você hoje? Posso responder sobre cursos, planos, agenda, tracker, investimentos, afiliados, certificados, dietas de famosos, e-commerce e muito mais!",
-      en: "Hello! I'm the Elite Life AI. How can I help you today? I can answer questions about courses, plans, schedule, tracker, investments, affiliates, certificates, celebrity diets, e-commerce and much more!",
-      es: "¡Hola! Soy la IA de Elite Life. ¿Cómo puedo ayudarte hoy? Puedo responder sobre cursos, planes, agenda, tracker, inversiones, afiliados, certificados, dietas de famosos, e-commerce y mucho más!"
+      pt: "Olá! Sou sua mentora Elite Life. Estou aqui para te ajudar a evoluir em todas as áreas da vida. Pergunte sobre disciplina, finanças, foco, produtividade, rotina, crescimento pessoal, organização, mentalidade, estudos ou controle emocional. Como posso te ajudar hoje?",
+      en: "Hello! I'm your Elite Life mentor. I'm here to help you evolve in all areas of life. Ask about discipline, finances, focus, productivity, routine, personal growth, organization, mindset, studies or emotional control. How can I help you today?",
+      es: "¡Hola! Soy tu mentora Elite Life. Estoy aquí para ayudarte a evolucionar en todas las áreas de la vida. Pregunta sobre disciplina, finanzas, enfoque, productividad, rutina, crecimiento personal, organización, mentalidad, estudios o control emocional. ¿Cómo puedo ayudarte hoy?"
     };
 
     setAiMessages([
@@ -919,38 +1007,8 @@ export default function EliteLifeHome() {
     e.preventDefault();
     if (!aiInput.trim()) return;
 
-    let response = "Entendi sua pergunta! ";
+    const response = getAIResponse(aiInput);
     
-    const input = aiInput.toLowerCase();
-    
-    if (input.includes("plano") || input.includes("preço") || input.includes("assinar")) {
-      response += "Temos 7 planos disponíveis: Gratuito, PRO (R$ 49,90), PRO PLUS (R$ 79,90), ELITE (R$ 89,90), ANUAL (R$ 299,00), INFLUENCER PRO (R$ 39,99) e E-COMMERCE PRO (R$ 89,90). Qual se encaixa melhor no seu objetivo?";
-    } else if (input.includes("curso") || input.includes("aprender")) {
-      response += "Temos + de 100 cursos nas áreas de Fitness, Nutrição, Finanças, E-commerce, Marketing Digital e Desenvolvimento Pessoal. Todos baseados em estudos de Harvard, MIT, Stanford, USP, Oxford, Cambridge, Yale, Princeton, Columbia e University of Chicago!";
-    } else if (input.includes("certificado")) {
-      response += "Ao concluir cada curso, você recebe um Certificado Elite Life oficial que pode ser baixado e compartilhado no LinkedIn!";
-    } else if (input.includes("afiliado") || input.includes("ganhar")) {
-      response += "Nosso programa de afiliados oferece 15% de comissão em cada venda. Você recebe um código de desconto de 5% e um link exclusivo. Pode acompanhar tudo em tempo real!";
-    } else if (input.includes("tracker") || input.includes("água") || input.includes("calorias")) {
-      response += "O Tracker permite registrar água, calorias, passos e exercícios. Fazemos um quiz inicial personalizado para calcular suas metas ideais baseado em estudos científicos e geramos relatórios semanais!";
-    } else if (input.includes("agenda")) {
-      response += "A Agenda é totalmente editável e se adapta ao seu plano. Versão gratuita tem recursos básicos, enquanto planos pagos têm agenda completa com lembretes personalizados!";
-    } else if (input.includes("carteira") || input.includes("investimento")) {
-      response += "A Carteira Personalizada (plano ELITE) permite simular investimentos em ações, fundos imobiliários e renda fixa, com relatórios detalhados de performance e testes de estratégias!";
-    } else if (input.includes("influencer") || input.includes("dieta") || input.includes("famoso")) {
-      response += "O plano Influencer Pro inclui 400 dietas de famosos (200 BR + 200 INT), IA para criar thumbnails e scripts, calendário de postagens, hashtags virais e muito mais!";
-    } else if (input.includes("medalha") || input.includes("pontos") || input.includes("ranking")) {
-      response += "Sistema de gamificação com 6 medalhas: Iniciante (100 pts), Bronze (500 pts), Prata (2.000 pts), Ouro (5.000 pts), Platina (10.000 pts) e Diamante (20.000 pts). Ganhe pontos completando atividades, assistindo vídeos e ficando 2h/dia na plataforma!";
-    } else if (input.includes("apostila") || input.includes("atividade")) {
-      response += "Temos + de 1000 atividades práticas e apostilas completas para cada área: Fitness, Nutrição, Finanças, E-commerce e Marketing Digital!";
-    } else if (input.includes("quiz")) {
-      response += "Oferecemos + de 1000 quizzes personalizados para testar seu conhecimento e ajudar no seu desenvolvimento em todas as áreas!";
-    } else if (input.includes("filme") || input.includes("livro") || input.includes("série")) {
-      response += "Temos uma seção exclusiva com recomendações de filmes, livros e séries sobre empreendedorismo, finanças, mente milionária e influência digital!";
-    } else {
-      response += "Posso ajudar com informações sobre cursos, planos, agenda, tracker, investimentos, afiliados, certificados, dietas de famosos, e-commerce, medalhas, apostilas, quizzes, recomendações e muito mais. O que você gostaria de saber especificamente?";
-    }
-
     setAiMessages([...aiMessages, 
       { role: "user", content: aiInput },
       { role: "assistant", content: response }
@@ -996,8 +1054,18 @@ export default function EliteLifeHome() {
     if (plan.id === 1) {
       setShowSignupModal(true);
     } else {
-      setSelectedPlan(plan);
-      setShowPaymentModal(true);
+      // Abrir mensagem da IA no chat
+      const aiPlanMessage = `Perfeito! Vamos ativar seu acesso completo ao Elite Life com o plano ${plan.name}. Você terá acesso a: ${plan.features.slice(0, 3).map((f: any) => typeof f === 'string' ? f : f.text).join(', ')}. Clique no botão abaixo para finalizar o pagamento e desbloquear todos os conteúdos imediatamente!`;
+      
+      setAiMessages([...aiMessages, { role: "assistant", content: aiPlanMessage }]);
+      setShowAIChat(true);
+      
+      // Abrir link de pagamento em nova aba
+      if (plan.paymentLink) {
+        setTimeout(() => {
+          window.open(plan.paymentLink, '_blank');
+        }, 1000);
+      }
     }
   };
 
@@ -1164,6 +1232,32 @@ export default function EliteLifeHome() {
     }
   };
 
+  const handleAffiliateClick = () => {
+    // Mensagem da IA sobre Programa de Afiliados BLOQUEADO
+    const affiliateBlockedMessage = `🔒 O Programa de Afiliados Elite Life ainda não está disponível na plataforma.
+
+Estamos finalizando os últimos detalhes para lançar um sistema completo onde você poderá ganhar até 15% de comissão por cada assinatura vendida.
+
+📌 Esta área está bloqueada temporariamente.
+
+Em breve você terá acesso a:
+✓ Link exclusivo para vendas
+✓ Acompanhamento de comissões
+✓ Materiais prontos para divulgar
+✓ Suporte de vendas
+✓ Treinamentos para vender muito mais
+✓ Comissões de até 15% por cada assinatura
+
+Estamos preparando o Programa de Afiliados com muito cuidado para garantir os melhores resultados para você.
+
+Fique atento(a)! Logo liberaremos esta função.
+
+💰 Em breve você poderá participar do Programa de Afiliados Elite Life e ganhar até 15% de comissão por cada venda. Esta área permanece bloqueada até o lançamento oficial.`;
+
+    setAiMessages([...aiMessages, { role: "assistant", content: affiliateBlockedMessage }]);
+    setShowAIChat(true);
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-[#0B0B0B] via-[#1A1A1A] to-[#0B0B0B] w-full overflow-x-hidden">
       {/* HEADER OTIMIZADO - Mobile First + Desktop Perfeito */}
@@ -1255,11 +1349,12 @@ export default function EliteLifeHome() {
               </button>
 
               <button
-                onClick={() => setShowAffiliateModal(true)}
+                onClick={handleAffiliateClick}
                 className="flex items-center gap-2 px-3 xl:px-4 py-2.5 rounded-xl text-white hover:bg-gradient-to-r hover:from-orange-500/10 hover:to-amber-600/10 hover:text-orange-400 transition-all duration-300 group"
               >
                 <Users className="w-4 h-4 xl:w-5 xl:h-5 group-hover:scale-110 transition-transform" />
                 <span className="font-medium text-sm">{t.affiliates}</span>
+                <Lock className="w-3 h-3 text-orange-400" />
               </button>
 
               <button
@@ -1379,9 +1474,24 @@ export default function EliteLifeHome() {
                 <div className="relative">
                   <button
                     onClick={() => setShowUserMenu(!showUserMenu)}
-                    className="flex items-center gap-2 px-3 py-2 rounded-xl bg-gradient-to-r from-[#D4AF37] to-amber-600 hover:shadow-lg hover:shadow-[#D4AF37]/50 transition-all duration-300"
+                    className="flex items-center gap-2 px-3 py-2 rounded-xl bg-gradient-to-r from-[#D4AF37] to-amber-600 hover:shadow-lg hover:shadow-[#D4AF37]/50 transition-all duration-300 group"
                   >
-                    <img src={userAvatar} alt="Avatar" className="w-7 h-7 sm:w-8 sm:h-8 lg:w-10 lg:h-10 rounded-full border-2 border-white" />
+                    <div className="relative">
+                      <img src={userAvatar} alt="Avatar" className="w-7 h-7 sm:w-8 sm:h-8 lg:w-10 lg:h-10 rounded-full border-2 border-white" />
+                      <label 
+                        htmlFor="avatar-upload" 
+                        className="absolute inset-0 flex items-center justify-center bg-black/50 rounded-full opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer"
+                      >
+                        <Camera className="w-4 h-4 text-white" />
+                      </label>
+                      <input
+                        id="avatar-upload"
+                        type="file"
+                        accept="image/*"
+                        onChange={handleAvatarUpload}
+                        className="hidden"
+                      />
+                    </div>
                     <span className="hidden sm:block text-sm lg:text-base font-bold text-[#0B0B0B]">{userName}</span>
                     <ChevronDown className="w-4 h-4 text-[#0B0B0B]" />
                   </button>
@@ -1389,7 +1499,22 @@ export default function EliteLifeHome() {
                   {showUserMenu && (
                     <div className="absolute right-0 top-full mt-2 w-56 sm:w-64 lg:w-72 bg-[#1A1A1A] rounded-2xl shadow-2xl border border-[#D4AF37]/20 p-4 z-50">
                       <div className="flex items-center gap-3 mb-4 pb-4 border-b border-[#D4AF37]/20">
-                        <img src={userAvatar} alt="Avatar" className="w-12 h-12 rounded-full border-2 border-[#D4AF37]" />
+                        <div className="relative group">
+                          <img src={userAvatar} alt="Avatar" className="w-12 h-12 rounded-full border-2 border-[#D4AF37]" />
+                          <label 
+                            htmlFor="avatar-upload-menu" 
+                            className="absolute inset-0 flex items-center justify-center bg-black/60 rounded-full opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer"
+                          >
+                            <Camera className="w-5 h-5 text-white" />
+                          </label>
+                          <input
+                            id="avatar-upload-menu"
+                            type="file"
+                            accept="image/*"
+                            onChange={handleAvatarUpload}
+                            className="hidden"
+                          />
+                        </div>
                         <div>
                           <h4 className="text-white font-bold text-base">{userName}</h4>
                           <p className="text-xs text-[#9A9A9A]">Plano: {userPlan === "free" ? "Gratuito" : "Premium"}</p>
@@ -1607,13 +1732,14 @@ export default function EliteLifeHome() {
 
               <button
                 onClick={() => {
-                  setShowAffiliateModal(true);
+                  handleAffiliateClick();
                   setIsMenuOpen(false);
                 }}
                 className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-white hover:bg-orange-500/10 transition-all"
               >
                 <Users className="w-5 h-5" />
                 <span>{t.affiliates}</span>
+                <Lock className="w-4 h-4 ml-auto text-orange-400" />
               </button>
 
               <button
@@ -1939,9 +2065,61 @@ export default function EliteLifeHome() {
         onClick={() => setShowAIChat(true)}
         className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 lg:bottom-8 lg:right-8 w-14 h-14 sm:w-16 sm:h-16 lg:w-20 lg:h-20 bg-gradient-to-r from-[#D4AF37] to-amber-600 rounded-full flex items-center justify-center shadow-2xl hover:scale-110 transition-transform duration-300 z-40 group"
       >
-        <MessageSquare className="w-7 h-7 sm:w-8 sm:h-8 lg:w-10 lg:h-10 text-[#0B0B0B] group-hover:scale-110 transition-transform" />
+        <Sparkles className="w-7 h-7 sm:w-8 sm:h-8 lg:w-10 lg:h-10 text-[#0B0B0B] group-hover:scale-110 transition-transform" />
         <span className="absolute -top-1 -right-1 w-4 h-4 sm:w-5 sm:h-5 bg-red-500 rounded-full animate-pulse"></span>
       </button>
+
+      {/* MODAL - AI Chat Elite Life */}
+      {showAIChat && (
+        <div className="fixed inset-0 bg-black/90 flex items-center justify-center z-[100] p-4">
+          <div className="bg-gradient-to-br from-[#1A1A1A] to-[#0B0B0B] rounded-3xl p-6 sm:p-8 max-w-2xl w-full h-[80vh] flex flex-col border-2 border-[#D4AF37]/30">
+            <div className="flex justify-between items-center mb-6 pb-4 border-b border-[#D4AF37]/20">
+              <div className="flex items-center gap-3">
+                <div className="w-12 h-12 bg-gradient-to-r from-[#D4AF37] to-amber-600 rounded-xl flex items-center justify-center">
+                  <Brain className="w-7 h-7 text-[#0B0B0B]" />
+                </div>
+                <div>
+                  <h2 className="text-2xl font-bold text-white">Mentora Elite Life</h2>
+                  <p className="text-sm text-[#D4AF37]">Sua guia para evolução pessoal</p>
+                </div>
+              </div>
+              <button onClick={() => setShowAIChat(false)} className="text-white hover:text-[#D4AF37] transition-colors">
+                <X className="w-7 h-7" />
+              </button>
+            </div>
+
+            <div className="flex-1 overflow-y-auto mb-4 space-y-4">
+              {aiMessages.map((msg, index) => (
+                <div key={index} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
+                  <div className={`max-w-[80%] p-4 rounded-2xl ${
+                    msg.role === 'user' 
+                      ? 'bg-gradient-to-r from-[#D4AF37] to-amber-600 text-[#0B0B0B]' 
+                      : 'bg-[#2A2A2A] text-white'
+                  }`}>
+                    <p className="text-sm leading-relaxed whitespace-pre-line">{msg.content}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            <form onSubmit={handleAISubmit} className="flex gap-2">
+              <input
+                type="text"
+                value={aiInput}
+                onChange={(e) => setAiInput(e.target.value)}
+                placeholder="Digite sua pergunta..."
+                className="flex-1 px-4 py-3 rounded-xl bg-[#2A2A2A] text-white border border-[#D4AF37]/20 focus:border-[#D4AF37] outline-none"
+              />
+              <button
+                type="submit"
+                className="px-6 py-3 bg-gradient-to-r from-[#D4AF37] to-amber-600 text-[#0B0B0B] rounded-xl font-bold hover:shadow-lg transition-all"
+              >
+                <Send className="w-5 h-5" />
+              </button>
+            </form>
+          </div>
+        </div>
+      )}
 
       {/* MODAL - Quiz Inicial Persuasivo */}
       {showInitialQuizModal && (

@@ -292,6 +292,31 @@ export default function EliteLifeHome() {
     }
   ];
 
+  // Lista completa de vídeos do Elite Life
+  const allVideos = [
+    // LISTA 1 - VÍDEOS PRINCIPAIS
+    "eyEXJ3agKuU", "GN0KWrj8gEA", "AA4kFuOUOzE", "iyTAeHp7vFE", "LDWKS9z005M",
+    "5G4VLBmszyY", "RqIv0hFd5QQ", "AcjPz8Qr_i8", "PpN4_nj7WE4", "Hir6lj4WX18",
+    "eif5_XolUDM", "n30Qz6EcHEM", "tCx9HKdORso", "m7Med0-y88I", "ZtgcWbcIWy4",
+    "TVtCJbpQQ74", "32hRlmYsPa0", "ePdUc2xMW6M", "TasDB-Gn0do", "cfouyjYKzn0",
+    "lT_eRUHdJ7g", "le6Xf7XS1-o", "17yQpfiDFCY", "SolU30Rl8rQ", "BOkaELzR9aM",
+    "J9wbTmuPfNg", "XkbDaNZTedc", "NaPFO4O5llo", "_LPIyvLLzyo", "RNB9uCQVEBI",
+    "ROYi13bMbbQ", "gIqiopx5qvQ", "lof9u_8ULf0", "exbgpMKPowo", "Em0UqsiYij8",
+    "XVOZItdAUbw", "CtfOALRAf8s", "vpU4zJ7MlzQ", "gMLJfHko1II", "PPDECleQNtc",
+    "m-6r2sAV8QE", "hcluoA_zvzQ",
+    
+    // LISTA 2 - VÍDEOS ADICIONAIS
+    "nX5nPjcVP_I", "l8zh-v3FIpM", "PHH-BMCuES0", "NNMBNRcP_tU", "YBJwJuSkgno",
+    "phwa27l7fgs", "T5ZgYbvHwE0", "cR5FGUBuNEw", "dxfx0Yw3n7k", "Frr6cMXMcEY",
+    "LHWJuZwx8SM", "gpD6boRgXdI", "quBBAXjMzac", "xws5gfEfRU4", "Q5t76g9yh3g",
+    "9j8IHdic0F0", "pRxyQXL1eVA", "obvenrhem9Q", "zbN3mChHGDI", "WvvzpUaNvOo",
+    "NN99hUNwO1A", "Flo47gIJQfg", "14h1Sn5irdE", "mZRHqSmTiwE", "l4VFryL5SC0",
+    "5ZLAxK7jrQ4", "-e2x7oQ9C1g", "f4m3asFg3oo", "yAsyW3ie8AA", "v4yMnlFR6u0",
+    "FIiOd412sRs", "AT7nSkn8Cs8", "X71YbXctXeM", "wJBof_K85YY", "Huii3YbR6ek",
+    "qTH_P4PBEI8", "ULoPE2xOBCo", "ywUuoTJJznA", "0rtNKdODxbo", "ORe4506BNwc",
+    "kqAex5L6D-M", "ykkty8JCx30"
+  ];
+
   const videoCategories = [
     { id: "all", label: "Todos" },
     { id: "motivacional", label: "Motivacionais" },
@@ -1258,6 +1283,41 @@ Fique atento(a)! Logo liberaremos esta função.
     setShowAIChat(true);
   };
 
+  const handleVideosClick = () => {
+    if (userPlan === "free") {
+      // Usuário sem plano - mostrar mensagem de bloqueio
+      const videosBlockedMessage = `🔒 Esta área é exclusiva para assinantes.
+
+Assine um dos planos para liberar todos os vídeos, aulas e conteúdos completos.
+
+📺 Ao assinar, você terá acesso a:
+✓ ${allVideos.length}+ vídeos exclusivos
+✓ Conteúdos sobre fitness, finanças, e-commerce e influencer
+✓ Aulas práticas e diretas
+✓ Materiais de apoio
+✓ Certificados de conclusão
+
+💎 Clique no botão "Assinar Plano" abaixo para desbloquear todo o conteúdo!`;
+
+      setAiMessages([...aiMessages, { role: "assistant", content: videosBlockedMessage }]);
+      setShowAIChat(true);
+    } else {
+      // Usuário com plano - liberar acesso
+      const videosUnlockedMessage = `✅ Acesso liberado! Aqui estão todos os vídeos exclusivos do Elite Life.
+
+Você tem acesso a ${allVideos.length}+ vídeos de alta qualidade sobre:
+🏋️ Fitness e Saúde
+💰 Finanças e Investimentos
+🛒 E-commerce e Vendas
+📱 Marketing Digital e Influencer
+
+Escolha um vídeo abaixo e comece sua transformação agora mesmo!`;
+
+      setAiMessages([...aiMessages, { role: "assistant", content: videosUnlockedMessage }]);
+      setShowVideosModal(true);
+    }
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-[#0B0B0B] via-[#1A1A1A] to-[#0B0B0B] w-full overflow-x-hidden">
       {/* HEADER OTIMIZADO - Mobile First + Desktop Perfeito */}
@@ -1296,7 +1356,7 @@ Fique atento(a)! Logo liberaremos esta função.
               </button>
 
               <button
-                onClick={() => userPlan === "free" ? handleLockedClick("/videos") : setShowVideosModal(true)}
+                onClick={handleVideosClick}
                 className="flex items-center gap-2 px-3 xl:px-4 py-2.5 rounded-xl text-white hover:bg-gradient-to-r hover:from-red-500/10 hover:to-pink-600/10 hover:text-red-400 transition-all duration-300 group"
               >
                 <Video className="w-4 h-4 xl:w-5 xl:h-5 group-hover:scale-110 transition-transform" />
@@ -1371,7 +1431,7 @@ Fique atento(a)! Logo liberaremos esta função.
               {/* Social Links - Desktop Only */}
               <div className="hidden xl:flex items-center gap-2">
                 <a 
-                  href="https://www.instagram.com/elitelife_experience?igsh=MWlhZzh0NGgxNTR1ag%3D%3D&utm_source=qr"
+                  href="https://www.instagram.com/elitelife_experience"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="p-2.5 rounded-xl bg-gradient-to-r from-pink-500 to-rose-600 hover:shadow-lg hover:shadow-pink-500/50 transition-all duration-300 group"
@@ -1599,7 +1659,7 @@ Fique atento(a)! Logo liberaremos esta função.
               {/* Social Links Mobile */}
               <div className="grid grid-cols-2 gap-2 pb-4 border-b border-[#D4AF37]/20">
                 <a 
-                  href="https://www.instagram.com/elitelife_experience?igsh=MWlhZzh0NGgxNTR1ag%3D%3D&utm_source=qr"
+                  href="https://www.instagram.com/elitelife_experience"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex items-center justify-center gap-2 p-3 rounded-xl bg-gradient-to-r from-pink-500 to-rose-600 hover:shadow-lg transition-all"
@@ -1661,7 +1721,7 @@ Fique atento(a)! Logo liberaremos esta função.
 
               <button
                 onClick={() => {
-                  userPlan === "free" ? handleLockedClick("/videos") : setShowVideosModal(true);
+                  handleVideosClick();
                   setIsMenuOpen(false);
                 }}
                 className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-white hover:bg-red-500/10 transition-all"
@@ -2033,7 +2093,7 @@ Fique atento(a)! Logo liberaremos esta função.
             <div>
               <h4 className="font-bold text-white mb-3 sm:mb-4 text-base sm:text-lg">{t.footer.social}</h4>
               <div className="flex flex-wrap gap-2 sm:gap-3">
-                <a href="https://www.instagram.com/elitelife_experience?igsh=MWlhZzh0NGgxNTR1ag%3D%3D&utm_source=qr" target="_blank" rel="noopener noreferrer" className="w-10 h-10 sm:w-12 sm:h-12 bg-[#2A2A2A] rounded-xl flex items-center justify-center hover:bg-[#D4AF37]/10 transition-all">
+                <a href="https://www.instagram.com/elitelife_experience" target="_blank" rel="noopener noreferrer" className="w-10 h-10 sm:w-12 sm:h-12 bg-[#2A2A2A] rounded-xl flex items-center justify-center hover:bg-[#D4AF37]/10 transition-all">
                   <Instagram className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
                 </a>
                 <a href="https://t.me/boost/elitelifeApp" target="_blank" rel="noopener noreferrer" className="w-10 h-10 sm:w-12 sm:h-12 bg-[#2A2A2A] rounded-xl flex items-center justify-center hover:bg-[#D4AF37]/10 transition-all">
@@ -2369,6 +2429,88 @@ Fique atento(a)! Logo liberaremos esta função.
               <p className="text-sm text-[#D4AF37]">
                 ⚠️ Válido apenas para primeira compra
               </p>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* MODAL - Vídeos */}
+      {showVideosModal && userPlan !== "free" && (
+        <div className="fixed inset-0 bg-black/90 flex items-center justify-center z-[100] p-4">
+          <div className="bg-gradient-to-br from-[#1A1A1A] to-[#0B0B0B] rounded-3xl p-6 sm:p-8 max-w-6xl w-full h-[85vh] flex flex-col border-2 border-[#D4AF37]/30">
+            <div className="flex justify-between items-center mb-6 pb-4 border-b border-[#D4AF37]/20">
+              <div className="flex items-center gap-3">
+                <div className="w-12 h-12 bg-gradient-to-r from-red-500 to-pink-600 rounded-xl flex items-center justify-center">
+                  <Video className="w-7 h-7 text-white" />
+                </div>
+                <div>
+                  <h2 className="text-2xl font-bold text-white">Vídeos Elite Life</h2>
+                  <p className="text-sm text-[#D4AF37]">{allVideos.length}+ vídeos exclusivos</p>
+                </div>
+              </div>
+              <button onClick={() => setShowVideosModal(false)} className="text-white hover:text-[#D4AF37] transition-colors">
+                <X className="w-7 h-7" />
+              </button>
+            </div>
+
+            <div className="flex-1 overflow-y-auto">
+              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+                {allVideos.map((videoId, index) => (
+                  <div
+                    key={index}
+                    className="group relative bg-[#2A2A2A] rounded-xl overflow-hidden hover:scale-105 transition-all duration-300 cursor-pointer"
+                    onClick={() => {
+                      setSelectedVideoId(videoId);
+                      setShowVideoPlayerModal(true);
+                    }}
+                  >
+                    <div className="aspect-video relative">
+                      <img
+                        src={`https://img.youtube.com/vi/${videoId}/mqdefault.jpg`}
+                        alt={`Vídeo ${index + 1}`}
+                        className="w-full h-full object-cover"
+                      />
+                      <div className="absolute inset-0 bg-black/50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                        <Play className="w-12 h-12 text-white" />
+                      </div>
+                    </div>
+                    <div className="p-3">
+                      <p className="text-white text-sm font-medium truncate">Vídeo Elite Life #{index + 1}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* MODAL - Video Player */}
+      {showVideoPlayerModal && selectedVideoId && (
+        <div className="fixed inset-0 bg-black/95 flex items-center justify-center z-[110] p-4">
+          <div className="w-full max-w-6xl">
+            <div className="flex justify-end mb-4">
+              <button
+                onClick={() => {
+                  setShowVideoPlayerModal(false);
+                  setSelectedVideoId("");
+                }}
+                className="text-white hover:text-[#D4AF37] transition-colors"
+              >
+                <X className="w-8 h-8" />
+              </button>
+            </div>
+            <div className="aspect-video w-full rounded-2xl overflow-hidden shadow-2xl">
+              <iframe
+                width="100%"
+                height="100%"
+                src={`https://www.youtube.com/embed/${selectedVideoId}?autoplay=1`}
+                title="YouTube video player"
+                frameBorder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+                className="w-full h-full"
+              ></iframe>
             </div>
           </div>
         </div>

@@ -5,6 +5,9 @@ import Script from "next/script";
 import "./globals.css";
 // Import all available fonts for AI usage
 import "../lib/fonts";
+import { AuthProvider } from "@/lib/auth-context";
+import { LanguageProvider } from "@/contexts/LanguageContext";
+import { AITutorChat } from "@/components/custom/ai-tutor-chat";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -27,14 +30,103 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="pt-BR">
+    <html lang="pt-BR" suppressHydrationWarning>
       <head>
+        <Script id="error-prevention" strategy="beforeInteractive">
+          {`
+            // Prevenir erros de navegação, fetch e chunk loading
+            (function() {
+              // Lista de erros a serem suprimidos (ambiente de desenvolvimento)
+              const suppressedErrors = [
+                'Failed to load chunk',
+                'Failed to fetch RSC payload',
+                'Load failed',
+                'hmr-client',
+                '__nextjs_original-stack-frames',
+                'react-server-dom-turbopack',
+                'Falling back to browser navigation',
+              ];
+
+              // Função para verificar se erro deve ser suprimido
+              function shouldSuppressError(message) {
+                if (!message) return false;
+                const msgStr = String(message).toLowerCase();
+                return suppressedErrors.some(err => msgStr.includes(err.toLowerCase()));
+              }
+
+              // Interceptar erros de fetch
+              const originalFetch = window.fetch;
+              window.fetch = function(...args) {
+                const url = args[0];
+                
+                // Prevenir fetch com URL undefined
+                if (!url || url === 'undefined' || url === undefined) {
+                  console.log('[Dev] Prevented fetch to undefined URL');
+                  return Promise.reject(new Error('Invalid URL'));
+                }
+                
+                return originalFetch.apply(this, args).catch(error => {
+                  // Silenciar erros de desenvolvimento
+                  if (shouldSuppressError(error.message) || shouldSuppressError(url)) {
+                    console.log('[Dev] Silenced network error');
+                    return Promise.reject(error);
+                  }
+                  throw error;
+                });
+              };
+
+              // Prevenir erros de promise rejection não tratados
+              window.addEventListener('unhandledrejection', function(event) {
+                const error = event.reason;
+                if (shouldSuppressError(error?.message)) {
+                  console.log('[Dev] Prevented unhandled rejection');
+                  event.preventDefault();
+                }
+              });
+
+              // Prevenir erros de window.onerror
+              window.addEventListener('error', function(event) {
+                if (shouldSuppressError(event.message) || shouldSuppressError(event.error?.message)) {
+                  console.log('[Dev] Prevented window error');
+                  event.preventDefault();
+                }
+              }, true);
+
+              // Prevenir erros de console
+              const originalError = console.error;
+              console.error = function(...args) {
+                const message = args[0];
+                if (shouldSuppressError(message)) {
+                  console.log('[Dev] Silenced console error');
+                  return;
+                }
+                originalError.apply(console, args);
+              };
+
+              // Prevenir erros de console.warn relacionados
+              const originalWarn = console.warn;
+              console.warn = function(...args) {
+                const message = args[0];
+                if (shouldSuppressError(message)) {
+                  return;
+                }
+                originalWarn.apply(console, args);
+              };
+            })();
+          `}
+        </Script>
         <Script src="/lasy-bridge.js" strategy="beforeInteractive" />
       </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        suppressHydrationWarning
       >
-        {children}
+        <LanguageProvider>
+          <AuthProvider>
+            {children}
+            <AITutorChat />
+          </AuthProvider>
+        </LanguageProvider>
       </body>
     </html>
   );

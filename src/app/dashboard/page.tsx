@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import {
   BookOpen,
@@ -19,16 +19,42 @@ import {
   ChevronRight,
   Sparkles,
   Star,
-  Zap
+  Zap,
+  Menu,
+  X
 } from "lucide-react";
 import { HeroSection } from "@/components/custom/home/hero-section";
 import { FeaturedCards } from "@/components/custom/home/featured-cards";
 import { TrailsCarousel } from "@/components/custom/home/trails-carousel";
 import { RecommendedSection } from "@/components/custom/home/recommended-section";
 import { DashboardNav } from "@/components/custom/dashboard-nav";
+import { SubscriptionModal } from "@/components/custom/subscription-modal";
+import { NotificationBell } from "@/components/custom/notification-bell";
+import { LanguageSelector } from "@/components/custom/LanguageSelector";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 export default function DashboardPage() {
-  // Mock user data - Em produção, viria do banco de dados
+  const [mounted, setMounted] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [showSubscriptionModal, setShowSubscriptionModal] = useState(false);
+  const [blockedContent, setBlockedContent] = useState("");
+  const { t } = useLanguage();
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  // Função para verificar se usuário tem plano ativo
+  const checkPlanAccess = (contentType: string) => {
+    if (userData.plan === "free") {
+      setBlockedContent(contentType);
+      setShowSubscriptionModal(true);
+      return false;
+    }
+    return true;
+  };
+
+  // Mock user data
   const userData = {
     name: "Usuário Elite",
     avatar: "https://i.pravatar.cc/150?img=12",
@@ -45,10 +71,9 @@ export default function DashboardPage() {
     weeklyPoints: 850,
     totalPoints: 12450,
     ranking: 42,
-    plan: "free" as const // Simula plano do usuário
+    plan: "free" as const
   };
 
-  // Featured Cards Data
   const featuredData = {
     lastCourse: {
       title: "Finanças Pessoais Avançadas",
@@ -69,7 +94,6 @@ export default function DashboardPage() {
     }
   };
 
-  // Trails Data
   const trails = [
     {
       id: "1",
@@ -123,7 +147,6 @@ export default function DashboardPage() {
     }
   ];
 
-  // Recommended Items
   const recommendedItems = [
     {
       id: "1",
@@ -161,7 +184,6 @@ export default function DashboardPage() {
     }
   ];
 
-  // Courses in Progress
   const coursesInProgress = [
     {
       id: "1",
@@ -192,7 +214,6 @@ export default function DashboardPage() {
     }
   ];
 
-  // Recent Activities
   const recentActivities = [
     {
       id: "1",
@@ -217,7 +238,6 @@ export default function DashboardPage() {
     }
   ];
 
-  // Pending Quizzes
   const pendingQuizzes = [
     {
       id: "1",
@@ -235,7 +255,6 @@ export default function DashboardPage() {
     }
   ];
 
-  // Recent Videos
   const recentVideos = [
     {
       id: "1",
@@ -260,7 +279,6 @@ export default function DashboardPage() {
     }
   ];
 
-  // Recent Medals
   const recentMedals = [
     {
       id: "1",
@@ -292,12 +310,142 @@ export default function DashboardPage() {
     }
   ];
 
+  if (!mounted) {
+    return null;
+  }
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-[#0B0B0B] via-[#1A1A1A] to-[#0B0B0B]">
-      {/* Dashboard Navigation with Locks */}
+      {/* Dashboard Header com Logo */}
+      <header className="fixed top-0 left-0 right-0 bg-black/95 backdrop-blur-xl border-b border-[#D4AF37]/30 z-50 shadow-2xl shadow-[#D4AF37]/10">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex items-center justify-between h-16 sm:h-20">
+            <Link href="/" className="flex items-center gap-2 sm:gap-3 group">
+              <div className="relative">
+                <div className="absolute inset-0 bg-[#D4AF37]/20 blur-xl rounded-full group-hover:bg-[#D4AF37]/30 transition-all" />
+                <img
+                  src="https://k6hrqrxuu8obbfwn.public.blob.vercel-storage.com/temp/e22a0287-4560-4daf-af81-6b17c1eb9768.jpg"
+                  alt="Elite Life Logo"
+                  className="relative h-10 w-10 sm:h-14 sm:w-14 object-contain rounded-lg drop-shadow-[0_0_20px_rgba(212,175,55,0.6)] group-hover:drop-shadow-[0_0_30px_rgba(212,175,55,0.9)] transition-all duration-300 group-hover:scale-110"
+                />
+              </div>
+              <div className="flex flex-col">
+                <h1 className="text-lg sm:text-2xl font-black text-transparent bg-clip-text bg-gradient-to-r from-[#D4AF37] via-amber-400 to-yellow-500 tracking-wider group-hover:from-amber-400 group-hover:to-yellow-600 transition-all">
+                  ELITE LIFE
+                </h1>
+                <p className="text-[8px] sm:text-[10px] text-[#D4AF37]/70 font-semibold tracking-widest uppercase hidden sm:block">Dashboard</p>
+              </div>
+            </Link>
+            
+            <div className="flex items-center gap-4">
+              {/* Language Selector */}
+              <LanguageSelector />
+              
+              {/* Notification Bell */}
+              <NotificationBell />
+              
+              {/* User Profile Link */}
+              <Link
+                href="/profile"
+                className="hidden lg:flex items-center gap-3 hover:bg-[#D4AF37]/10 rounded-full pr-4 transition-all group"
+              >
+                <img
+                  src={userData.avatar}
+                  alt={userData.name}
+                  className="w-10 h-10 rounded-full border-2 border-[#D4AF37] group-hover:border-amber-400 transition-all"
+                />
+                <div className="flex flex-col">
+                  <span className="text-white font-semibold text-sm group-hover:text-[#D4AF37] transition-colors">{userData.name}</span>
+                  <div className="flex items-center gap-1">
+                    <Star className="w-3 h-3 text-[#D4AF37]" />
+                    <span className="text-[#D4AF37] font-bold text-xs">Nível {userData.level}</span>
+                  </div>
+                </div>
+              </Link>
+              
+              <button
+                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                className="lg:hidden p-2 text-white hover:text-[#D4AF37] transition-colors"
+              >
+                {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+              </button>
+            </div>
+          </div>
+        </div>
+
+        {/* Mobile Menu */}
+        {mobileMenuOpen && (
+          <div className="lg:hidden bg-black/98 border-t border-[#D4AF37]/30 backdrop-blur-xl">
+            <div className="px-4 py-4 space-y-3">
+              <Link
+                href="/dashboard"
+                onClick={() => setMobileMenuOpen(false)}
+                className="block px-4 py-3 text-white hover:text-[#D4AF37] hover:bg-[#D4AF37]/10 rounded-lg transition-all font-semibold"
+              >
+                <div className="flex items-center gap-3">
+                  <Target className="w-5 h-5" />
+                  <span>Home</span>
+                </div>
+              </Link>
+              <Link
+                href="/courses"
+                onClick={() => setMobileMenuOpen(false)}
+                className="block px-4 py-3 text-white hover:text-[#D4AF37] hover:bg-[#D4AF37]/10 rounded-lg transition-all font-semibold"
+              >
+                <div className="flex items-center gap-3">
+                  <BookOpen className="w-5 h-5" />
+                  <span>Cursos</span>
+                </div>
+              </Link>
+              <Link
+                href="/activities"
+                onClick={() => setMobileMenuOpen(false)}
+                className="block px-4 py-3 text-white hover:text-[#D4AF37] hover:bg-[#D4AF37]/10 rounded-lg transition-all font-semibold"
+              >
+                <div className="flex items-center gap-3">
+                  <CheckSquare className="w-5 h-5" />
+                  <span>Atividades</span>
+                </div>
+              </Link>
+              <Link
+                href="/ranking"
+                onClick={() => setMobileMenuOpen(false)}
+                className="block px-4 py-3 text-white hover:text-[#D4AF37] hover:bg-[#D4AF37]/10 rounded-lg transition-all font-semibold"
+              >
+                <div className="flex items-center gap-3">
+                  <Trophy className="w-5 h-5" />
+                  <span>Ranking</span>
+                </div>
+              </Link>
+              <Link
+                href="/learning"
+                onClick={() => setMobileMenuOpen(false)}
+                className="block px-4 py-3 text-white hover:text-[#D4AF37] hover:bg-[#D4AF37]/10 rounded-lg transition-all font-semibold"
+              >
+                <div className="flex items-center gap-3">
+                  <BookOpen className="w-5 h-5" />
+                  <span>Aprendizado (2K+ Quizzes)</span>
+                </div>
+              </Link>
+              <Link
+                href="/recommendations"
+                onClick={() => setMobileMenuOpen(false)}
+                className="block px-4 py-3 text-white hover:text-[#D4AF37] hover:bg-[#D4AF37]/10 rounded-lg transition-all font-semibold"
+              >
+                <div className="flex items-center gap-3">
+                  <Video className="w-5 h-5" />
+                  <span>Recomendações</span>
+                </div>
+              </Link>
+            </div>
+          </div>
+        )}
+      </header>
+
+      {/* Dashboard Navigation */}
       <DashboardNav userPlan={userData.plan} />
 
-      {/* Quick Access Menu (Mobile) */}
+      {/* Quick Access Menu (Mobile Bottom) */}
       <nav className="fixed bottom-0 left-0 right-0 bg-[#1A1A1A] border-t border-[#D4AF37]/20 z-50 lg:hidden">
         <div className="flex items-center justify-around py-3">
           <Link href="/dashboard" className="flex flex-col items-center gap-1 text-[#D4AF37]">
@@ -522,49 +670,49 @@ export default function DashboardPage() {
           <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-4">
             <div className="bg-gradient-to-br from-[#1A1A1A] to-[#2A2A2A] rounded-xl p-4 border border-[#D4AF37]/20 text-center">
               <Flame className="w-8 h-8 text-orange-500 mx-auto mb-2" />
-              <div className="text-2xl font-bold text-white mb-1" suppressHydrationWarning>{userData.streak}</div>
+              <div className="text-2xl font-bold text-white mb-1">{userData.streak}</div>
               <div className="text-xs text-[#9A9A9A]">Dias</div>
             </div>
             
             <div className="bg-gradient-to-br from-[#1A1A1A] to-[#2A2A2A] rounded-xl p-4 border border-[#D4AF37]/20 text-center">
               <Clock className="w-8 h-8 text-blue-500 mx-auto mb-2" />
-              <div className="text-2xl font-bold text-white mb-1" suppressHydrationWarning>{userData.hoursStudied}h</div>
+              <div className="text-2xl font-bold text-white mb-1">{userData.hoursStudied}h</div>
               <div className="text-xs text-[#9A9A9A]">Estudadas</div>
             </div>
             
             <div className="bg-gradient-to-br from-[#1A1A1A] to-[#2A2A2A] rounded-xl p-4 border border-[#D4AF37]/20 text-center">
               <BookOpen className="w-8 h-8 text-purple-500 mx-auto mb-2" />
-              <div className="text-2xl font-bold text-white mb-1" suppressHydrationWarning>{userData.coursesCompleted}</div>
+              <div className="text-2xl font-bold text-white mb-1">{userData.coursesCompleted}</div>
               <div className="text-xs text-[#9A9A9A]">Cursos</div>
             </div>
             
             <div className="bg-gradient-to-br from-[#1A1A1A] to-[#2A2A2A] rounded-xl p-4 border border-[#D4AF37]/20 text-center">
               <Target className="w-8 h-8 text-green-500 mx-auto mb-2" />
-              <div className="text-2xl font-bold text-white mb-1" suppressHydrationWarning>{userData.trailsCompleted}</div>
+              <div className="text-2xl font-bold text-white mb-1">{userData.trailsCompleted}</div>
               <div className="text-xs text-[#9A9A9A]">Trilhas</div>
             </div>
             
             <div className="bg-gradient-to-br from-[#1A1A1A] to-[#2A2A2A] rounded-xl p-4 border border-[#D4AF37]/20 text-center">
               <HelpCircle className="w-8 h-8 text-cyan-500 mx-auto mb-2" />
-              <div className="text-2xl font-bold text-white mb-1" suppressHydrationWarning>{userData.quizzesCompleted}</div>
+              <div className="text-2xl font-bold text-white mb-1">{userData.quizzesCompleted}</div>
               <div className="text-xs text-[#9A9A9A]">Quizzes</div>
             </div>
             
             <div className="bg-gradient-to-br from-[#1A1A1A] to-[#2A2A2A] rounded-xl p-4 border border-[#D4AF37]/20 text-center">
               <CheckSquare className="w-8 h-8 text-pink-500 mx-auto mb-2" />
-              <div className="text-2xl font-bold text-white mb-1" suppressHydrationWarning>{userData.activitiesCompleted}</div>
+              <div className="text-2xl font-bold text-white mb-1">{userData.activitiesCompleted}</div>
               <div className="text-xs text-[#9A9A9A]">Atividades</div>
             </div>
             
             <div className="bg-gradient-to-br from-[#1A1A1A] to-[#2A2A2A] rounded-xl p-4 border border-[#D4AF37]/20 text-center">
               <Zap className="w-8 h-8 text-yellow-500 mx-auto mb-2" />
-              <div className="text-2xl font-bold text-white mb-1" suppressHydrationWarning>{userData.weeklyPoints}</div>
+              <div className="text-2xl font-bold text-white mb-1">{userData.weeklyPoints}</div>
               <div className="text-xs text-[#9A9A9A]">XP Semanal</div>
             </div>
             
             <div className="bg-gradient-to-br from-[#1A1A1A] to-[#2A2A2A] rounded-xl p-4 border border-[#D4AF37]/20 text-center">
               <Star className="w-8 h-8 text-[#D4AF37] mx-auto mb-2" />
-              <div className="text-2xl font-bold text-white mb-1" suppressHydrationWarning>{userData.totalPoints}</div>
+              <div className="text-2xl font-bold text-white mb-1">{userData.totalPoints}</div>
               <div className="text-xs text-[#9A9A9A]">XP Total</div>
             </div>
           </div>
@@ -610,7 +758,7 @@ export default function DashboardPage() {
               <div className="flex items-center justify-between mb-6">
                 <div>
                   <div className="text-sm text-[#9A9A9A] mb-1">Sua Posição</div>
-                  <div className="text-4xl font-bold text-[#D4AF37]" suppressHydrationWarning>#{userData.ranking}</div>
+                  <div className="text-4xl font-bold text-[#D4AF37]">#{userData.ranking}</div>
                 </div>
                 <Trophy className="w-16 h-16 text-[#D4AF37]" />
               </div>
@@ -618,11 +766,11 @@ export default function DashboardPage() {
               <div className="space-y-3 mb-6">
                 <div className="flex items-center justify-between">
                   <span className="text-[#9A9A9A]">Pontos Totais</span>
-                  <span className="text-white font-bold" suppressHydrationWarning>{userData.totalPoints} XP</span>
+                  <span className="text-white font-bold">{userData.totalPoints} XP</span>
                 </div>
                 <div className="flex items-center justify-between">
                   <span className="text-[#9A9A9A]">Pontos esta Semana</span>
-                  <span className="text-[#D4AF37] font-bold" suppressHydrationWarning>+{userData.weeklyPoints} XP</span>
+                  <span className="text-[#D4AF37] font-bold">+{userData.weeklyPoints} XP</span>
                 </div>
                 <div className="flex items-center justify-between">
                   <span className="text-[#9A9A9A]">Para Subir</span>
@@ -638,6 +786,13 @@ export default function DashboardPage() {
           </div>
         </div>
       </div>
+
+      {/* Subscription Modal */}
+      <SubscriptionModal
+        isOpen={showSubscriptionModal}
+        onClose={() => setShowSubscriptionModal(false)}
+        contentType={blockedContent}
+      />
     </div>
   );
 }

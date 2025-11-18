@@ -1,638 +1,466 @@
 "use client";
 
-import { useState } from "react";
 import Link from "next/link";
 import {
+  ArrowRight,
+  CheckCircle,
+  Star,
+  Users,
+  TrendingUp,
+  Award,
   BookOpen,
   Video,
-  CheckSquare,
-  HelpCircle,
-  Play,
-  Trophy,
-  Award,
-  TrendingUp,
-  Clock,
-  BarChart3,
   Target,
-  Flame,
-  Medal,
-  ChevronRight,
-  Sparkles,
-  Star,
-  Zap
+  Zap,
+  Shield,
+  Clock,
+  Trophy,
+  Sparkles
 } from "lucide-react";
-import { HeroSection } from "@/components/custom/home/hero-section";
-import { FeaturedCards } from "@/components/custom/home/featured-cards";
-import { TrailsCarousel } from "@/components/custom/home/trails-carousel";
-import { RecommendedSection } from "@/components/custom/home/recommended-section";
 
-export default function HomePage() {
-  // Mock user data - Em produção, viria do banco de dados
-  const userData = {
-    name: "Usuário Elite",
-    avatar: "https://i.pravatar.cc/150?img=12",
-    level: 15,
-    xp: 3450,
-    xpToNextLevel: 5000,
-    streak: 12,
-    totalMedals: 8,
-    hoursStudied: 45,
-    coursesCompleted: 3,
-    trailsCompleted: 1,
-    quizzesCompleted: 24,
-    activitiesCompleted: 18,
-    weeklyPoints: 850,
-    totalPoints: 12450,
-    ranking: 42
-  };
-
-  // Featured Cards Data
-  const featuredData = {
-    lastCourse: {
-      title: "Finanças Pessoais Avançadas",
-      module: "Módulo 3: Investimentos",
-      progress: 65,
-      thumbnail: "https://images.unsplash.com/photo-1579621970563-ebec7560ff3e?w=400&h=300&fit=crop"
-    },
-    dailyMission: {
-      title: "Conclua 1 atividade hoje",
-      description: "Complete uma atividade para manter seu streak!",
-      points: 50,
-      medal: "🎯"
-    },
-    weeklyGoal: {
-      title: "3 módulos concluídos nesta semana",
-      current: 2,
-      target: 3
-    }
-  };
-
-  // Trails Data
-  const trails = [
+export default function LandingPage() {
+  const plans = [
     {
-      id: "1",
+      name: "Grátis",
+      price: "R$ 0",
+      period: "/mês",
+      description: "Ideal para começar sua jornada",
+      features: [
+        "Acesso a 3 cursos básicos",
+        "Comunidade exclusiva",
+        "Certificado digital",
+        "Suporte por email"
+      ],
+      highlighted: false
+    },
+    {
+      name: "Pro",
+      price: "R$ 97",
+      period: "/mês",
+      description: "Para quem quer resultados reais",
+      features: [
+        "Acesso a todos os cursos",
+        "Mentorias em grupo semanais",
+        "Certificados profissionais",
+        "Suporte prioritário",
+        "Material complementar",
+        "Comunidade VIP"
+      ],
+      highlighted: false
+    },
+    {
+      name: "Premium",
+      price: "R$ 197",
+      period: "/mês",
+      description: "Transformação completa garantida",
+      features: [
+        "Tudo do plano Pro",
+        "Mentoria individual mensal",
+        "Acesso vitalício aos cursos",
+        "Grupo exclusivo de networking",
+        "Workshops ao vivo",
+        "Suporte 24/7"
+      ],
+      highlighted: true
+    },
+    {
+      name: "Elite",
+      price: "R$ 497",
+      period: "/mês",
+      description: "Para quem busca a excelência",
+      features: [
+        "Tudo do plano Premium",
+        "Mentoria individual semanal",
+        "Acesso a eventos presenciais",
+        "Consultoria personalizada",
+        "Networking com empresários",
+        "Garantia de resultados"
+      ],
+      highlighted: false
+    }
+  ];
+
+  const benefits = [
+    {
+      icon: <BookOpen className="w-8 h-8" />,
+      title: "Educação de Qualidade",
+      description: "Cursos desenvolvidos por especialistas com metodologia comprovada"
+    },
+    {
+      icon: <Target className="w-8 h-8" />,
+      title: "Foco em Resultados",
+      description: "Sistema gamificado que mantém você motivado e no caminho certo"
+    },
+    {
+      icon: <Users className="w-8 h-8" />,
+      title: "Comunidade Ativa",
+      description: "Mais de 50 mil alunos transformando suas vidas juntos"
+    },
+    {
+      icon: <Award className="w-8 h-8" />,
+      title: "Certificados Reconhecidos",
+      description: "Certificados digitais que valorizam seu currículo"
+    },
+    {
+      icon: <Video className="w-8 h-8" />,
+      title: "Conteúdo Atualizado",
+      description: "Novos cursos e materiais adicionados mensalmente"
+    },
+    {
+      icon: <Shield className="w-8 h-8" />,
+      title: "Garantia de 7 Dias",
+      description: "Não gostou? Devolvemos 100% do seu investimento"
+    }
+  ];
+
+  const modules = [
+    {
       name: "Finanças",
-      thumbnail: "https://images.unsplash.com/photo-1579621970563-ebec7560ff3e?w=400&h=300&fit=crop",
-      progress: 65,
-      xpEarned: 2450,
-      totalXP: 5000,
-      medals: 3,
-      color: "from-green-500/20 to-emerald-600/20"
+      description: "Aprenda a gerenciar seu dinheiro e investir com inteligência",
+      color: "from-green-500 to-emerald-600"
     },
     {
-      id: "2",
       name: "Mindset",
-      thumbnail: "https://images.unsplash.com/photo-1552664730-d307ca884978?w=400&h=300&fit=crop",
-      progress: 45,
-      xpEarned: 1800,
-      totalXP: 4000,
-      medals: 2,
-      color: "from-purple-500/20 to-indigo-600/20"
+      description: "Desenvolva mentalidade de alta performance e sucesso",
+      color: "from-purple-500 to-indigo-600"
     },
     {
-      id: "3",
       name: "Produtividade",
-      thumbnail: "https://images.unsplash.com/photo-1484480974693-6ca0a78fb36b?w=400&h=300&fit=crop",
-      progress: 30,
-      xpEarned: 1200,
-      totalXP: 4000,
-      medals: 1,
-      color: "from-blue-500/20 to-cyan-600/20"
+      description: "Técnicas comprovadas para multiplicar seus resultados",
+      color: "from-blue-500 to-cyan-600"
     },
     {
-      id: "4",
-      name: "E-commerce",
-      thumbnail: "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=400&h=300&fit=crop",
-      progress: 20,
-      xpEarned: 800,
-      totalXP: 4000,
-      medals: 1,
-      color: "from-orange-500/20 to-red-600/20"
-    },
-    {
-      id: "5",
       name: "Saúde",
-      thumbnail: "https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=400&h=300&fit=crop",
-      progress: 55,
-      xpEarned: 2200,
-      totalXP: 4000,
-      medals: 2,
-      color: "from-pink-500/20 to-rose-600/20"
+      description: "Cuide do seu corpo e mente para ter energia máxima",
+      color: "from-pink-500 to-rose-600"
+    },
+    {
+      name: "E-commerce",
+      description: "Construa seu negócio online do zero ao primeiro milhão",
+      color: "from-orange-500 to-red-600"
+    },
+    {
+      name: "Marketing",
+      description: "Domine as estratégias que geram vendas reais",
+      color: "from-yellow-500 to-amber-600"
     }
   ];
 
-  // Recommended Items
-  const recommendedItems = [
+  const testimonials = [
     {
-      id: "1",
-      type: "course" as const,
-      title: "Investimentos para Iniciantes",
-      thumbnail: "https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=400&h=300&fit=crop",
-      tag: "Recomendado",
-      duration: "2h 30min",
-      points: 150
+      name: "Carlos Silva",
+      role: "Empreendedor",
+      avatar: "https://i.pravatar.cc/150?img=1",
+      text: "Em 3 meses consegui organizar minhas finanças e começar a investir. Hoje tenho uma renda passiva de R$ 2.000/mês!"
     },
     {
-      id: "2",
-      type: "video" as const,
-      title: "Como Criar Rotinas Vencedoras",
-      thumbnail: "https://images.unsplash.com/photo-1506784983877-45594efa4cbe?w=400&h=300&fit=crop",
-      tag: "Popular",
-      duration: "15min",
-      points: 50
+      name: "Ana Paula",
+      role: "Estudante",
+      avatar: "https://i.pravatar.cc/150?img=5",
+      text: "A Elite Life mudou minha vida! Consegui meu primeiro emprego na área que sempre sonhei graças aos cursos."
     },
     {
-      id: "3",
-      type: "activity" as const,
-      title: "Planejamento Financeiro Mensal",
-      thumbnail: "https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=400&h=300&fit=crop",
-      tag: "Baseado no seu progresso",
-      points: 100
-    },
-    {
-      id: "4",
-      type: "quiz" as const,
-      title: "Quiz: Teste seus Conhecimentos",
-      thumbnail: "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=400&h=300&fit=crop",
-      tag: "Mais adequado para você agora",
-      points: 75
-    }
-  ];
-
-  // Courses in Progress
-  const coursesInProgress = [
-    {
-      id: "1",
-      title: "Finanças Pessoais Avançadas",
-      thumbnail: "https://images.unsplash.com/photo-1579621970563-ebec7560ff3e?w=400&h=300&fit=crop",
-      progress: 65,
-      modulesCompleted: 8,
-      totalModules: 12,
-      category: "Finanças"
-    },
-    {
-      id: "2",
-      title: "Mindset de Alta Performance",
-      thumbnail: "https://images.unsplash.com/photo-1552664730-d307ca884978?w=400&h=300&fit=crop",
-      progress: 45,
-      modulesCompleted: 5,
-      totalModules: 10,
-      category: "Mindset"
-    },
-    {
-      id: "3",
-      title: "Produtividade Extrema",
-      thumbnail: "https://images.unsplash.com/photo-1484480974693-6ca0a78fb36b?w=400&h=300&fit=crop",
-      progress: 30,
-      modulesCompleted: 3,
-      totalModules: 8,
-      category: "Produtividade"
-    }
-  ];
-
-  // Recent Activities
-  const recentActivities = [
-    {
-      id: "1",
-      title: "Mapeamento de Metas Financeiras",
-      difficulty: "Médio",
-      points: 100,
-      status: "pending" as const
-    },
-    {
-      id: "2",
-      title: "Análise de Investimentos",
-      difficulty: "Difícil",
-      points: 150,
-      status: "pending" as const
-    },
-    {
-      id: "3",
-      title: "Planejamento Semanal",
-      difficulty: "Fácil",
-      points: 50,
-      status: "completed" as const
-    }
-  ];
-
-  // Pending Quizzes
-  const pendingQuizzes = [
-    {
-      id: "1",
-      title: "Quiz: Fundamentos de Investimentos",
-      questions: 10,
-      points: 100,
-      medal: "🏆"
-    },
-    {
-      id: "2",
-      title: "Quiz: Produtividade Avançada",
-      questions: 15,
-      points: 150,
-      medal: "💎"
-    }
-  ];
-
-  // Recent Videos
-  const recentVideos = [
-    {
-      id: "1",
-      title: "Como Investir em Ações",
-      thumbnail: "https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=400&h=300&fit=crop",
-      duration: "15:30",
-      progress: 45
-    },
-    {
-      id: "2",
-      title: "Rotina Matinal de Sucesso",
-      thumbnail: "https://images.unsplash.com/photo-1506784983877-45594efa4cbe?w=400&h=300&fit=crop",
-      duration: "12:15",
-      progress: 0
-    },
-    {
-      id: "3",
-      title: "Técnicas de Foco Profundo",
-      thumbnail: "https://images.unsplash.com/photo-1484480974693-6ca0a78fb36b?w=400&h=300&fit=crop",
-      duration: "18:45",
-      progress: 100
-    }
-  ];
-
-  // Recent Medals
-  const recentMedals = [
-    {
-      id: "1",
-      name: "Iniciante",
-      icon: "🌱",
-      unlocked: true,
-      progress: 100
-    },
-    {
-      id: "2",
-      name: "Bronze",
-      icon: "🥉",
-      unlocked: true,
-      progress: 100
-    },
-    {
-      id: "3",
-      name: "Prata",
-      icon: "🥈",
-      unlocked: true,
-      progress: 100
-    },
-    {
-      id: "4",
-      name: "Ouro",
-      icon: "🥇",
-      unlocked: false,
-      progress: 75
+      name: "Roberto Mendes",
+      role: "Empresário",
+      avatar: "https://i.pravatar.cc/150?img=3",
+      text: "Aumentei minha produtividade em 300% aplicando as técnicas ensinadas. Recomendo de olhos fechados!"
     }
   ];
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-[#0B0B0B] via-[#1A1A1A] to-[#0B0B0B]">
-      {/* Quick Access Menu */}
-      <nav className="fixed bottom-0 left-0 right-0 bg-[#1A1A1A] border-t border-[#D4AF37]/20 z-50 lg:hidden">
-        <div className="flex items-center justify-around py-3">
-          <Link href="/" className="flex flex-col items-center gap-1 text-[#D4AF37]">
-            <Target className="w-6 h-6" />
-            <span className="text-xs font-medium">Home</span>
-          </Link>
-          <Link href="/courses" className="flex flex-col items-center gap-1 text-white hover:text-[#D4AF37] transition-colors">
-            <BookOpen className="w-6 h-6" />
-            <span className="text-xs font-medium">Cursos</span>
-          </Link>
-          <Link href="/activities" className="flex flex-col items-center gap-1 text-white hover:text-[#D4AF37] transition-colors">
-            <CheckSquare className="w-6 h-6" />
-            <span className="text-xs font-medium">Atividades</span>
-          </Link>
-          <Link href="/ranking" className="flex flex-col items-center gap-1 text-white hover:text-[#D4AF37] transition-colors">
-            <Trophy className="w-6 h-6" />
-            <span className="text-xs font-medium">Ranking</span>
-          </Link>
-          <Link href="/certificates" className="flex flex-col items-center gap-1 text-white hover:text-[#D4AF37] transition-colors">
-            <Award className="w-6 h-6" />
-            <span className="text-xs font-medium">Certificados</span>
-          </Link>
-        </div>
-      </nav>
-
-      {/* Main Content */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 pb-24 lg:pb-8">
-        {/* Hero Section */}
-        <div className="mb-8">
-          <HeroSection
-            userName={userData.name}
-            userAvatar={userData.avatar}
-            userLevel={userData.level}
-            userXP={userData.xp}
-            xpToNextLevel={userData.xpToNextLevel}
-            streak={userData.streak}
-            totalMedals={userData.totalMedals}
-          />
-        </div>
-
-        {/* Featured Cards */}
-        <div className="mb-12">
-          <FeaturedCards
-            lastCourse={featuredData.lastCourse}
-            dailyMission={featuredData.dailyMission}
-            weeklyGoal={featuredData.weeklyGoal}
-          />
-        </div>
-
-        {/* Trails Carousel */}
-        <TrailsCarousel trails={trails} />
-
-        {/* Recommended Section */}
-        <RecommendedSection items={recommendedItems} />
-
-        {/* Courses in Progress */}
-        <div className="mb-12">
-          <h2 className="text-2xl sm:text-3xl font-bold text-white mb-6">Seus Cursos em Andamento</h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {coursesInProgress.map((course) => (
+      {/* Header */}
+      <header className="fixed top-0 left-0 right-0 bg-[#0B0B0B]/95 backdrop-blur-sm border-b border-[#D4AF37]/20 z-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex items-center justify-between h-16">
+            <div className="flex items-center gap-2">
+              <Sparkles className="w-8 h-8 text-[#D4AF37]" />
+              <span className="text-2xl font-bold text-white">ELITE LIFE</span>
+            </div>
+            
+            <div className="flex items-center gap-4">
               <Link
-                key={course.id}
-                href="/courses"
-                className="bg-gradient-to-br from-[#1A1A1A] to-[#2A2A2A] rounded-2xl overflow-hidden border border-[#D4AF37]/20 hover:border-[#D4AF37]/50 transition-all group cursor-pointer hover:scale-105"
+                href="/dashboard"
+                className="px-6 py-2 text-white hover:text-[#D4AF37] transition-colors font-medium"
               >
-                <img
-                  src={course.thumbnail}
-                  alt={course.title}
-                  className="w-full h-40 object-cover"
-                />
-                <div className="p-4">
-                  <div className="text-xs text-[#D4AF37] font-bold mb-2">{course.category}</div>
-                  <h3 className="text-white font-semibold mb-3 line-clamp-2">{course.title}</h3>
-                  
-                  <div className="mb-3">
-                    <div className="flex items-center justify-between mb-1">
-                      <span className="text-xs text-[#9A9A9A]">
-                        {course.modulesCompleted} / {course.totalModules} módulos
-                      </span>
-                      <span className="text-xs text-[#D4AF37] font-bold">{course.progress}%</span>
-                    </div>
-                    <div className="w-full bg-[#2A2A2A] rounded-full h-2">
-                      <div
-                        className="bg-gradient-to-r from-[#D4AF37] to-amber-600 h-2 rounded-full"
-                        style={{ width: `${course.progress}%` }}
-                      />
-                    </div>
-                  </div>
-
-                  <button className="w-full py-2 bg-[#2A2A2A] hover:bg-[#3A3A3A] text-white rounded-xl font-medium transition-all flex items-center justify-center gap-2">
-                    Continuar
-                    <ChevronRight className="w-4 h-4" />
-                  </button>
-                </div>
+                Entrar
               </Link>
-            ))}
-          </div>
-        </div>
-
-        {/* Activities and Quizzes Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-12">
-          {/* Recent Activities */}
-          <div>
-            <h2 className="text-2xl font-bold text-white mb-6">Últimas Atividades</h2>
-            <div className="space-y-4">
-              {recentActivities.map((activity) => (
-                <Link
-                  key={activity.id}
-                  href="/activities"
-                  className="bg-gradient-to-br from-[#1A1A1A] to-[#2A2A2A] rounded-xl p-4 border border-[#D4AF37]/20 hover:border-[#D4AF37]/50 transition-all group cursor-pointer hover:scale-105 flex items-center justify-between"
-                >
-                  <div className="flex-1">
-                    <h3 className="text-white font-semibold mb-1">{activity.title}</h3>
-                    <div className="flex items-center gap-3 text-sm">
-                      <span className={`px-2 py-1 rounded-lg ${
-                        activity.difficulty === "Fácil"
-                          ? "bg-green-500/20 text-green-400"
-                          : activity.difficulty === "Médio"
-                          ? "bg-yellow-500/20 text-yellow-400"
-                          : "bg-red-500/20 text-red-400"
-                      }`}>
-                        {activity.difficulty}
-                      </span>
-                      <span className="text-[#D4AF37] font-bold">+{activity.points} XP</span>
-                    </div>
-                  </div>
-                  <div>
-                    {activity.status === "completed" ? (
-                      <div className="w-10 h-10 bg-green-500/20 rounded-full flex items-center justify-center">
-                        <CheckSquare className="w-5 h-5 text-green-400" />
-                      </div>
-                    ) : (
-                      <ChevronRight className="w-6 h-6 text-[#9A9A9A] group-hover:text-[#D4AF37]" />
-                    )}
-                  </div>
-                </Link>
-              ))}
-            </div>
-          </div>
-
-          {/* Pending Quizzes */}
-          <div>
-            <h2 className="text-2xl font-bold text-white mb-6">Quizzes Pendentes</h2>
-            <div className="space-y-4">
-              {pendingQuizzes.map((quiz) => (
-                <Link
-                  key={quiz.id}
-                  href="/quizzes"
-                  className="bg-gradient-to-br from-[#1A1A1A] to-[#2A2A2A] rounded-xl p-4 border border-[#D4AF37]/20 hover:border-[#D4AF37]/50 transition-all group cursor-pointer hover:scale-105 flex items-center justify-between"
-                >
-                  <div className="flex items-center gap-4">
-                    <div className="text-4xl">{quiz.medal}</div>
-                    <div>
-                      <h3 className="text-white font-semibold mb-1">{quiz.title}</h3>
-                      <div className="flex items-center gap-3 text-sm">
-                        <span className="text-[#9A9A9A]">{quiz.questions} perguntas</span>
-                        <span className="text-[#D4AF37] font-bold">+{quiz.points} XP</span>
-                      </div>
-                    </div>
-                  </div>
-                  <ChevronRight className="w-6 h-6 text-[#9A9A9A] group-hover:text-[#D4AF37]" />
-                </Link>
-              ))}
-            </div>
-          </div>
-        </div>
-
-        {/* Recent Videos */}
-        <div className="mb-12">
-          <h2 className="text-2xl sm:text-3xl font-bold text-white mb-6">Vídeos Recentes</h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {recentVideos.map((video) => (
               <Link
-                key={video.id}
-                href="/video-player"
-                className="bg-gradient-to-br from-[#1A1A1A] to-[#2A2A2A] rounded-2xl overflow-hidden border border-[#D4AF37]/20 hover:border-[#D4AF37]/50 transition-all group cursor-pointer hover:scale-105"
+                href="/dashboard"
+                className="px-6 py-2 bg-gradient-to-r from-[#D4AF37] to-amber-600 text-[#0B0B0B] rounded-xl font-bold hover:shadow-lg hover:shadow-[#D4AF37]/50 transition-all"
               >
-                <div className="relative">
-                  <img
-                    src={video.thumbnail}
-                    alt={video.title}
-                    className="w-full h-40 object-cover"
-                  />
-                  <div className="absolute inset-0 bg-black/50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-                    <Play className="w-16 h-16 text-white" />
-                  </div>
-                  <div className="absolute bottom-3 right-3 bg-black/80 px-2 py-1 rounded-lg">
-                    <span className="text-xs text-white font-bold">{video.duration}</span>
-                  </div>
-                </div>
-                <div className="p-4">
-                  <h3 className="text-white font-semibold mb-3 line-clamp-2">{video.title}</h3>
-                  
-                  {video.progress > 0 && (
-                    <div className="mb-3">
-                      <div className="flex items-center justify-between mb-1">
-                        <span className="text-xs text-[#9A9A9A]">Progresso</span>
-                        <span className="text-xs text-[#D4AF37] font-bold">{video.progress}%</span>
-                      </div>
-                      <div className="w-full bg-[#2A2A2A] rounded-full h-2">
-                        <div
-                          className="bg-gradient-to-r from-red-500 to-pink-600 h-2 rounded-full"
-                          style={{ width: `${video.progress}%` }}
-                        />
-                      </div>
-                    </div>
-                  )}
-
-                  <button className="w-full py-2 bg-gradient-to-r from-red-500 to-pink-600 text-white rounded-xl font-medium transition-all flex items-center justify-center gap-2">
-                    {video.progress > 0 ? "Continuar" : "Assistir"}
-                    <Play className="w-4 h-4" />
-                  </button>
-                </div>
+                Criar conta
               </Link>
-            ))}
-          </div>
-        </div>
-
-        {/* Progress Stats */}
-        <div className="mb-12">
-          <h2 className="text-2xl sm:text-3xl font-bold text-white mb-6">Progresso Resumido</h2>
-          <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-4">
-            <div className="bg-gradient-to-br from-[#1A1A1A] to-[#2A2A2A] rounded-xl p-4 border border-[#D4AF37]/20 text-center">
-              <Flame className="w-8 h-8 text-orange-500 mx-auto mb-2" />
-              <div className="text-2xl font-bold text-white mb-1">{userData.streak}</div>
-              <div className="text-xs text-[#9A9A9A]">Dias</div>
-            </div>
-            
-            <div className="bg-gradient-to-br from-[#1A1A1A] to-[#2A2A2A] rounded-xl p-4 border border-[#D4AF37]/20 text-center">
-              <Clock className="w-8 h-8 text-blue-500 mx-auto mb-2" />
-              <div className="text-2xl font-bold text-white mb-1">{userData.hoursStudied}h</div>
-              <div className="text-xs text-[#9A9A9A]">Estudadas</div>
-            </div>
-            
-            <div className="bg-gradient-to-br from-[#1A1A1A] to-[#2A2A2A] rounded-xl p-4 border border-[#D4AF37]/20 text-center">
-              <BookOpen className="w-8 h-8 text-purple-500 mx-auto mb-2" />
-              <div className="text-2xl font-bold text-white mb-1">{userData.coursesCompleted}</div>
-              <div className="text-xs text-[#9A9A9A]">Cursos</div>
-            </div>
-            
-            <div className="bg-gradient-to-br from-[#1A1A1A] to-[#2A2A2A] rounded-xl p-4 border border-[#D4AF37]/20 text-center">
-              <Target className="w-8 h-8 text-green-500 mx-auto mb-2" />
-              <div className="text-2xl font-bold text-white mb-1">{userData.trailsCompleted}</div>
-              <div className="text-xs text-[#9A9A9A]">Trilhas</div>
-            </div>
-            
-            <div className="bg-gradient-to-br from-[#1A1A1A] to-[#2A2A2A] rounded-xl p-4 border border-[#D4AF37]/20 text-center">
-              <HelpCircle className="w-8 h-8 text-cyan-500 mx-auto mb-2" />
-              <div className="text-2xl font-bold text-white mb-1">{userData.quizzesCompleted}</div>
-              <div className="text-xs text-[#9A9A9A]">Quizzes</div>
-            </div>
-            
-            <div className="bg-gradient-to-br from-[#1A1A1A] to-[#2A2A2A] rounded-xl p-4 border border-[#D4AF37]/20 text-center">
-              <CheckSquare className="w-8 h-8 text-pink-500 mx-auto mb-2" />
-              <div className="text-2xl font-bold text-white mb-1">{userData.activitiesCompleted}</div>
-              <div className="text-xs text-[#9A9A9A]">Atividades</div>
-            </div>
-            
-            <div className="bg-gradient-to-br from-[#1A1A1A] to-[#2A2A2A] rounded-xl p-4 border border-[#D4AF37]/20 text-center">
-              <Zap className="w-8 h-8 text-yellow-500 mx-auto mb-2" />
-              <div className="text-2xl font-bold text-white mb-1">{userData.weeklyPoints}</div>
-              <div className="text-xs text-[#9A9A9A]">XP Semanal</div>
-            </div>
-            
-            <div className="bg-gradient-to-br from-[#1A1A1A] to-[#2A2A2A] rounded-xl p-4 border border-[#D4AF37]/20 text-center">
-              <Star className="w-8 h-8 text-[#D4AF37] mx-auto mb-2" />
-              <div className="text-2xl font-bold text-white mb-1">{userData.totalPoints}</div>
-              <div className="text-xs text-[#9A9A9A]">XP Total</div>
             </div>
           </div>
         </div>
+      </header>
 
-        {/* Medals and Ranking Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          {/* Recent Medals */}
-          <div>
-            <h2 className="text-2xl font-bold text-white mb-6">Medalhas Recentes</h2>
-            <div className="bg-gradient-to-br from-[#1A1A1A] to-[#2A2A2A] rounded-2xl p-6 border border-[#D4AF37]/20">
-              <div className="grid grid-cols-2 gap-4">
-                {recentMedals.map((medal) => (
-                  <div
-                    key={medal.id}
-                    className={`bg-[#2A2A2A] rounded-xl p-4 text-center ${
-                      !medal.unlocked && "opacity-50"
-                    }`}
-                  >
-                    <div className="text-4xl mb-2">{medal.icon}</div>
-                    <div className="text-white font-semibold mb-2">{medal.name}</div>
-                    {!medal.unlocked && (
-                      <div>
-                        <div className="text-xs text-[#9A9A9A] mb-1">{medal.progress}%</div>
-                        <div className="w-full bg-[#1A1A1A] rounded-full h-1">
-                          <div
-                            className="bg-gradient-to-r from-[#D4AF37] to-amber-600 h-1 rounded-full"
-                            style={{ width: `${medal.progress}%` }}
-                          />
-                        </div>
-                      </div>
-                    )}
-                  </div>
-                ))}
-              </div>
+      {/* Hero Section */}
+      <section className="pt-32 pb-20 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center">
+            <div className="inline-flex items-center gap-2 bg-[#D4AF37]/10 border border-[#D4AF37]/30 rounded-full px-4 py-2 mb-6">
+              <Star className="w-4 h-4 text-[#D4AF37]" />
+              <span className="text-[#D4AF37] text-sm font-semibold">Mais de 50 mil alunos transformados</span>
             </div>
-          </div>
-
-          {/* Ranking Card */}
-          <div>
-            <h2 className="text-2xl font-bold text-white mb-6">Seu Ranking</h2>
-            <div className="bg-gradient-to-br from-[#1A1A1A] to-[#2A2A2A] rounded-2xl p-6 border border-[#D4AF37]/20">
-              <div className="flex items-center justify-between mb-6">
-                <div>
-                  <div className="text-sm text-[#9A9A9A] mb-1">Sua Posição</div>
-                  <div className="text-4xl font-bold text-[#D4AF37]">#{userData.ranking}</div>
-                </div>
-                <Trophy className="w-16 h-16 text-[#D4AF37]" />
-              </div>
-
-              <div className="space-y-3 mb-6">
-                <div className="flex items-center justify-between">
-                  <span className="text-[#9A9A9A]">Pontos Totais</span>
-                  <span className="text-white font-bold">{userData.totalPoints} XP</span>
-                </div>
-                <div className="flex items-center justify-between">
-                  <span className="text-[#9A9A9A]">Pontos esta Semana</span>
-                  <span className="text-[#D4AF37] font-bold">+{userData.weeklyPoints} XP</span>
-                </div>
-                <div className="flex items-center justify-between">
-                  <span className="text-[#9A9A9A]">Para Subir</span>
-                  <span className="text-white font-bold">150 XP</span>
-                </div>
-              </div>
-
-              <button className="w-full py-3 bg-gradient-to-r from-[#D4AF37] to-amber-600 text-[#0B0B0B] rounded-xl font-bold hover:shadow-lg hover:shadow-[#D4AF37]/50 transition-all flex items-center justify-center gap-2">
-                Ver Ranking Completo
-                <ChevronRight className="w-5 h-5" />
+            
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white mb-6">
+              Transforme sua vida em{" "}
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#D4AF37] to-amber-600">
+                90 dias
+              </span>
+            </h1>
+            
+            <p className="text-xl text-[#9A9A9A] mb-8 max-w-3xl mx-auto">
+              Corpo, mente e dinheiro no mesmo lugar. A plataforma completa de educação para quem busca resultados reais.
+            </p>
+            
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+              <Link
+                href="/dashboard"
+                className="px-8 py-4 bg-gradient-to-r from-[#D4AF37] to-amber-600 text-[#0B0B0B] rounded-xl font-bold text-lg hover:shadow-lg hover:shadow-[#D4AF37]/50 transition-all flex items-center gap-2"
+              >
+                Começar agora
+                <ArrowRight className="w-5 h-5" />
+              </Link>
+              <button className="px-8 py-4 bg-[#1A1A1A] border border-[#D4AF37]/30 text-white rounded-xl font-bold text-lg hover:bg-[#2A2A2A] transition-all">
+                Ver planos
               </button>
             </div>
+
+            {/* Stats */}
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mt-16">
+              <div className="bg-gradient-to-br from-[#1A1A1A] to-[#2A2A2A] rounded-2xl p-6 border border-[#D4AF37]/20">
+                <div className="text-3xl font-bold text-[#D4AF37] mb-2">50k+</div>
+                <div className="text-[#9A9A9A]">Alunos Ativos</div>
+              </div>
+              <div className="bg-gradient-to-br from-[#1A1A1A] to-[#2A2A2A] rounded-2xl p-6 border border-[#D4AF37]/20">
+                <div className="text-3xl font-bold text-[#D4AF37] mb-2">200+</div>
+                <div className="text-[#9A9A9A]">Cursos</div>
+              </div>
+              <div className="bg-gradient-to-br from-[#1A1A1A] to-[#2A2A2A] rounded-2xl p-6 border border-[#D4AF37]/20">
+                <div className="text-3xl font-bold text-[#D4AF37] mb-2">98%</div>
+                <div className="text-[#9A9A9A]">Satisfação</div>
+              </div>
+              <div className="bg-gradient-to-br from-[#1A1A1A] to-[#2A2A2A] rounded-2xl p-6 border border-[#D4AF37]/20">
+                <div className="text-3xl font-bold text-[#D4AF37] mb-2">24/7</div>
+                <div className="text-[#9A9A9A]">Suporte</div>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
+      </section>
+
+      {/* Benefits Section */}
+      <section className="py-20 px-4 sm:px-6 lg:px-8 bg-[#1A1A1A]/50">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl sm:text-4xl font-bold text-white mb-4">
+              Por que escolher a Elite Life?
+            </h2>
+            <p className="text-xl text-[#9A9A9A]">
+              Tudo que você precisa para alcançar seus objetivos
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {benefits.map((benefit, index) => (
+              <div
+                key={index}
+                className="bg-gradient-to-br from-[#1A1A1A] to-[#2A2A2A] rounded-2xl p-6 border border-[#D4AF37]/20 hover:border-[#D4AF37]/50 transition-all"
+              >
+                <div className="text-[#D4AF37] mb-4">{benefit.icon}</div>
+                <h3 className="text-xl font-bold text-white mb-2">{benefit.title}</h3>
+                <p className="text-[#9A9A9A]">{benefit.description}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Modules Section */}
+      <section className="py-20 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl sm:text-4xl font-bold text-white mb-4">
+              Módulos de Aprendizado
+            </h2>
+            <p className="text-xl text-[#9A9A9A]">
+              Conteúdo completo para transformar todas as áreas da sua vida
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {modules.map((module, index) => (
+              <div
+                key={index}
+                className="bg-gradient-to-br from-[#1A1A1A] to-[#2A2A2A] rounded-2xl p-6 border border-[#D4AF37]/20 hover:scale-105 transition-all cursor-pointer"
+              >
+                <div className={`w-12 h-12 rounded-xl bg-gradient-to-r ${module.color} mb-4`} />
+                <h3 className="text-xl font-bold text-white mb-2">{module.name}</h3>
+                <p className="text-[#9A9A9A]">{module.description}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Plans Section */}
+      <section className="py-20 px-4 sm:px-6 lg:px-8 bg-[#1A1A1A]/50">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl sm:text-4xl font-bold text-white mb-4">
+              Escolha seu plano
+            </h2>
+            <p className="text-xl text-[#9A9A9A]">
+              Invista em você e comece sua transformação hoje
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {plans.map((plan, index) => (
+              <div
+                key={index}
+                className={`bg-gradient-to-br from-[#1A1A1A] to-[#2A2A2A] rounded-2xl p-6 border ${
+                  plan.highlighted
+                    ? "border-[#D4AF37] ring-2 ring-[#D4AF37]/50 scale-105"
+                    : "border-[#D4AF37]/20"
+                } transition-all`}
+              >
+                {plan.highlighted && (
+                  <div className="bg-gradient-to-r from-[#D4AF37] to-amber-600 text-[#0B0B0B] text-xs font-bold px-3 py-1 rounded-full inline-block mb-4">
+                    MAIS POPULAR
+                  </div>
+                )}
+                
+                <h3 className="text-2xl font-bold text-white mb-2">{plan.name}</h3>
+                <p className="text-[#9A9A9A] text-sm mb-4">{plan.description}</p>
+                
+                <div className="mb-6">
+                  <span className="text-4xl font-bold text-[#D4AF37]">{plan.price}</span>
+                  <span className="text-[#9A9A9A]">{plan.period}</span>
+                </div>
+
+                <ul className="space-y-3 mb-6">
+                  {plan.features.map((feature, idx) => (
+                    <li key={idx} className="flex items-start gap-2">
+                      <CheckCircle className="w-5 h-5 text-[#D4AF37] flex-shrink-0 mt-0.5" />
+                      <span className="text-[#9A9A9A] text-sm">{feature}</span>
+                    </li>
+                  ))}
+                </ul>
+
+                <Link
+                  href="/dashboard"
+                  className={`w-full py-3 rounded-xl font-bold transition-all flex items-center justify-center gap-2 ${
+                    plan.highlighted
+                      ? "bg-gradient-to-r from-[#D4AF37] to-amber-600 text-[#0B0B0B] hover:shadow-lg hover:shadow-[#D4AF37]/50"
+                      : "bg-[#2A2A2A] text-white hover:bg-[#3A3A3A]"
+                  }`}
+                >
+                  Começar agora
+                  <ArrowRight className="w-4 h-4" />
+                </Link>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Testimonials Section */}
+      <section className="py-20 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl sm:text-4xl font-bold text-white mb-4">
+              O que nossos alunos dizem
+            </h2>
+            <p className="text-xl text-[#9A9A9A]">
+              Histórias reais de transformação
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {testimonials.map((testimonial, index) => (
+              <div
+                key={index}
+                className="bg-gradient-to-br from-[#1A1A1A] to-[#2A2A2A] rounded-2xl p-6 border border-[#D4AF37]/20"
+              >
+                <div className="flex items-center gap-1 mb-4">
+                  {[...Array(5)].map((_, i) => (
+                    <Star key={i} className="w-5 h-5 text-[#D4AF37] fill-[#D4AF37]" />
+                  ))}
+                </div>
+                
+                <p className="text-[#9A9A9A] mb-6">{testimonial.text}</p>
+                
+                <div className="flex items-center gap-3">
+                  <img
+                    src={testimonial.avatar}
+                    alt={testimonial.name}
+                    className="w-12 h-12 rounded-full border-2 border-[#D4AF37]"
+                  />
+                  <div>
+                    <div className="text-white font-semibold">{testimonial.name}</div>
+                    <div className="text-[#9A9A9A] text-sm">{testimonial.role}</div>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* CTA Section */}
+      <section className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-r from-[#D4AF37]/10 to-amber-600/10 border-y border-[#D4AF37]/20">
+        <div className="max-w-4xl mx-auto text-center">
+          <Trophy className="w-16 h-16 text-[#D4AF37] mx-auto mb-6" />
+          <h2 className="text-3xl sm:text-4xl font-bold text-white mb-4">
+            Pronto para transformar sua vida?
+          </h2>
+          <p className="text-xl text-[#9A9A9A] mb-8">
+            Junte-se a mais de 50 mil alunos que já estão no caminho do sucesso
+          </p>
+          <Link
+            href="/dashboard"
+            className="inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-[#D4AF37] to-amber-600 text-[#0B0B0B] rounded-xl font-bold text-lg hover:shadow-lg hover:shadow-[#D4AF37]/50 transition-all"
+          >
+            Começar agora gratuitamente
+            <ArrowRight className="w-5 h-5" />
+          </Link>
+          <p className="text-[#9A9A9A] text-sm mt-4">
+            Sem cartão de crédito necessário • Cancele quando quiser
+          </p>
+        </div>
+      </section>
+
+      {/* Footer */}
+      <footer className="py-12 px-4 sm:px-6 lg:px-8 border-t border-[#D4AF37]/20">
+        <div className="max-w-7xl mx-auto">
+          <div className="flex flex-col md:flex-row items-center justify-between gap-6">
+            <div className="flex items-center gap-2">
+              <Sparkles className="w-8 h-8 text-[#D4AF37]" />
+              <span className="text-2xl font-bold text-white">ELITE LIFE</span>
+            </div>
+            
+            <div className="text-[#9A9A9A] text-sm">
+              © 2025 Elite Life. Todos os direitos reservados.
+            </div>
+            
+            <div className="flex items-center gap-6">
+              <Link href="#" className="text-[#9A9A9A] hover:text-[#D4AF37] transition-colors">
+                Termos
+              </Link>
+              <Link href="#" className="text-[#9A9A9A] hover:text-[#D4AF37] transition-colors">
+                Privacidade
+              </Link>
+              <Link href="#" className="text-[#9A9A9A] hover:text-[#D4AF37] transition-colors">
+                Contato
+              </Link>
+            </div>
+          </div>
+        </div>
+      </footer>
     </div>
   );
 }

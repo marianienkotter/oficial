@@ -48,7 +48,7 @@ export function HeroSection({
           </div>
           
           <div>
-            <h1 className="text-2xl sm:text-3xl font-bold text-white mb-1">
+            <h1 className="text-2xl sm:text-3xl font-bold text-white mb-1" suppressHydrationWarning>
               {getGreeting()}, {userName}!
             </h1>
             <p className="text-[#9A9A9A] text-sm sm:text-base">

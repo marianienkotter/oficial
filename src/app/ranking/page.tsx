@@ -339,7 +339,7 @@ export default function RankingPage() {
                 <div className="w-full space-y-2 mb-4">
                   <div className="flex items-center justify-between text-sm">
                     <span className="text-[#9A9A9A]">Pontos</span>
-                    <span className="text-white font-bold">{getPointsForTab(rankingData[1]).toLocaleString()} XP</span>
+                    <span className="text-white font-bold" suppressHydrationWarning>{getPointsForTab(rankingData[1]).toLocaleString('pt-BR')} XP</span>
                   </div>
                   <div className="flex items-center justify-between text-sm">
                     <span className="text-[#9A9A9A]">Medalhas</span>
@@ -347,7 +347,7 @@ export default function RankingPage() {
                   </div>
                   <div className="flex items-center justify-between text-sm">
                     <span className="text-[#9A9A9A]">Ganhos</span>
-                    <span className="text-green-400 font-bold">R$ {rankingData[1].earnings.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</span>
+                    <span className="text-green-400 font-bold" suppressHydrationWarning>R$ {rankingData[1].earnings.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</span>
                   </div>
                 </div>
               </div>
@@ -373,7 +373,7 @@ export default function RankingPage() {
                 <div className="w-full space-y-2 mb-4">
                   <div className="flex items-center justify-between text-sm">
                     <span className="text-[#9A9A9A]">Pontos</span>
-                    <span className="text-[#D4AF37] font-bold">{getPointsForTab(rankingData[0]).toLocaleString()} XP</span>
+                    <span className="text-[#D4AF37] font-bold" suppressHydrationWarning>{getPointsForTab(rankingData[0]).toLocaleString('pt-BR')} XP</span>
                   </div>
                   <div className="flex items-center justify-between text-sm">
                     <span className="text-[#9A9A9A]">Medalhas</span>
@@ -381,7 +381,7 @@ export default function RankingPage() {
                   </div>
                   <div className="flex items-center justify-between text-sm">
                     <span className="text-[#9A9A9A]">Ganhos</span>
-                    <span className="text-green-400 font-bold">R$ {rankingData[0].earnings.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</span>
+                    <span className="text-green-400 font-bold" suppressHydrationWarning>R$ {rankingData[0].earnings.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</span>
                   </div>
                 </div>
               </div>
@@ -407,7 +407,7 @@ export default function RankingPage() {
                 <div className="w-full space-y-2 mb-4">
                   <div className="flex items-center justify-between text-sm">
                     <span className="text-[#9A9A9A]">Pontos</span>
-                    <span className="text-white font-bold">{getPointsForTab(rankingData[2]).toLocaleString()} XP</span>
+                    <span className="text-white font-bold" suppressHydrationWarning>{getPointsForTab(rankingData[2]).toLocaleString('pt-BR')} XP</span>
                   </div>
                   <div className="flex items-center justify-between text-sm">
                     <span className="text-[#9A9A9A]">Medalhas</span>
@@ -415,7 +415,7 @@ export default function RankingPage() {
                   </div>
                   <div className="flex items-center justify-between text-sm">
                     <span className="text-[#9A9A9A]">Ganhos</span>
-                    <span className="text-green-400 font-bold">R$ {rankingData[2].earnings.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</span>
+                    <span className="text-green-400 font-bold" suppressHydrationWarning>R$ {rankingData[2].earnings.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</span>
                   </div>
                 </div>
               </div>
@@ -447,7 +447,7 @@ export default function RankingPage() {
               <div className="grid grid-cols-3 gap-6 text-center">
                 <div>
                   <div className="text-sm text-[#9A9A9A] mb-1">Pontos</div>
-                  <div className="text-lg font-bold text-white">{getCurrentUserPoints().toLocaleString()} XP</div>
+                  <div className="text-lg font-bold text-white" suppressHydrationWarning>{getCurrentUserPoints().toLocaleString('pt-BR')} XP</div>
                 </div>
                 <div>
                   <div className="text-sm text-[#9A9A9A] mb-1">Medalhas</div>
@@ -455,7 +455,7 @@ export default function RankingPage() {
                 </div>
                 <div>
                   <div className="text-sm text-[#9A9A9A] mb-1">Ganhos</div>
-                  <div className="text-lg font-bold text-green-400">R$ {currentUser.earnings.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</div>
+                  <div className="text-lg font-bold text-green-400" suppressHydrationWarning>R$ {currentUser.earnings.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</div>
                 </div>
               </div>
             </div>
@@ -491,7 +491,7 @@ export default function RankingPage() {
                   <div className="grid grid-cols-3 gap-6 text-center">
                     <div>
                       <div className="text-xs text-[#9A9A9A] mb-1">Pontos</div>
-                      <div className="text-sm font-bold text-white">{getPointsForTab(user).toLocaleString()} XP</div>
+                      <div className="text-sm font-bold text-white" suppressHydrationWarning>{getPointsForTab(user).toLocaleString('pt-BR')} XP</div>
                     </div>
                     <div>
                       <div className="text-xs text-[#9A9A9A] mb-1">Medalhas</div>
@@ -499,7 +499,7 @@ export default function RankingPage() {
                     </div>
                     <div>
                       <div className="text-xs text-[#9A9A9A] mb-1">Ganhos</div>
-                      <div className="text-sm font-bold text-green-400">R$ {user.earnings.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</div>
+                      <div className="text-sm font-bold text-green-400" suppressHydrationWarning>R$ {user.earnings.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</div>
                     </div>
                   </div>
                 </div>
@@ -517,7 +517,7 @@ export default function RankingPage() {
               </div>
               <div>
                 <div className="text-sm text-[#9A9A9A]">Total de Pontos</div>
-                <div className="text-2xl font-bold text-white">12.450 XP</div>
+                <div className="text-2xl font-bold text-white" suppressHydrationWarning>12.450 XP</div>
               </div>
             </div>
             <div className="text-sm text-green-400">+850 XP esta semana</div>
@@ -543,7 +543,7 @@ export default function RankingPage() {
               </div>
               <div>
                 <div className="text-sm text-[#9A9A9A]">Ganhos Elite Life</div>
-                <div className="text-2xl font-bold text-green-400">R$ 3.850,00</div>
+                <div className="text-2xl font-bold text-green-400" suppressHydrationWarning>R$ 3.850,00</div>
               </div>
             </div>
             <div className="text-sm text-green-400">+R$ 420,00 este mês</div>

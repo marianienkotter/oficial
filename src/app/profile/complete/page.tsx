@@ -1,37 +1,21 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef } from "react";
 import { useRouter } from "next/navigation";
-import Link from "next/link";
-import { User, Calendar, Camera, Image as ImageIcon, Sparkles, AlertCircle, Mail, Phone, ArrowLeft, CheckCircle } from "lucide-react";
+import { User, Calendar, Camera, Image as ImageIcon, Sparkles, AlertCircle } from "lucide-react";
 import { useAuth } from "@/lib/auth-context";
 
-export default function EditProfilePage() {
+export default function CompleteProfilePage() {
   const router = useRouter();
-  const { user, updateProfile, isAuthenticated } = useAuth();
+  const { user, updateProfile } = useAuth();
   const [nome, setNome] = useState("");
   const [idade, setIdade] = useState("");
   const [photoUrl, setPhotoUrl] = useState("");
   const [photoPreview, setPhotoPreview] = useState("");
   const [error, setError] = useState("");
-  const [success, setSuccess] = useState(false);
   const [loading, setLoading] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const cameraInputRef = useRef<HTMLInputElement>(null);
-
-  useEffect(() => {
-    if (!isAuthenticated) {
-      router.push("/auth/login");
-      return;
-    }
-
-    if (user) {
-      setNome(user.nome || "");
-      setIdade(user.idade?.toString() || "");
-      setPhotoUrl(user.photo_url || "");
-      setPhotoPreview(user.photo_url || "");
-    }
-  }, [user, isAuthenticated, router]);
 
   const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -49,7 +33,6 @@ export default function EditProfilePage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
-    setSuccess(false);
 
     // Validações
     if (!nome) {
@@ -57,7 +40,7 @@ export default function EditProfilePage() {
       return;
     }
 
-    if (idade && (parseInt(idade) < 1 || parseInt(idade) > 120)) {
+    if (!idade || parseInt(idade) < 1 || parseInt(idade) > 120) {
       setError("Por favor, insira uma idade válida.");
       return;
     }
@@ -67,15 +50,12 @@ export default function EditProfilePage() {
     try {
       const success = await updateProfile({
         nome,
-        idade: idade ? parseInt(idade) : undefined,
+        idade: parseInt(idade),
         photo_url: photoUrl || undefined,
       });
 
       if (success) {
-        setSuccess(true);
-        setTimeout(() => {
-          router.push("/dashboard");
-        }, 2000);
+        router.push("/dashboard");
       } else {
         setError("Erro ao salvar perfil. Tente novamente.");
       }
@@ -86,9 +66,9 @@ export default function EditProfilePage() {
     }
   };
 
-  if (!user) {
-    return null;
-  }
+  const handleSkip = () => {
+    router.push("/dashboard");
+  };
 
   return (
     <div className="min-h-screen bg-[#000000] flex items-center justify-center px-4 py-12 relative overflow-hidden">
@@ -98,7 +78,7 @@ export default function EditProfilePage() {
       <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-amber-500/20 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }} />
 
       <div className="max-w-md w-full relative z-10">
-        {/* Header */}
+        {/* Logo */}
         <div className="text-center mb-8">
           <div className="flex justify-center mb-6">
             <div className="relative group">
@@ -122,10 +102,10 @@ export default function EditProfilePage() {
           </div>
 
           <h2 className="text-2xl font-bold text-white mb-2">
-            Editar perfil
+            Complete seu perfil
           </h2>
           <p className="text-gray-400">
-            Atualize suas informações pessoais
+            Personalize sua experiência na Elite Life
           </p>
         </div>
 
@@ -137,14 +117,6 @@ export default function EditProfilePage() {
               <div className="flex items-center gap-3 p-4 bg-red-500/10 border border-red-500/30 rounded-xl text-red-400">
                 <AlertCircle className="w-5 h-5 flex-shrink-0" />
                 <p className="text-sm">{error}</p>
-              </div>
-            )}
-
-            {/* Sucesso */}
-            {success && (
-              <div className="flex items-center gap-3 p-4 bg-green-500/10 border border-green-500/30 rounded-xl text-green-400">
-                <CheckCircle className="w-5 h-5 flex-shrink-0" />
-                <p className="text-sm">Perfil atualizado com sucesso! Redirecionando...</p>
               </div>
             )}
 
@@ -252,65 +224,32 @@ export default function EditProfilePage() {
               </div>
             </div>
 
-            {/* Informações não editáveis */}
-            <div className="space-y-4 pt-4 border-t border-[#D4AF37]/20">
-              <div>
-                <label className="block text-gray-500 font-semibold mb-2 text-sm">
-                  E-mail (não editável)
-                </label>
-                <div className="relative">
-                  <div className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-600">
-                    <Mail className="w-5 h-5" />
-                  </div>
-                  <input
-                    type="email"
-                    value={user.email}
-                    disabled
-                    className="w-full pl-12 pr-4 py-3 bg-black/20 border border-gray-800 rounded-xl text-gray-500 cursor-not-allowed"
-                  />
-                </div>
-              </div>
+            {/* Botões */}
+            <div className="space-y-3 pt-2">
+              <button
+                type="submit"
+                disabled={loading}
+                className="w-full py-4 bg-gradient-to-r from-[#D4AF37] via-amber-500 to-yellow-600 text-black rounded-xl font-bold text-lg hover:shadow-2xl hover:shadow-[#D4AF37]/50 transition-all transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
+              >
+                {loading ? "Salvando..." : "Salvar perfil"}
+              </button>
 
-              {user.telefone && (
-                <div>
-                  <label className="block text-gray-500 font-semibold mb-2 text-sm">
-                    Telefone (não editável)
-                  </label>
-                  <div className="relative">
-                    <div className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-600">
-                      <Phone className="w-5 h-5" />
-                    </div>
-                    <input
-                      type="tel"
-                      value={user.telefone}
-                      disabled
-                      className="w-full pl-12 pr-4 py-3 bg-black/20 border border-gray-800 rounded-xl text-gray-500 cursor-not-allowed"
-                    />
-                  </div>
-                </div>
-              )}
+              <button
+                type="button"
+                onClick={handleSkip}
+                className="w-full py-4 bg-white/5 border border-[#D4AF37]/30 text-gray-400 rounded-xl font-semibold hover:text-white hover:border-[#D4AF37] transition-all"
+              >
+                Pular por enquanto
+              </button>
             </div>
-
-            {/* Botão Salvar */}
-            <button
-              type="submit"
-              disabled={loading}
-              className="w-full py-4 bg-gradient-to-r from-[#D4AF37] via-amber-500 to-yellow-600 text-black rounded-xl font-bold text-lg hover:shadow-2xl hover:shadow-[#D4AF37]/50 transition-all transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 mt-6"
-            >
-              {loading ? "Salvando..." : "Salvar alterações"}
-            </button>
           </form>
         </div>
 
-        {/* Link Voltar */}
+        {/* Info */}
         <div className="text-center mt-6">
-          <Link
-            href="/dashboard"
-            className="inline-flex items-center gap-2 text-gray-400 hover:text-[#D4AF37] transition-colors text-sm font-semibold"
-          >
-            <ArrowLeft className="w-4 h-4" />
-            Voltar para o dashboard
-          </Link>
+          <p className="text-gray-500 text-sm">
+            Você poderá editar seu perfil a qualquer momento
+          </p>
         </div>
       </div>
     </div>

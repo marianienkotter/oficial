@@ -1,7 +1,6 @@
 "use client";
 
 import Link from "next/link";
-import Image from "next/image";
 import {
   ArrowRight,
   CheckCircle,
@@ -9,13 +8,11 @@ import {
   Users,
   Award,
   BookOpen,
-  Video,
   Target,
   Shield,
   Trophy,
   Sparkles,
   Zap,
-  TrendingUp,
   Crown,
   Gem,
   Rocket,
@@ -24,22 +21,18 @@ import {
   Brain,
   Heart,
   Briefcase,
-  Lock,
   Clock,
-  Flame,
   ChevronRight,
   Play,
   Menu,
   X
 } from "lucide-react";
 import { useState } from "react";
-import { LanguageSelector } from "@/components/custom/LanguageSelector";
-import { useLanguage } from "@/contexts/LanguageContext";
-import { SocialLinks } from "@/components/custom/SocialLinks";
+import { NotificationBell } from "@/components/custom/notification-bell";
+import { LanguageSwitcher } from "@/components/custom/language-switcher";
 
 export default function LandingPage() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const { t } = useLanguage();
 
   const benefits = [
     {
@@ -132,8 +125,7 @@ export default function LandingPage() {
       avatar: "https://i.pravatar.cc/150?img=12",
       text: "Faturei R$ 180 mil no primeiro ano aplicando as estratégias da Elite Life. Hoje tenho liberdade financeira e tempo para minha família.",
       revenue: "R$ 180K",
-      time: "8 meses",
-      gradient: "from-green-500 to-emerald-600"
+      time: "8 meses"
     },
     {
       name: "Juliana Costa",
@@ -141,8 +133,7 @@ export default function LandingPage() {
       avatar: "https://i.pravatar.cc/150?img=45",
       text: "Saí do zero para uma carteira de R$ 500 mil em investimentos. A metodologia é simplesmente transformadora!",
       revenue: "R$ 500K",
-      time: "1 ano",
-      gradient: "from-purple-500 to-indigo-600"
+      time: "1 ano"
     },
     {
       name: "Ricardo Alves",
@@ -150,8 +141,7 @@ export default function LandingPage() {
       avatar: "https://i.pravatar.cc/150?img=33",
       text: "Meu e-commerce passou de R$ 10K para R$ 250K/mês em 8 meses. Elite Life foi o melhor investimento da minha vida.",
       revenue: "R$ 250K/mês",
-      time: "8 meses",
-      gradient: "from-blue-500 to-cyan-600"
+      time: "8 meses"
     }
   ];
 
@@ -163,7 +153,7 @@ export default function LandingPage() {
   ];
 
   const features = [
-    { icon: <Video className="w-6 h-6" />, text: "Aulas em vídeo 4K" },
+    { icon: <Target className="w-6 h-6" />, text: "Aulas em vídeo 4K" },
     { icon: <BookOpen className="w-6 h-6" />, text: "Material complementar" },
     { icon: <Award className="w-6 h-6" />, text: "Certificado reconhecido" },
     { icon: <Users className="w-6 h-6" />, text: "Comunidade exclusiva" },
@@ -173,7 +163,7 @@ export default function LandingPage() {
 
   return (
     <div className="min-h-screen bg-[#000000]">
-      {/* Header Premium com Logo */}
+      {/* Header Premium com Logo e Sino de Notificações */}
       <header className="fixed top-0 left-0 right-0 bg-black/95 backdrop-blur-xl border-b border-[#D4AF37]/30 z-50 shadow-2xl shadow-[#D4AF37]/10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16 sm:h-20">
@@ -195,31 +185,30 @@ export default function LandingPage() {
             </Link>
             
             <div className="flex items-center gap-2 sm:gap-4">
-              {/* Social Links - Desktop */}
-              <div className="hidden lg:block">
-                <SocialLinks />
-              </div>
+              {/* Ícone de Idiomas */}
+              <LanguageSwitcher />
               
-              {/* Language Selector */}
-              <LanguageSelector />
+              {/* Sino de Notificações */}
+              <NotificationBell />
               
               <Link
                 href="/auth/login"
                 className="hidden md:block px-4 sm:px-6 py-2 sm:py-2.5 text-white hover:text-[#D4AF37] transition-all font-semibold text-sm sm:text-base"
               >
-                {t("btn.login")}
+                Entrar
               </Link>
               <Link
-                href="/auth/register"
+                href="/auth/signup"
                 className="px-4 sm:px-8 py-2 sm:py-3 bg-gradient-to-r from-[#D4AF37] via-amber-500 to-yellow-600 text-black rounded-full font-bold hover:shadow-2xl hover:shadow-[#D4AF37]/50 transition-all transform hover:scale-105 text-xs sm:text-base"
               >
-                {t("btn.start")}
+                Começar Agora
               </Link>
               
               {/* Mobile Menu Button */}
               <button
                 onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
                 className="md:hidden p-2 text-white hover:text-[#D4AF37] transition-colors"
+                aria-label="Menu"
               >
                 {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
               </button>
@@ -231,11 +220,6 @@ export default function LandingPage() {
         {mobileMenuOpen && (
           <div className="md:hidden bg-black/98 border-t border-[#D4AF37]/30 backdrop-blur-xl">
             <div className="px-4 py-4 space-y-3">
-              {/* Social Links - Mobile */}
-              <div className="flex justify-center py-3 border-b border-[#D4AF37]/20">
-                <SocialLinks />
-              </div>
-              
               <Link
                 href="/auth/login"
                 onClick={() => setMobileMenuOpen(false)}
@@ -244,7 +228,7 @@ export default function LandingPage() {
                 Entrar na Plataforma
               </Link>
               <Link
-                href="/auth/register"
+                href="/auth/signup"
                 onClick={() => setMobileMenuOpen(false)}
                 className="block px-4 py-3 bg-gradient-to-r from-[#D4AF37] via-amber-500 to-yellow-600 text-black rounded-lg font-bold text-center"
               >
@@ -298,35 +282,35 @@ export default function LandingPage() {
             {/* Badge Premium */}
             <div className="inline-flex items-center gap-2 bg-gradient-to-r from-[#D4AF37]/20 to-amber-500/20 border border-[#D4AF37]/50 rounded-full px-4 sm:px-6 py-2 sm:py-3 mb-6 sm:mb-8 backdrop-blur-sm hover:border-[#D4AF37] transition-all group">
               <Gem className="w-4 h-4 sm:w-5 sm:h-5 text-[#D4AF37] group-hover:rotate-12 transition-transform" />
-              <span className="text-[#D4AF37] font-bold text-xs sm:text-base">{t("landing.students")}</span>
+              <span className="text-[#D4AF37] font-bold text-xs sm:text-base">Mais de 50 mil vidas transformadas</span>
               <Sparkles className="w-4 h-4 sm:w-5 sm:h-5 text-[#D4AF37] group-hover:-rotate-12 transition-transform" />
             </div>
             
             {/* Main Headline */}
             <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-black text-white mb-4 sm:mb-6 leading-tight px-4">
-              {t("landing.hero.title")}
+              Transforme sua vida
               <br />
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#D4AF37] via-amber-400 to-yellow-500 drop-shadow-[0_0_30px_rgba(212,175,55,0.5)]">
-                {t("landing.hero.subtitle")}
+                em 90 dias
               </span>
             </h2>
             
             {/* Subheadline */}
             <p className="text-base sm:text-xl md:text-2xl lg:text-3xl text-gray-300 mb-2 sm:mb-3 font-light max-w-4xl mx-auto px-4">
-              {t("landing.hero.description")}
+              A plataforma completa para quem quer alcançar
             </p>
             <p className="text-lg sm:text-2xl md:text-3xl lg:text-4xl font-bold text-white mb-8 sm:mb-12 max-w-4xl mx-auto px-4">
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-emerald-500">{t("landing.hero.financial")}</span>
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-emerald-500">Liberdade Financeira</span>
               {" • "}
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-pink-400 to-rose-500">{t("landing.hero.health")}</span>
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-pink-400 to-rose-500">Corpo Saudável</span>
               {" • "}
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-indigo-500">{t("landing.hero.mindset")}</span>
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-indigo-500">Mente Poderosa</span>
             </p>
             
             {/* CTA Buttons */}
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6 mb-12 sm:mb-16 px-4">
               <Link
-                href="/dashboard"
+                href="/auth/signup"
                 className="w-full sm:w-auto group px-8 sm:px-10 py-4 sm:py-5 bg-gradient-to-r from-[#D4AF37] via-amber-500 to-yellow-600 text-black rounded-full font-black text-base sm:text-xl hover:shadow-2xl hover:shadow-[#D4AF37]/60 transition-all transform hover:scale-105 flex items-center justify-center gap-3 relative overflow-hidden"
               >
                 <span className="relative z-10">Começar Agora Grátis</span>
@@ -501,96 +485,69 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* Testimonials Section - MELHORADO COM VISIBILIDADE PERFEITA */}
-      <section className="py-16 sm:py-20 md:py-24 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
-        {/* Background decorativo */}
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#D4AF37]/5 to-transparent" />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-[#D4AF37]/10 rounded-full blur-3xl" />
-        
-        <div className="max-w-7xl mx-auto relative z-10">
+      {/* Testimonials Section */}
+      <section className="py-16 sm:py-20 md:py-24 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto">
           <div className="text-center mb-12 sm:mb-16 md:mb-20">
-            <div className="inline-flex items-center gap-2 bg-[#D4AF37]/10 border border-[#D4AF37]/30 rounded-full px-4 sm:px-6 py-2 sm:py-3 mb-6 sm:mb-8 hover:bg-[#D4AF37]/20 transition-all backdrop-blur-sm">
-              <Trophy className="w-5 h-5 sm:w-6 sm:h-6 text-[#D4AF37]" />
+            <div className="inline-flex items-center gap-2 bg-[#D4AF37]/10 border border-[#D4AF37]/30 rounded-full px-4 py-2 mb-4 sm:mb-6 hover:bg-[#D4AF37]/20 transition-all">
+              <Trophy className="w-4 h-4 sm:w-5 sm:h-5 text-[#D4AF37]" />
               <span className="text-[#D4AF37] font-bold text-sm sm:text-base">Resultados Reais</span>
             </div>
-            <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-white mb-4 sm:mb-6 px-4 leading-tight">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-white mb-4 sm:mb-6 px-4">
               Histórias de
               <br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#D4AF37] via-amber-400 to-yellow-500 drop-shadow-[0_0_30px_rgba(212,175,55,0.4)]">
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#D4AF37] to-amber-500">
                 Sucesso Comprovado
               </span>
             </h2>
-            <p className="text-base sm:text-lg md:text-xl text-gray-300 max-w-3xl mx-auto px-4 leading-relaxed">
-              Mais de <span className="text-[#D4AF37] font-bold">50 mil alunos</span> já transformaram suas vidas com a Elite Life.
-              <br className="hidden sm:block" />
-              <span className="text-white font-semibold">Você é o próximo.</span>
+            <p className="text-lg sm:text-xl text-gray-400 max-w-3xl mx-auto px-4">
+              Mais de 50 mil alunos já transformaram suas vidas com a <span className="text-[#D4AF37] font-bold">ELITE LIFE</span>. Você é o próximo.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 mb-12">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
             {testimonials.map((testimonial, index) => (
               <div
                 key={index}
-                className="relative bg-gradient-to-br from-[#0D0D0D] to-[#1A1A1A] rounded-3xl p-6 sm:p-8 border border-[#D4AF37]/30 hover:border-[#D4AF37]/60 transition-all duration-500 hover:scale-[1.02] overflow-hidden group"
+                className="relative bg-gradient-to-br from-[#0D0D0D] to-[#1A1A1A] rounded-3xl p-6 sm:p-8 border border-[#D4AF37]/20 hover:border-[#D4AF37]/60 transition-all hover:scale-105 overflow-hidden group"
               >
-                {/* Efeito de brilho no hover */}
-                <div className={`absolute inset-0 bg-gradient-to-br ${testimonial.gradient} opacity-0 group-hover:opacity-10 transition-opacity duration-500`} />
-                <div className="absolute -top-20 -right-20 w-40 h-40 bg-gradient-to-br from-[#D4AF37]/20 to-amber-500/20 rounded-full blur-3xl group-hover:scale-150 transition-transform duration-700" />
+                <div className="absolute -top-20 -right-20 w-40 h-40 bg-green-500/10 rounded-full blur-3xl group-hover:bg-green-500/20 transition-all" />
                 
-                {/* Badge de resultado - MELHORADO: cores vibrantes e visíveis */}
-                <div className={`absolute top-4 right-4 px-4 sm:px-5 py-2.5 sm:py-3 bg-gradient-to-r ${testimonial.gradient} rounded-full shadow-2xl transform group-hover:scale-110 transition-transform duration-300 z-20 border-2 border-white/20`}>
-                  <span className="text-white font-black text-base sm:text-lg drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)] whitespace-nowrap">{testimonial.revenue}</span>
+                <div className="absolute -top-4 right-4 sm:right-8 px-3 sm:px-4 py-1.5 sm:py-2 bg-gradient-to-r from-green-500 to-emerald-600 rounded-full shadow-lg">
+                  <span className="text-white font-bold text-xs sm:text-sm">{testimonial.revenue}</span>
                 </div>
 
                 <div className="relative z-10">
-                  {/* Estrelas */}
-                  <div className="flex items-center gap-1 mb-6">
+                  <div className="flex items-center gap-1 mb-4 sm:mb-6">
                     {[...Array(5)].map((_, i) => (
-                      <Star key={i} className="w-5 h-5 text-[#D4AF37] fill-[#D4AF37] drop-shadow-[0_0_8px_rgba(212,175,55,0.6)]" />
+                      <Star key={i} className="w-4 h-4 sm:w-5 sm:h-5 text-[#D4AF37] fill-[#D4AF37]" />
                     ))}
                   </div>
                   
-                  {/* Depoimento - MELHORADO: texto branco brilhante e legível */}
-                  <blockquote className="text-white mb-8 text-base sm:text-lg leading-relaxed font-medium pr-20 drop-shadow-[0_2px_4px_rgba(0,0,0,0.5)]">
-                    "{testimonial.text}"
-                  </blockquote>
+                  <p className="text-gray-300 mb-6 sm:mb-8 text-base sm:text-lg leading-relaxed italic">
+                    &quot;{testimonial.text}&quot;
+                  </p>
                   
-                  {/* Perfil do depoente */}
-                  <div className="flex items-center justify-between pt-6 border-t border-[#D4AF37]/20">
-                    <div className="flex items-center gap-4">
-                      <div className="relative">
-                        <div className={`absolute inset-0 bg-gradient-to-r ${testimonial.gradient} rounded-full blur-md opacity-50`} />
-                        <img
-                          src={testimonial.avatar}
-                          alt={testimonial.name}
-                          className="relative w-14 h-14 sm:w-16 sm:h-16 rounded-full border-2 border-[#D4AF37] object-cover"
-                        />
-                      </div>
+                  <div className="flex items-center justify-between flex-wrap gap-4">
+                    <div className="flex items-center gap-3 sm:gap-4">
+                      <img
+                        src={testimonial.avatar}
+                        alt={testimonial.name}
+                        className="w-12 h-12 sm:w-14 sm:h-14 rounded-full border-2 border-[#D4AF37]"
+                      />
                       <div>
-                        <div className="text-white font-bold text-base sm:text-lg drop-shadow-[0_2px_4px_rgba(0,0,0,0.5)]">{testimonial.name}</div>
-                        <div className="text-[#D4AF37] text-sm font-semibold drop-shadow-[0_2px_4px_rgba(0,0,0,0.5)]">{testimonial.role}</div>
+                        <div className="text-white font-bold text-base sm:text-lg">{testimonial.name}</div>
+                        <div className="text-[#D4AF37] text-xs sm:text-sm font-semibold">{testimonial.role}</div>
                       </div>
                     </div>
-                    <div className="flex items-center gap-2 text-gray-300 text-sm bg-white/5 px-3 py-1.5 rounded-full backdrop-blur-sm border border-white/10">
-                      <Clock className="w-4 h-4" />
-                      <span className="font-medium">{testimonial.time}</span>
+                    <div className="flex items-center gap-1 text-gray-400 text-xs sm:text-sm">
+                      <Clock className="w-3 h-3 sm:w-4 sm:h-4" />
+                      <span>{testimonial.time}</span>
                     </div>
                   </div>
                 </div>
               </div>
             ))}
-          </div>
-
-          {/* CTA adicional na seção de depoimentos */}
-          <div className="text-center">
-            <Link
-              href="/auth/register"
-              className="inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-[#D4AF37] via-amber-500 to-yellow-600 text-black rounded-full font-bold text-lg hover:shadow-2xl hover:shadow-[#D4AF37]/50 transition-all transform hover:scale-105"
-            >
-              <span>Quero Transformar Minha Vida Agora</span>
-              <ArrowRight className="w-5 h-5" />
-            </Link>
-            <p className="text-gray-400 text-sm mt-4">Junte-se a mais de 50 mil alunos de sucesso</p>
           </div>
         </div>
       </section>
@@ -625,7 +582,7 @@ export default function LandingPage() {
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6 px-4">
             <Link
-              href="/dashboard"
+              href="/auth/signup"
               className="w-full sm:w-auto group px-8 sm:px-10 py-4 sm:py-5 bg-gradient-to-r from-[#D4AF37] via-amber-500 to-yellow-600 text-black rounded-full font-black text-base sm:text-xl hover:shadow-2xl hover:shadow-[#D4AF37]/60 transition-all transform hover:scale-105 flex items-center justify-center gap-3 relative overflow-hidden"
             >
               <span className="relative z-10">Começar Agora Gratuitamente</span>
@@ -681,19 +638,13 @@ export default function LandingPage() {
                 A plataforma completa para transformar sua vida financeira, física e mental. 
                 Mais de 50 mil alunos já alcançaram seus objetivos.
               </p>
-              <div className="flex items-center gap-4 mb-6">
+              <div className="flex items-center gap-4">
                 <div className="flex items-center gap-1">
                   {[...Array(5)].map((_, i) => (
                     <Star key={i} className="w-4 h-4 sm:w-5 sm:h-5 text-[#D4AF37] fill-[#D4AF37]" />
                   ))}
                 </div>
                 <span className="text-gray-400 font-semibold text-xs sm:text-sm">4.9/5 (12.450 avaliações)</span>
-              </div>
-              
-              {/* Social Links no Footer */}
-              <div className="flex items-center gap-3">
-                <span className="text-gray-400 text-sm font-semibold">Siga-nos:</span>
-                <SocialLinks />
               </div>
             </div>
 

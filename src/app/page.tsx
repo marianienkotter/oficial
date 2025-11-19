@@ -27,12 +27,38 @@ import {
   Menu,
   X
 } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
+import { useAuth } from "@/lib/auth-context";
 import { NotificationBell } from "@/components/custom/notification-bell";
 import { LanguageSwitcher } from "@/components/custom/language-switcher";
 
 export default function LandingPage() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const { isAuthenticated } = useAuth();
+  const router = useRouter();
+  const [shouldRedirect, setShouldRedirect] = useState(false);
+
+  // Redirecionar usuários autenticados para /home (com controle de estado)
+  useEffect(() => {
+    if (isAuthenticated && !shouldRedirect) {
+      setShouldRedirect(true);
+      // Usar replace em vez de push para evitar loops
+      router.replace("/home");
+    }
+  }, [isAuthenticated, shouldRedirect, router]);
+
+  // Se está autenticado e vai redirecionar, mostrar loading
+  if (isAuthenticated && shouldRedirect) {
+    return (
+      <div className="min-h-screen bg-[#000000] flex items-center justify-center">
+        <div className="text-center">
+          <div className="w-16 h-16 border-4 border-[#D4AF37] border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+          <p className="text-[#D4AF37] font-semibold">Redirecionando...</p>
+        </div>
+      </div>
+    );
+  }
 
   const benefits = [
     {
@@ -198,7 +224,7 @@ export default function LandingPage() {
                 Entrar
               </Link>
               <Link
-                href="/auth/signup"
+                href="/plans"
                 className="px-4 sm:px-8 py-2 sm:py-3 bg-gradient-to-r from-[#D4AF37] via-amber-500 to-yellow-600 text-black rounded-full font-bold hover:shadow-2xl hover:shadow-[#D4AF37]/50 transition-all transform hover:scale-105 text-xs sm:text-base"
               >
                 Começar Agora
@@ -228,16 +254,9 @@ export default function LandingPage() {
                 Entrar na Plataforma
               </Link>
               <Link
-                href="/auth/signup"
-                onClick={() => setMobileMenuOpen(false)}
-                className="block px-4 py-3 bg-gradient-to-r from-[#D4AF37] via-amber-500 to-yellow-600 text-black rounded-lg font-bold text-center"
-              >
-                Criar Conta Grátis
-              </Link>
-              <Link
                 href="/plans"
                 onClick={() => setMobileMenuOpen(false)}
-                className="block px-4 py-3 text-white hover:text-[#D4AF37] hover:bg-[#D4AF37]/10 rounded-lg transition-all font-semibold"
+                className="block px-4 py-3 bg-gradient-to-r from-[#D4AF37] via-amber-500 to-yellow-600 text-black rounded-lg font-bold text-center"
               >
                 Ver Planos
               </Link>
@@ -310,7 +329,7 @@ export default function LandingPage() {
             {/* CTA Buttons */}
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6 mb-12 sm:mb-16 px-4">
               <Link
-                href="/auth/signup"
+                href="/plans"
                 className="w-full sm:w-auto group px-8 sm:px-10 py-4 sm:py-5 bg-gradient-to-r from-[#D4AF37] via-amber-500 to-yellow-600 text-black rounded-full font-black text-base sm:text-xl hover:shadow-2xl hover:shadow-[#D4AF37]/60 transition-all transform hover:scale-105 flex items-center justify-center gap-3 relative overflow-hidden"
               >
                 <span className="relative z-10">Começar Agora Grátis</span>
@@ -582,7 +601,7 @@ export default function LandingPage() {
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6 px-4">
             <Link
-              href="/auth/signup"
+              href="/plans"
               className="w-full sm:w-auto group px-8 sm:px-10 py-4 sm:py-5 bg-gradient-to-r from-[#D4AF37] via-amber-500 to-yellow-600 text-black rounded-full font-black text-base sm:text-xl hover:shadow-2xl hover:shadow-[#D4AF37]/60 transition-all transform hover:scale-105 flex items-center justify-center gap-3 relative overflow-hidden"
             >
               <span className="relative z-10">Começar Agora Gratuitamente</span>
@@ -658,7 +677,7 @@ export default function LandingPage() {
                   </Link>
                 </li>
                 <li>
-                  <Link href="/dashboard" className="text-gray-400 hover:text-[#D4AF37] transition-colors flex items-center gap-2 group text-sm sm:text-base">
+                  <Link href="/courses" className="text-gray-400 hover:text-[#D4AF37] transition-colors flex items-center gap-2 group text-sm sm:text-base">
                     <ChevronRight className="w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity" />
                     Área do Aluno
                   </Link>

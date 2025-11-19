@@ -19,9 +19,13 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     setIsClient(true);
     if (typeof window !== 'undefined') {
-      const savedLanguage = localStorage.getItem('elitelife_language') as Language;
-      if (savedLanguage && translations[savedLanguage]) {
-        setLanguageState(savedLanguage);
+      try {
+        const savedLanguage = localStorage.getItem('elitelife_language') as Language;
+        if (savedLanguage && translations[savedLanguage]) {
+          setLanguageState(savedLanguage);
+        }
+      } catch (error) {
+        console.error('Erro ao carregar idioma:', error);
       }
     }
   }, []);
@@ -29,16 +33,25 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
   const setLanguage = (lang: Language) => {
     setLanguageState(lang);
     if (typeof window !== 'undefined') {
-      localStorage.setItem('elitelife_language', lang);
+      try {
+        localStorage.setItem('elitelife_language', lang);
+      } catch (error) {
+        console.error('Erro ao salvar idioma:', error);
+      }
     }
     // Aqui você pode adicionar chamada ao backend para salvar no banco
     // saveLanguageToDatabase(lang);
   };
 
   const t = (key: string): string => {
-    if (!isClient) return key; // Durante SSR, retorna a chave
-    const translation = translations[language]?.[key];
-    return translation || key;
+    if (!isClient) return ''; // Durante SSR, retorna string vazia
+    try {
+      const translation = translations[language]?.[key];
+      return translation || key;
+    } catch (error) {
+      console.error('Erro ao traduzir:', error);
+      return key;
+    }
   };
 
   return (

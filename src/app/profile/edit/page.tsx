@@ -3,7 +3,7 @@
 import { useState, useRef, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { User, Calendar, Camera, Image as ImageIcon, Sparkles, AlertCircle, Mail, Phone, ArrowLeft, CheckCircle } from "lucide-react";
+import { User, Calendar, Camera, Image as ImageIcon, Sparkles, AlertCircle, Mail, Phone, ArrowLeft, CheckCircle, FileText } from "lucide-react";
 import { useAuth } from "@/lib/auth-context";
 
 export default function EditProfilePage() {
@@ -11,7 +11,8 @@ export default function EditProfilePage() {
   const { user, updateProfile, isAuthenticated } = useAuth();
   const [nome, setNome] = useState("");
   const [idade, setIdade] = useState("");
-  const [photoUrl, setPhotoUrl] = useState("");
+  const [descricao, setDescricao] = useState("");
+  const [fotoUrl, setFotoUrl] = useState("");
   const [photoPreview, setPhotoPreview] = useState("");
   const [error, setError] = useState("");
   const [success, setSuccess] = useState(false);
@@ -28,8 +29,9 @@ export default function EditProfilePage() {
     if (user) {
       setNome(user.nome || "");
       setIdade(user.idade?.toString() || "");
-      setPhotoUrl(user.photo_url || "");
-      setPhotoPreview(user.photo_url || "");
+      setDescricao(user.descricao || "");
+      setFotoUrl(user.foto_perfil || "");
+      setPhotoPreview(user.foto_perfil || "");
     }
   }, [user, isAuthenticated, router]);
 
@@ -40,7 +42,7 @@ export default function EditProfilePage() {
       reader.onloadend = () => {
         const result = reader.result as string;
         setPhotoPreview(result);
-        setPhotoUrl(result);
+        setFotoUrl(result);
       };
       reader.readAsDataURL(file);
     }
@@ -68,13 +70,14 @@ export default function EditProfilePage() {
       const success = await updateProfile({
         nome,
         idade: idade ? parseInt(idade) : undefined,
-        photo_url: photoUrl || undefined,
+        descricao: descricao || undefined,
+        foto_perfil: fotoUrl || undefined,
       });
 
       if (success) {
         setSuccess(true);
         setTimeout(() => {
-          router.push("/dashboard");
+          router.push("/courses");
         }, 2000);
       } else {
         setError("Erro ao salvar perfil. Tente novamente.");
@@ -252,6 +255,26 @@ export default function EditProfilePage() {
               </div>
             </div>
 
+            {/* Descrição/Bio */}
+            <div>
+              <label htmlFor="descricao" className="block text-white font-semibold mb-2">
+                Descrição / Bio
+              </label>
+              <div className="relative">
+                <div className="absolute left-4 top-4 text-gray-400">
+                  <FileText className="w-5 h-5" />
+                </div>
+                <textarea
+                  id="descricao"
+                  value={descricao}
+                  onChange={(e) => setDescricao(e.target.value)}
+                  placeholder="Conte um pouco sobre você..."
+                  rows={4}
+                  className="w-full pl-12 pr-4 py-4 bg-black/40 border border-[#D4AF37]/30 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-[#D4AF37] focus:ring-2 focus:ring-[#D4AF37]/20 transition-all resize-none"
+                />
+              </div>
+            </div>
+
             {/* Informações não editáveis */}
             <div className="space-y-4 pt-4 border-t border-[#D4AF37]/20">
               <div>
@@ -305,11 +328,11 @@ export default function EditProfilePage() {
         {/* Link Voltar */}
         <div className="text-center mt-6">
           <Link
-            href="/dashboard"
+            href="/courses"
             className="inline-flex items-center gap-2 text-gray-400 hover:text-[#D4AF37] transition-colors text-sm font-semibold"
           >
             <ArrowLeft className="w-4 h-4" />
-            Voltar para o dashboard
+            Voltar para os cursos
           </Link>
         </div>
       </div>

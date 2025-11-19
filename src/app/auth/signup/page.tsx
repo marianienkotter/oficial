@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { Mail, Lock, Eye, EyeOff, Phone, Sparkles, AlertCircle, CheckCircle } from "lucide-react";
+import { Mail, Lock, Eye, EyeOff, Sparkles, AlertCircle, Phone, CheckCircle } from "lucide-react";
 import { useAuth } from "@/lib/auth-context";
 
 export default function SignupPage() {
@@ -23,19 +23,9 @@ export default function SignupPage() {
     return re.test(email);
   };
 
-  const formatPhone = (value: string) => {
-    const numbers = value.replace(/\D/g, "");
-    if (numbers.length <= 11) {
-      return numbers
-        .replace(/(\d{2})(\d)/, "($1) $2")
-        .replace(/(\d{5})(\d)/, "$1-$2");
-    }
-    return telefone;
-  };
-
-  const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const formatted = formatPhone(e.target.value);
-    setTelefone(formatted);
+  const validatePhone = (phone: string) => {
+    const re = /^\(?([0-9]{2})\)?[-. ]?([0-9]{4,5})[-. ]?([0-9]{4})$/;
+    return re.test(phone.replace(/\s/g, ''));
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -53,6 +43,11 @@ export default function SignupPage() {
       return;
     }
 
+    if (!validatePhone(telefone)) {
+      setError("Por favor, insira um telefone válido (ex: 11 98765-4321).");
+      return;
+    }
+
     if (senha.length < 6) {
       setError("A senha deve ter no mínimo 6 caracteres.");
       return;
@@ -63,25 +58,20 @@ export default function SignupPage() {
       return;
     }
 
-    const phoneNumbers = telefone.replace(/\D/g, "");
-    if (phoneNumbers.length < 10) {
-      setError("Por favor, insira um número de telefone válido.");
-      return;
-    }
-
     setLoading(true);
 
     try {
       const success = await signup(email, senha, telefone);
       
       if (success) {
-        router.push("/profile/complete");
+        // Redirecionar para home após cadastro bem-sucedido
+        router.push("/home");
       } else {
-        setError("Este e-mail já está em uso.");
+        setError("Este e-mail já está cadastrado. Tente fazer login.");
+        setLoading(false);
       }
     } catch (err) {
       setError("Erro ao criar conta. Tente novamente.");
-    } finally {
       setLoading(false);
     }
   };
@@ -123,7 +113,7 @@ export default function SignupPage() {
             Criar sua conta Elite
           </h2>
           <p className="text-gray-400">
-            Comece sua jornada de transformação agora
+            Comece sua jornada de transformação hoje
           </p>
         </div>
 
@@ -152,7 +142,7 @@ export default function SignupPage() {
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  placeholder="Digite seu e-mail"
+                  placeholder="seu@email.com"
                   className="w-full pl-12 pr-4 py-3.5 bg-black/40 border border-[#D4AF37]/30 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-[#D4AF37] focus:ring-2 focus:ring-[#D4AF37]/20 transition-all"
                 />
               </div>
@@ -161,7 +151,7 @@ export default function SignupPage() {
             {/* Telefone */}
             <div>
               <label htmlFor="telefone" className="block text-white font-semibold mb-2">
-                Número de telefone
+                Telefone
               </label>
               <div className="relative">
                 <div className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400">
@@ -171,9 +161,8 @@ export default function SignupPage() {
                   id="telefone"
                   type="tel"
                   value={telefone}
-                  onChange={handlePhoneChange}
-                  placeholder="(XX) XXXXX-XXXX"
-                  maxLength={15}
+                  onChange={(e) => setTelefone(e.target.value)}
+                  placeholder="(11) 98765-4321"
                   className="w-full pl-12 pr-4 py-3.5 bg-black/40 border border-[#D4AF37]/30 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-[#D4AF37] focus:ring-2 focus:ring-[#D4AF37]/20 transition-all"
                 />
               </div>
@@ -193,7 +182,7 @@ export default function SignupPage() {
                   type={showPassword ? "text" : "password"}
                   value={senha}
                   onChange={(e) => setSenha(e.target.value)}
-                  placeholder="Crie uma senha (mínimo 6 caracteres)"
+                  placeholder="Mínimo 6 caracteres"
                   className="w-full pl-12 pr-12 py-3.5 bg-black/40 border border-[#D4AF37]/30 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-[#D4AF37] focus:ring-2 focus:ring-[#D4AF37]/20 transition-all"
                 />
                 <button
@@ -209,7 +198,7 @@ export default function SignupPage() {
             {/* Confirmar Senha */}
             <div>
               <label htmlFor="confirmarSenha" className="block text-white font-semibold mb-2">
-                Confirmar senha
+                Confirmar Senha
               </label>
               <div className="relative">
                 <div className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400">
@@ -220,7 +209,7 @@ export default function SignupPage() {
                   type={showConfirmPassword ? "text" : "password"}
                   value={confirmarSenha}
                   onChange={(e) => setConfirmarSenha(e.target.value)}
-                  placeholder="Confirme sua senha"
+                  placeholder="Digite a senha novamente"
                   className="w-full pl-12 pr-12 py-3.5 bg-black/40 border border-[#D4AF37]/30 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-[#D4AF37] focus:ring-2 focus:ring-[#D4AF37]/20 transition-all"
                 />
                 <button
@@ -233,33 +222,29 @@ export default function SignupPage() {
               </div>
             </div>
 
-            {/* Indicador de Força da Senha */}
-            {senha && (
-              <div className="space-y-2">
-                <div className="flex items-center gap-2 text-xs">
-                  <CheckCircle className={`w-4 h-4 ${senha.length >= 6 ? 'text-green-500' : 'text-gray-500'}`} />
-                  <span className={senha.length >= 6 ? 'text-green-500' : 'text-gray-500'}>
-                    Mínimo 6 caracteres
-                  </span>
-                </div>
-                {confirmarSenha && (
-                  <div className="flex items-center gap-2 text-xs">
-                    <CheckCircle className={`w-4 h-4 ${senha === confirmarSenha ? 'text-green-500' : 'text-gray-500'}`} />
-                    <span className={senha === confirmarSenha ? 'text-green-500' : 'text-gray-500'}>
-                      Senhas coincidem
-                    </span>
-                  </div>
-                )}
+            {/* Benefícios */}
+            <div className="bg-[#D4AF37]/5 border border-[#D4AF37]/20 rounded-xl p-4 space-y-2">
+              <div className="flex items-center gap-2 text-sm text-gray-300">
+                <CheckCircle className="w-4 h-4 text-[#D4AF37]" />
+                <span>Acesso a cursos exclusivos</span>
               </div>
-            )}
+              <div className="flex items-center gap-2 text-sm text-gray-300">
+                <CheckCircle className="w-4 h-4 text-[#D4AF37]" />
+                <span>Sistema de gamificação e recompensas</span>
+              </div>
+              <div className="flex items-center gap-2 text-sm text-gray-300">
+                <CheckCircle className="w-4 h-4 text-[#D4AF37]" />
+                <span>Comunidade exclusiva de elite</span>
+              </div>
+            </div>
 
             {/* Botão Criar Conta */}
             <button
               type="submit"
               disabled={loading}
-              className="w-full py-4 bg-gradient-to-r from-[#D4AF37] via-amber-500 to-yellow-600 text-black rounded-xl font-bold text-lg hover:shadow-2xl hover:shadow-[#D4AF37]/50 transition-all transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 mt-6"
+              className="w-full py-4 bg-gradient-to-r from-[#D4AF37] via-amber-500 to-yellow-600 text-black rounded-xl font-bold text-lg hover:shadow-2xl hover:shadow-[#D4AF37]/50 transition-all transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
             >
-              {loading ? "Criando conta..." : "Criar conta"}
+              {loading ? "Criando conta..." : "Criar Conta Elite"}
             </button>
           </form>
 
@@ -270,22 +255,22 @@ export default function SignupPage() {
             <div className="flex-1 h-px bg-gradient-to-r from-transparent via-[#D4AF37]/30 to-transparent" />
           </div>
 
-          {/* Link Entrar */}
+          {/* Link Login */}
           <Link
             href="/auth/login"
             className="block w-full py-4 bg-white/5 backdrop-blur-sm border-2 border-[#D4AF37] text-[#D4AF37] rounded-xl font-bold text-center hover:bg-[#D4AF37] hover:text-black transition-all transform hover:scale-105"
           >
-            Fazer login
+            Fazer Login
           </Link>
         </div>
 
         {/* Link Voltar */}
         <div className="text-center mt-6">
           <Link
-            href="/auth"
+            href="/"
             className="text-gray-400 hover:text-[#D4AF37] transition-colors text-sm font-semibold"
           >
-            ← Voltar
+            ← Voltar para início
           </Link>
         </div>
       </div>

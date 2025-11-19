@@ -7,6 +7,9 @@ import "./globals.css";
 import "../lib/fonts";
 import { AuthProvider } from "@/lib/auth-context";
 import { LanguageProvider } from "@/lib/i18n/language-context";
+import { UserProgressProvider } from "@/contexts/UserProgressContext";
+import { SocialProofNotifications } from "@/components/custom/social-proof-notifications";
+import { MainAIAssistant } from "@/components/custom/main-ai-assistant";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -35,7 +38,11 @@ export default function RootLayout({
       >
         <AuthProvider>
           <LanguageProvider>
-            {children}
+            <UserProgressProvider>
+              {children}
+              <SocialProofNotifications />
+              <MainAIAssistant />
+            </UserProgressProvider>
           </LanguageProvider>
         </AuthProvider>
       </body>

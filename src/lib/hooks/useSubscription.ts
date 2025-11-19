@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 
-export type SubscriptionPlan = 'free' | 'monthly' | 'annual' | 'influencer';
+export type SubscriptionPlan = 'free' | 'pro' | 'pro-plus' | 'elite' | 'anual' | 'influencer-pro';
 export type SubscriptionStatus = 'active' | 'inactive' | 'cancelled' | 'pending';
 
 export interface SubscriptionData {
@@ -28,24 +28,21 @@ export function useSubscription() {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    // Simular busca do banco de dados
-    // Em produção, isso seria uma chamada real à API
     const fetchSubscription = async () => {
       try {
-        // Aqui você faria:
-        // const response = await fetch('/api/subscription');
-        // const data = await response.json();
-        
-        // Por enquanto, simulamos com localStorage para demonstração
-        const storedPlan = localStorage.getItem('userPlan') as SubscriptionPlan || 'free';
-        const storedStatus = localStorage.getItem('subscriptionStatus') as SubscriptionStatus || 'inactive';
-        
-        setSubscription({
-          plan: storedPlan,
-          status: storedStatus,
-          stripeStatus: storedPlan !== 'free' ? 'paid' : 'unpaid',
-          features: getFeaturesByPlan(storedPlan)
-        });
+        // Buscar do localStorage (em produção seria API)
+        const userData = localStorage.getItem('elite_user');
+        if (userData) {
+          const user = JSON.parse(userData);
+          const plan = user.plano_atual || 'free';
+          
+          setSubscription({
+            plan,
+            status: plan !== 'free' ? 'active' : 'inactive',
+            stripeStatus: plan !== 'free' ? 'paid' : 'unpaid',
+            features: getFeaturesByPlan(plan)
+          });
+        }
       } catch (error) {
         console.error('Erro ao buscar assinatura:', error);
       } finally {
@@ -64,54 +61,42 @@ export function useSubscription() {
     if (subscription.status !== 'active') return false;
     if (subscription.stripeStatus !== 'paid') return false;
     
-    return true;
+    return subscription.features.includes(feature);
   };
 
   /**
    * Verifica se usuário pode acessar vídeos
    */
   const canAccessVideos = (): boolean => {
-    return hasAccess('videos');
+    return subscription.plan !== 'free';
   };
 
   /**
    * Verifica se usuário pode acessar cursos
    */
   const canAccessCourses = (): boolean => {
-    return hasAccess('courses');
+    return subscription.plan !== 'free';
   };
 
   /**
-   * Verifica se usuário pode acessar carteira
+   * Verifica se usuário pode acessar Influencer Pro
    */
-  const canAccessWallet = (): boolean => {
-    // Influencer não tem acesso à carteira
-    if (subscription.plan === 'influencer') return false;
-    return hasAccess('wallet');
-  };
-
-  /**
-   * Verifica se usuário pode acessar área de influencer
-   */
-  const canAccessInfluencer = (): boolean => {
-    return hasAccess('influencer');
-  };
-
-  /**
-   * Verifica se usuário pode acessar vídeos de finanças
-   */
-  const canAccessFinanceVideos = (): boolean => {
-    // Influencer não tem acesso a vídeos de finanças
-    if (subscription.plan === 'influencer') return false;
-    return hasAccess('videos');
+  const canAccessInfluencerPro = (): boolean => {
+    return subscription.plan === 'elite' || 
+           subscription.plan === 'anual' || 
+           subscription.plan === 'influencer-pro';
   };
 
   /**
    * Atualiza o plano do usuário (após pagamento)
    */
   const updatePlan = (newPlan: SubscriptionPlan, newStatus: SubscriptionStatus = 'active') => {
-    localStorage.setItem('userPlan', newPlan);
-    localStorage.setItem('subscriptionStatus', newStatus);
+    const userData = localStorage.getItem('elite_user');
+    if (userData) {
+      const user = JSON.parse(userData);
+      user.plano_atual = newPlan;
+      localStorage.setItem('elite_user', JSON.stringify(user));
+    }
     
     setSubscription({
       plan: newPlan,
@@ -127,9 +112,7 @@ export function useSubscription() {
     hasAccess,
     canAccessVideos,
     canAccessCourses,
-    canAccessWallet,
-    canAccessInfluencer,
-    canAccessFinanceVideos,
+    canAccessInfluencerPro,
     updatePlan,
     isPremium: subscription.plan !== 'free' && subscription.status === 'active'
   };
@@ -141,9 +124,11 @@ export function useSubscription() {
 function getFeaturesByPlan(plan: SubscriptionPlan): string[] {
   const features: Record<SubscriptionPlan, string[]> = {
     free: ['dashboard-basic'],
-    monthly: ['videos', 'courses', 'quizzes', 'activities', 'wallet', 'certificates', 'ai-support'],
-    annual: ['videos', 'courses', 'quizzes', 'activities', 'wallet', 'certificates', 'ai-support', 'advanced-dashboard'],
-    influencer: ['videos', 'courses', 'influencer-tools', 'thumbnails', 'scripts', 'hashtags', 'tracker']
+    pro: ['videos', 'courses-basic', 'quizzes', 'activities'],
+    'pro-plus': ['videos', 'courses', 'quizzes', 'activities', 'certificates', 'support'],
+    elite: ['videos', 'courses', 'quizzes', 'activities', 'certificates', 'support', 'influencer-pro'],
+    anual: ['videos', 'courses', 'quizzes', 'activities', 'certificates', 'support', 'influencer-pro', 'bonus'],
+    'influencer-pro': ['videos', 'courses', 'influencer-pro', 'hashtags', 'thumbnails', 'scripts', 'dietas', 'agenda']
   };
 
   return features[plan] || [];

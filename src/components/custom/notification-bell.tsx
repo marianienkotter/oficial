@@ -23,12 +23,28 @@ export function NotificationBell() {
   const [isOpen, setIsOpen] = useState(false);
   const [notifications, setNotifications] = useState<Notification[]>([]);
   const [unreadCount, setUnreadCount] = useState(0);
-  const { t } = useLanguage();
+  const [mounted, setMounted] = useState(false);
+  
+  let t: (key: string) => string;
+  try {
+    const languageContext = useLanguage();
+    t = languageContext.t;
+  } catch (error) {
+    // Fallback se o contexto não estiver disponível
+    t = (key: string) => key;
+  }
+
+  // Garantir que o componente está montado no cliente
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   // Carregar notificações ao montar o componente
   useEffect(() => {
-    loadNotifications();
-  }, []);
+    if (mounted) {
+      loadNotifications();
+    }
+  }, [mounted]);
 
   // Atualizar contador de não lidas
   useEffect(() => {
@@ -41,21 +57,21 @@ export function NotificationBell() {
     const mockNotifications: Notification[] = [
       {
         id: "1",
-        title: t('notifications.welcome.title'),
-        message: t('notifications.welcome.message'),
+        title: t('notifications.welcome.title') || 'Bem-vindo à Elite Life!',
+        message: t('notifications.welcome.message') || 'Estamos felizes em ter você aqui!',
         icon: "welcome",
         timestamp: new Date(),
         read: false,
       },
       {
         id: "2",
-        title: t('notifications.coupon.title'),
-        message: t('notifications.coupon.message'),
+        title: t('notifications.coupon.title') || 'Cupom Exclusivo 🎁',
+        message: t('notifications.coupon.message') || 'Você ganhou 5% OFF!',
         icon: "coupon",
         timestamp: new Date(),
         read: false,
         action: {
-          label: t('button.goToPlans'),
+          label: t('button.goToPlans') || 'Ir para Planos',
           href: "/plans",
         },
       },
@@ -103,11 +119,23 @@ export function NotificationBell() {
     const hours = Math.floor(diff / 3600000);
     const days = Math.floor(diff / 86400000);
 
-    if (minutes < 1) return t('time.now');
-    if (minutes < 60) return `${minutes}${t('time.minutesAgo')}`;
-    if (hours < 24) return `${hours}${t('time.hoursAgo')}`;
-    return `${days}${t('time.daysAgo')}`;
+    if (minutes < 1) return t('time.now') || 'Agora';
+    if (minutes < 60) return `${minutes}${t('time.minutesAgo') || 'min atrás'}`;
+    if (hours < 24) return `${hours}${t('time.hoursAgo') || 'h atrás'}`;
+    return `${days}${t('time.daysAgo') || 'd atrás'}`;
   };
+
+  // Não renderizar até estar montado no cliente
+  if (!mounted) {
+    return (
+      <button
+        className="relative p-2 text-[#D4AF37] hover:text-amber-400 transition-all hover:scale-110 group"
+        aria-label="Notificações"
+      >
+        <Bell className="w-6 h-6" />
+      </button>
+    );
+  }
 
   return (
     <div className="relative">
@@ -115,7 +143,7 @@ export function NotificationBell() {
       <button
         onClick={() => setIsOpen(!isOpen)}
         className="relative p-2 text-[#D4AF37] hover:text-amber-400 transition-all hover:scale-110 group"
-        aria-label={t('notifications.title')}
+        aria-label={t('notifications.title') || 'Notificações'}
       >
         <Bell className="w-6 h-6 group-hover:animate-bounce" />
         
@@ -144,12 +172,12 @@ export function NotificationBell() {
               <div className="flex items-center justify-between">
                 <h3 className="text-white font-bold text-lg flex items-center gap-2">
                   <Bell className="w-5 h-5 text-[#D4AF37]" />
-                  {t('notifications.title')}
+                  {t('notifications.title') || 'Notificações'}
                 </h3>
                 <button
                   onClick={() => setIsOpen(false)}
                   className="text-gray-400 hover:text-white transition-colors"
-                  aria-label={t('button.close')}
+                  aria-label={t('button.close') || 'Fechar'}
                 >
                   <X className="w-5 h-5" />
                 </button>
@@ -160,7 +188,7 @@ export function NotificationBell() {
                   onClick={markAllAsRead}
                   className="mt-2 text-xs text-[#D4AF37] hover:text-amber-400 transition-colors font-semibold"
                 >
-                  {t('notifications.markAllRead')}
+                  {t('notifications.markAllRead') || 'Marcar todas como lidas'}
                 </button>
               )}
             </div>
@@ -170,7 +198,7 @@ export function NotificationBell() {
               {notifications.length === 0 ? (
                 <div className="p-8 text-center">
                   <Bell className="w-12 h-12 text-gray-600 mx-auto mb-3" />
-                  <p className="text-gray-400 text-sm">{t('notifications.empty')}</p>
+                  <p className="text-gray-400 text-sm">{t('notifications.empty') || 'Nenhuma notificação ainda'}</p>
                 </div>
               ) : (
                 <div className="divide-y divide-[#D4AF37]/10">
@@ -233,7 +261,7 @@ export function NotificationBell() {
                   onClick={() => setIsOpen(false)}
                   className="text-xs text-gray-400 hover:text-white transition-colors font-semibold"
                 >
-                  {t('notifications.viewAll')}
+                  {t('notifications.viewAll') || 'Ver todas as notificações'}
                 </button>
               </div>
             )}

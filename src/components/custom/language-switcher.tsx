@@ -1,13 +1,30 @@
 "use client";
 
 import { Globe, Check } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useLanguage } from "@/lib/i18n/language-context";
 import { languages, Language } from "@/lib/i18n/translations";
 
 export function LanguageSwitcher() {
   const [isOpen, setIsOpen] = useState(false);
-  const { language, setLanguage } = useLanguage();
+  const [mounted, setMounted] = useState(false);
+  
+  let language: Language = 'pt';
+  let setLanguage: (lang: Language) => void = () => {};
+  
+  try {
+    const languageContext = useLanguage();
+    language = languageContext.language;
+    setLanguage = languageContext.setLanguage;
+  } catch (error) {
+    // Fallback se o contexto não estiver disponível
+    console.error('LanguageContext não disponível:', error);
+  }
+
+  // Garantir que o componente está montado no cliente
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const handleLanguageChange = (langCode: Language) => {
     setLanguage(langCode);
@@ -15,6 +32,18 @@ export function LanguageSwitcher() {
   };
 
   const currentLanguage = languages.find(lang => lang.code === language);
+
+  // Não renderizar até estar montado no cliente
+  if (!mounted) {
+    return (
+      <button
+        className="relative p-2 rounded-full bg-[#0A0A0A] border-2 border-[#D4AF37] text-white"
+        aria-label="Selecionar idioma"
+      >
+        <Globe className="w-5 h-5 text-[#D4AF37]" />
+      </button>
+    );
+  }
 
   return (
     <div className="relative">
